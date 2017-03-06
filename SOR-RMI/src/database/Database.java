@@ -15,6 +15,7 @@ import com.mysql.fabric.xmlrpc.base.Array;
 import annotation.Table;
 import bean.Admin;
 import bean.Plat;
+import bean.Menu;
 
 public class Database {
 
