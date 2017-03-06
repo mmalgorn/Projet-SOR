@@ -2,6 +2,7 @@ package database;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.security.acl.Group;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,6 +14,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import annotation.Table;
+import bean.Groupe;
+import bean.Plat;
 
 public class Database {
 
@@ -40,11 +43,11 @@ public class Database {
 		Database db = new Database();
 
 		db.open();
-		Map<Object, ArrayList<Object>> hm = db.lire();
+		Map<Object, ArrayList<Object>> hm = db.lire(Groupe.class, Plat.class);
 		for (Object o : hm.keySet()) {
-
+			System.out.println(((Groupe)o).getGroupe_nom());
 			for (Object o1 : hm.get(o)) {
-
+				System.out.println("\t" + ((Plat)o1).getPlat_nom());
 			}
 		}
 		db.close();

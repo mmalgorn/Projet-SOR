@@ -13,8 +13,6 @@ public class ClientRMI {
 			Registry registry = LocateRegistry.getRegistry(port);
 			ServeurRMI serveur = 
 					(ServeurRMI)registry.lookup("monserveurrmi");
-			System.out.println(
-					serveur.meth());
 					
 		}
 		catch (Exception e) {
