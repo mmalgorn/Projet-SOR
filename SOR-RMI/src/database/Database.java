@@ -2,20 +2,17 @@ package database;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import com.mysql.fabric.xmlrpc.base.Array;
-
 import annotation.Table;
-import bean.Admin;
-import bean.Plat;
-import bean.Menu;
 
 public class Database {
 
@@ -38,6 +35,20 @@ public class Database {
 	static ResourceBundle	rb;
 	static String			url, user, pwd;
 	static Connection		connection;
+
+	public static void main(String[] args) {
+		Database db = new Database();
+
+		db.open();
+		Map<Object, ArrayList<Object>> hm = db.lire();
+		for (Object o : hm.keySet()) {
+
+			for (Object o1 : hm.get(o)) {
+
+			}
+		}
+		db.close();
+	}
 
 	public Database() {
 		rb = ResourceBundle.getBundle(fData);
@@ -122,8 +133,7 @@ public class Database {
 
 	public ArrayList<Object> lire(Class c) {
 		Table table = (Table) c.getAnnotation(Table.class);
-		String sql = "select * from " + table.name() + condition;
-		System.out.println(sql);
+		String sql = "select * from " + table.name();
 		Field[] fields = c.getDeclaredFields();
 
 		PreparedStatement ps = null;
@@ -140,18 +150,15 @@ public class Database {
 					Method m = null;
 					for (Method method : c.getMethods())
 						if (method.getName().equals(nomMethode)) m = method;
-					if(m == null) throw new NoSuchMethodException();
-					System.out.println(nomMethode);
+					if (m == null) throw new NoSuchMethodException();
 					if (m.getParameterTypes()[0] == Integer.class) {
 						Integer i = rs.getInt(f.getName());
-						System.out.println(i);
 						m.invoke(o, i);
 					} else if (m.getParameterTypes()[0] == String.class) {
 						String s = rs.getString(f.getName());
-						System.out.println(s);
 						m.invoke(o, s);
 					} else {
-						System.out.print(" type = inconnu");
+						System.out.println("type = inconnu");
 					}
 				}
 				objects.add(o);
@@ -161,52 +168,74 @@ public class Database {
 		}
 		return objects;
 	}
-	
+
 	public Map<Object, ArrayList<Object>> lire(Class c1, Class c2) {
 		Table table1 = (Table) c1.getAnnotation(Table.class);
 		Table table2 = (Table) c2.getAnnotation(Table.class);
 		String prefix = table1.name().substring(0, 1) + table2.name().substring(0, 1);
-		String sql = "select " + table1 + ".* " + table2 + ".* ";
-		sql += "from " + table1.name() + "," + table2.name() + ", " + table1.name() + "_" + table2.name();
-		sql += "where " + prefix +"_id_" + table1.name() + "=" + table1.name() + "_id";
-		sql += "and " + prefix +"_id_" + table2.name() + "=" + table2.name() + "_id";
-		System.out.println(sql);
-		
+		String sql = "select " + table1.name() + ".*, " + table2.name() + ".* ";
+		sql += "from " + table1.name() + ", " + table2.name() + ", " + table1.name() + "_" + table2.name();
+		sql += " where " + prefix + "_id_" + table1.name() + "=" + table1.name() + "_id";
+		sql += " and " + prefix + "_id_" + table2.name() + "=" + table2.name() + "_id";
+		Field[] fields1 = c1.getDeclaredFields();
+		Field[] fields2 = c2.getDeclaredFields();
+
 		Map<Object, ArrayList<Object>> objects = new HashMap<Object, ArrayList<Object>>();
-//
-//		PreparedStatement ps = null;
-//		ResultSet rs = null;
-//		Map<Object, ArrayList<Object>> objects = new HashMap<Object, ArrayList<Object>>();
-//		try {
-//			ps = connection.prepareStatement(sql);
-//			rs = ps.executeQuery();
-//			while (rs.next()) {
-//				Object o = c.newInstance();
-//				for (Field f : fields) {
-//					String nomMethode = "set" + f.getName().substring(0, 1).toUpperCase() + f.getName().substring(1);
-//
-//					Method m = null;
-//					for (Method method : c.getMethods())
-//						if (method.getName().equals(nomMethode)) m = method;
-//					if(m == null) throw new NoSuchMethodException();
-//					System.out.println(nomMethode);
-//					if (m.getParameterTypes()[0] == Integer.class) {
-//						Integer i = rs.getInt(f.getName());
-//						System.out.println(i);
-//						m.invoke(o, i);
-//					} else if (m.getParameterTypes()[0] == String.class) {
-//						String s = rs.getString(f.getName());
-//						System.out.println(s);
-//						m.invoke(o, s);
-//					} else {
-//						System.out.print(" type = inconnu");
-//					}
-//				}
-//				objects.add(o);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = connection.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Object o1 = c1.newInstance();
+				Object o2 = c2.newInstance();
+				for (Field f : fields1) {
+					String nomMethode = "set" + f.getName().substring(0, 1).toUpperCase() + f.getName().substring(1);
+
+					Method m = null;
+					for (Method method : c1.getMethods())
+						if (method.getName().equals(nomMethode)) m = method;
+					if (m == null) throw new NoSuchMethodException();
+					if (m.getParameterTypes()[0] == Integer.class) {
+						Integer i = rs.getInt(f.getName());
+						m.invoke(o1, i);
+					} else if (m.getParameterTypes()[0] == String.class) {
+						String s = rs.getString(f.getName());
+						m.invoke(o1, s);
+					} else {
+						System.out.print(" type = inconnu");
+					}
+				}
+				for (Field f : fields2) {
+					String nomMethode = "set" + f.getName().substring(0, 1).toUpperCase() + f.getName().substring(1);
+
+					Method m = null;
+					for (Method method : c2.getMethods())
+						if (method.getName().equals(nomMethode)) m = method;
+					if (m == null) throw new NoSuchMethodException();
+					if (m.getParameterTypes()[0] == Integer.class) {
+						Integer i = rs.getInt(f.getName());
+						m.invoke(o2, i);
+					} else if (m.getParameterTypes()[0] == String.class) {
+						String s = rs.getString(f.getName());
+						m.invoke(o2, s);
+					} else {
+						System.out.println("type = inconnu");
+					}
+				}
+				boolean exists = false;
+				for (Object o : objects.keySet()) {
+					if (o1.equals(o)) {
+						o1 = o;
+						exists = true;
+					}
+				}
+				if (!exists) objects.put(o1, new ArrayList<Object>());
+				objects.get(o1).add(o2);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return objects;
 	}
 
@@ -220,14 +249,5 @@ public class Database {
 			e.printStackTrace();
 		}
 		return res;
-	}
-
-	public static void main(String[] args) {
-		Database db = new Database();
-
-		db.open();
-		db.lire(Menu.class, Plat.class);
-//		System.out.println(((Plat)a.get(0)).getPlat_nom());
-		db.close();
 	}
 }
