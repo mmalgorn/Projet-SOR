@@ -6,12 +6,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.mysql.fabric.xmlrpc.base.Array;
 
 import annotation.Table;
 import bean.Admin;
+import bean.Plat;
 
 public class Database {
 
@@ -118,7 +121,7 @@ public class Database {
 
 	public ArrayList<Object> lire(Class c) {
 		Table table = (Table) c.getAnnotation(Table.class);
-		String sql = "select * from " + table.name();
+		String sql = "select * from " + table.name() + condition;
 		System.out.println(sql);
 		Field[] fields = c.getDeclaredFields();
 
@@ -140,6 +143,7 @@ public class Database {
 					System.out.println(nomMethode);
 					if (m.getParameterTypes()[0] == Integer.class) {
 						Integer i = rs.getInt(f.getName());
+						System.out.println(i);
 						m.invoke(o, i);
 					} else if (m.getParameterTypes()[0] == String.class) {
 						String s = rs.getString(f.getName());
@@ -154,6 +158,54 @@ public class Database {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return objects;
+	}
+	
+	public Map<Object, ArrayList<Object>> lire(Class c1, Class c2) {
+		Table table1 = (Table) c1.getAnnotation(Table.class);
+		Table table2 = (Table) c2.getAnnotation(Table.class);
+		String prefix = table1.name().substring(0, 1) + table2.name().substring(0, 1);
+		String sql = "select " + table1 + ".* " + table2 + ".* ";
+		sql += "from " + table1.name() + "," + table2.name() + ", " + table1.name() + "_" + table2.name();
+		sql += "where " + prefix +"_id_" + table1.name() + "=" + table1.name() + "_id";
+		sql += "and " + prefix +"_id_" + table2.name() + "=" + table2.name() + "_id";
+		System.out.println(sql);
+		
+		Map<Object, ArrayList<Object>> objects = new HashMap<Object, ArrayList<Object>>();
+//
+//		PreparedStatement ps = null;
+//		ResultSet rs = null;
+//		Map<Object, ArrayList<Object>> objects = new HashMap<Object, ArrayList<Object>>();
+//		try {
+//			ps = connection.prepareStatement(sql);
+//			rs = ps.executeQuery();
+//			while (rs.next()) {
+//				Object o = c.newInstance();
+//				for (Field f : fields) {
+//					String nomMethode = "set" + f.getName().substring(0, 1).toUpperCase() + f.getName().substring(1);
+//
+//					Method m = null;
+//					for (Method method : c.getMethods())
+//						if (method.getName().equals(nomMethode)) m = method;
+//					if(m == null) throw new NoSuchMethodException();
+//					System.out.println(nomMethode);
+//					if (m.getParameterTypes()[0] == Integer.class) {
+//						Integer i = rs.getInt(f.getName());
+//						System.out.println(i);
+//						m.invoke(o, i);
+//					} else if (m.getParameterTypes()[0] == String.class) {
+//						String s = rs.getString(f.getName());
+//						System.out.println(s);
+//						m.invoke(o, s);
+//					} else {
+//						System.out.print(" type = inconnu");
+//					}
+//				}
+//				objects.add(o);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		return objects;
 	}
 
@@ -173,8 +225,8 @@ public class Database {
 		Database db = new Database();
 
 		db.open();
-		ArrayList<Object> a = db.lire(Admin.class);
-		// System.out.println(((Admin)a.get(0)).getAdmin_password());
+		db.lire(Menu.class, Plat.class);
+//		System.out.println(((Plat)a.get(0)).getPlat_nom());
 		db.close();
 	}
 }

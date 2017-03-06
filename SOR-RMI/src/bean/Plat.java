@@ -8,15 +8,14 @@ public class Plat {
 	Integer plat_id;
 	String plat_nom;
 	String plat_description;
-	Integer plat_id_groupe;
 	String plat_photo;
 	
-	public Plat(Integer plat_id, String plat_nom, String plat_description, Integer plat_id_groupe, String plat_photo) {
-		super();
+	public Plat() { }
+	
+	public Plat(Integer plat_id, String plat_nom, String plat_description, String plat_photo) {
 		this.plat_id = plat_id;
 		this.plat_nom = plat_nom;
 		this.plat_description = plat_description;
-		this.plat_id_groupe = plat_id_groupe;
 		this.plat_photo = plat_photo;
 	}
 
@@ -43,15 +42,7 @@ public class Plat {
 	public void setPlat_description(String plat_description) {
 		this.plat_description = plat_description;
 	}
-
-	public Integer getPlat_id_groupe() {
-		return plat_id_groupe;
-	}
-
-	public void setPlat_id_groupe(Integer plat_id_groupe) {
-		this.plat_id_groupe = plat_id_groupe;
-	}
-
+	
 	public String getPlat_photo() {
 		return plat_photo;
 	}
