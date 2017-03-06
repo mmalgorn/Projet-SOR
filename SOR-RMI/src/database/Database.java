@@ -12,6 +12,7 @@ import com.mysql.fabric.xmlrpc.base.Array;
 
 import annotation.Table;
 import bean.Admin;
+import bean.Menu;
 
 public class Database {
 
@@ -173,7 +174,7 @@ public class Database {
 		Database db = new Database();
 
 		db.open();
-		ArrayList<Object> a = db.lire(Admin.class);
+		ArrayList<Object> a = db.lire(Menu.class);
 		// System.out.println(((Admin)a.get(0)).getAdmin_password());
 		db.close();
 	}
