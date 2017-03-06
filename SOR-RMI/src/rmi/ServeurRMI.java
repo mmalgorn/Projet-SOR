@@ -2,10 +2,9 @@ package rmi;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public interface ServeurRMI extends Remote {
 
-	public String meth() throws RemoteException;
-	
-	
+	public ArrayList<Object> lire(Class c) throws RemoteException;
 }
