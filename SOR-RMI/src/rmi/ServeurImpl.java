@@ -10,15 +10,7 @@ import database.Database;
 
 public class ServeurImpl implements ServeurRMI {
 	
-	static Database db;
-	
-	@Override
-	public ArrayList<Object> lire(Class c) throws RemoteException {
-		// TODO Auto-generated method stub
-		return db.lire(c);
-	}
-
-	
+	static Database db;	
 
 	public static void main(String[] args) {
 
@@ -55,7 +47,9 @@ public class ServeurImpl implements ServeurRMI {
 	}
 
 
-
-	
+	@Override
+	public ArrayList<Object> lire(Class c) throws RemoteException {
+		return db.lire(c);
+	}
 
 }

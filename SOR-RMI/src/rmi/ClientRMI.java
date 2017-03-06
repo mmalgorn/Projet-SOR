@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import bean.Menu;
 
+import bean.Plat;
+
 public class ClientRMI {
 
 	public static void main(String [] args) {
@@ -15,7 +17,9 @@ public class ClientRMI {
 		try {
 			Registry registry = LocateRegistry.getRegistry(port);
 			ServeurRMI serveur = (ServeurRMI)registry.lookup("monserveurrmi");
-					ArrayList<Object> al = serveur.lire(Menu.class);
+			ArrayList<Object> obj = serveur.lire(Plat.class);
+			for(Object o : obj)
+				System.out.println(((Plat)o).getPlat_nom());
 					
 					for(Object o : al){
 						System.out.println(((Menu)o).getMenu_nom());

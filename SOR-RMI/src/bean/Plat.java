@@ -1,9 +1,11 @@
 package bean;
 
+import java.io.Serializable;
+
 import annotation.Table;
 
 @Table(name="plat")
-public class Plat {
+public class Plat implements Serializable {
 
 	Integer plat_id;
 	String plat_nom;
