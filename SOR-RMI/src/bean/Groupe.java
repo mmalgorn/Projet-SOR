@@ -8,11 +8,11 @@ public class Groupe {
 	Integer groupe_id;
 	String groupe_nom;
 	
-	public groupe(){
+	public Groupe(){
 		
 	}
 	
-	public groupe(Integer groupe_id, String groupe_nom) {
+	public Groupe(Integer groupe_id, String groupe_nom) {
 		this.groupe_id = groupe_id;
 		this.groupe_nom = groupe_nom;
 	}
