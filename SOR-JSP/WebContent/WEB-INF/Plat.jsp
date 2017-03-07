@@ -18,7 +18,7 @@
  <c:forEach items="${Plat}" var="Plats">
 	
 	<p>${Plats.getPlat_nom()}</p>
-	<p>${Plats.getPlat_prix() }</p> 
+	<p>${Plats.getPlat_prix()}</p> 
  
 </c:forEach>
 

@@ -13,5 +13,10 @@
 <div class="page-header">
 	<h1>La Samba du palet</h1>
 </div>
+<c:forEach items="${Menu}" var="menu">
+	
+	<a href="Menu?ref=${menu.getMenu_id() }">${menu.getMenu_nom()}</a>
+	
+</c:forEach>
 
 <%@include file="Footer.jsp" %>
