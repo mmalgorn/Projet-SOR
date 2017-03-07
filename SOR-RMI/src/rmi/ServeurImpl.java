@@ -52,7 +52,10 @@ public class ServeurImpl implements ServeurRMI {
 	@Override
 	public ArrayList<Admin> getAdmin(String name, String password) throws RemoteException {
 		// TODO Auto-generated method stub
-		return db.getAdmin(name, password);
+		
+		ArrayList<Admin> list = db.getAdmin(name, password);
+		System.out.println(list.size());
+		return list;
 	}
 
 	@Override

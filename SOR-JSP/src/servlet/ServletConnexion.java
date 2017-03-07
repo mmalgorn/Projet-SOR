@@ -67,21 +67,15 @@ public class ServletConnexion extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		System.out.println(login+" "+mdp);
 		
 		ArrayList<Admin> admins = manager.getAdmin(login, mdp);
-		
-		System.out.println(admins.size());
 		HttpSession session = null;
-		System.out.println("Before admin");
 		if(!admins.isEmpty()){
 			session = request.getSession();
 			session.setAttribute("admin", admins.get(0));
-			System.out.println("admin");
+			
 		}
 		
-		//Admin a = (Admin)session.getAttribute("admin");
-		//System.out.println(a.getAdmin_user());
 
 		
 		
