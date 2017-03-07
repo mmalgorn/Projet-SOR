@@ -28,27 +28,27 @@ public class Manager {
 	}
 
 
-	public ArrayList<Admin> getAdmin(String name, String password) throws RemoteException{
+	public static ArrayList<Admin> getAdmin(String name, String password) throws RemoteException{
 		
 		return serveur.getAdmin(name, password);
 	}
 
-	public ArrayList<Groupe> getGroupe(String name) throws RemoteException{
+	public static ArrayList<Groupe> getGroupe(String name) throws RemoteException{
 		
 		return serveur.getGroupe(name);
 	}
 
-	public ArrayList<Plat> getGroupePlat(Groupe g) throws RemoteException{
+	public static ArrayList<Plat> getGroupePlat(Groupe g) throws RemoteException{
 		
 		return serveur.getGroupePlat(g);
 	}
 
-	public ArrayList<Menu> getMenu(String name) throws RemoteException{
+	public static ArrayList<Menu> getMenu(String name) throws RemoteException{
 		
 		return serveur.getMenu(name);
 	}
 
-	public ArrayList<Plat> getMenuPlat(Menu m) throws RemoteException{
+	public static ArrayList<Plat> getMenuPlat(Menu m) throws RemoteException{
 		
 		return serveur.getMenuPlat(m);
 	}
@@ -57,75 +57,75 @@ public class Manager {
 		
 		return serveur.getPlat();
 	}
-	public ArrayList<Plat> getPlat(String nom) throws RemoteException{
+	public static ArrayList<Plat> getPlat(String nom) throws RemoteException{
 		
 		return serveur.getPlat(nom);
 	}
 
-	public ArrayList<Plat> getPlat(String comparateur, float prix) throws RemoteException{
+	public static ArrayList<Plat> getPlat(String comparateur, float prix) throws RemoteException{
 	
 		//return serveur.getPlat(comparateur,prix);
 		return new ArrayList<Plat>();
 				
 	}
 
-	public ArrayList<Groupe> getPlatGroupe(Plat p) throws RemoteException{
+	public static ArrayList<Groupe> getPlatGroupe(Plat p) throws RemoteException{
 		
 		return serveur.getPlatGroupe(p);
 	}
 
-	public ArrayList<Menu> getPlatMenu(Plat p) throws RemoteException{
+	public static ArrayList<Menu> getPlatMenu(Plat p) throws RemoteException{
 		
 		return serveur.getPlatMenu(p);
 	}
 
-	public boolean putAdmin(Admin a) throws RemoteException{
+	public static boolean putAdmin(Admin a) throws RemoteException{
 		
 		return serveur.putAdmin(a);
 	}
 
-	public boolean putGroupe(Groupe g) throws RemoteException{
+	public static boolean putGroupe(Groupe g) throws RemoteException{
 		
 		return serveur.putGroupe(g);
 	}
 
-	public boolean putGroupePlat(Plat p, Groupe g) throws RemoteException{
+	public static boolean putGroupePlat(Plat p, Groupe g) throws RemoteException{
 		
 		return serveur.putGroupePlat(p, g);
 	}
 
-	public boolean putMenu(Menu m) throws RemoteException{
+	public static boolean putMenu(Menu m) throws RemoteException{
 		
 		return serveur.putMenu(m);
 	}
 
-	public boolean putPlatMenu(Plat p, Menu m) throws RemoteException{
+	public static boolean putPlatMenu(Plat p, Menu m) throws RemoteException{
 		
 		//return  serveur.MenuPlat(p, m);
 		return false;
 	}
 
-	public boolean putPlat(Plat p) throws RemoteException{
+	public static boolean putPlat(Plat p) throws RemoteException{
 		
 		return serveur.putPlat(p);
 	}
 
-	public boolean updateAdmin(Admin a) throws RemoteException{
+	public static boolean updateAdmin(Admin a) throws RemoteException{
 		
 		return serveur.updateAdmin(a);
 	}
 
-	public boolean updateGroupe(Groupe g) throws RemoteException{
+	public static boolean updateGroupe(Groupe g) throws RemoteException{
 		
 		return serveur.updateGroupe(g);
 	}
 
-	public boolean updateMenu(Menu m) throws RemoteException{
+	public static boolean updateMenu(Menu m) throws RemoteException{
 		
 		return serveur.updateMenu(m);
 	}
 
-	public boolean updatePlat(Plat p) throws RemoteException{
+	public static boolean updatePlat(Plat p) throws RemoteException{
 		
 		return serveur.updatePlat(p);
 	}
