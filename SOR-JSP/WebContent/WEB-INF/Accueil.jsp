@@ -19,5 +19,11 @@
 </ul>
 	<h1>La Samba du palet</h1>
 
+ <c:forEach items="${Menu}" var="menu">
+	
+	<a href="Menu?ref=${menu.getMenu_id() }">${menu.getMenu_nom()}</a>
+	
+</c:forEach>
+
 </body>
 </html>

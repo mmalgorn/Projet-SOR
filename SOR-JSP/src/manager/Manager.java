@@ -33,6 +33,13 @@ public class Manager {
 		return serveur.getAdmin(name, password);
 	}
 
+
+	public ArrayList<Groupe> getGroupe() throws RemoteException{
+		
+		return serveur.getGroupe();
+	}
+
+	
 	public static ArrayList<Groupe> getGroupe(String name) throws RemoteException{
 		
 		return serveur.getGroupe(name);
@@ -43,6 +50,12 @@ public class Manager {
 		return serveur.getGroupePlat(g);
 	}
 
+	public static ArrayList<Menu> getMenu() throws RemoteException{
+		
+		return serveur.getMenu();
+	}
+
+	
 	public static ArrayList<Menu> getMenu(String name) throws RemoteException{
 		
 		return serveur.getMenu(name);
@@ -64,8 +77,7 @@ public class Manager {
 
 	public static ArrayList<Plat> getPlat(String comparateur, float prix) throws RemoteException{
 	
-		//return serveur.getPlat(comparateur,prix);
-		return new ArrayList<Plat>();
+		return serveur.getPlat(comparateur,prix);
 				
 	}
 
@@ -101,8 +113,8 @@ public class Manager {
 
 	public static boolean putPlatMenu(Plat p, Menu m) throws RemoteException{
 		
-		//return  serveur.MenuPlat(p, m);
-		return false;
+		return  serveur.putMenuPlat(p, m);
+		
 	}
 
 	public static boolean putPlat(Plat p) throws RemoteException{

@@ -35,8 +35,7 @@ public class ServletPlat extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		
-		Manager manager = (Manager) request.getSession().getAttribute("Manager");
-		ArrayList<Plat> list = manager.getPlat();
+		ArrayList<Plat> list = Manager.getPlat();
 		request.setAttribute("Plat", list);		
 		request.getServletContext().getRequestDispatcher("/WEB-INF/Plat.jsp").forward(request, response);
 		
