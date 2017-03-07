@@ -20,11 +20,7 @@ public class ClientRMI {
 			ArrayList<Object> obj = serveur.lire(Plat.class);
 			for(Object o : obj)
 				System.out.println(((Plat)o).getPlat_nom());
-					
-					for(Object o : al){
-						System.out.println(((Menu)o).getMenu_nom());
-					}
-				 	
+								 	
 		}
 		catch (Exception e) {
 			System.out.println("Erreur clientRMI "+e.getMessage());
