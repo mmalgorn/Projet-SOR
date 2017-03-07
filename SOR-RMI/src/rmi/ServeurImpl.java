@@ -18,9 +18,9 @@ public class ServeurImpl implements ServeurRMI {
 
 	public static void main(String[] args) {
 
-		int port = 20000;
+		final int port = 20000;
 
-		ServeurImpl si = new ServeurImpl();
+		final ServeurImpl si = new ServeurImpl();
 		ServeurRMI serveurRMI = null;
 
 		Registry registry = null;
@@ -30,19 +30,19 @@ public class ServeurImpl implements ServeurRMI {
 		try {
 			LocateRegistry.createRegistry(port);
 			registry = LocateRegistry.getRegistry(port);
-		} catch (RemoteException e) {
+		} catch (final RemoteException e) {
 			System.out.println("Erreur registry " + e.getMessage());
 		}
 
 		try {
 			serveurRMI = (ServeurRMI) UnicastRemoteObject.exportObject(si, 0);
-		} catch (RemoteException e) {
+		} catch (final RemoteException e) {
 			System.out.println("Erreur exportObject " + e.getMessage());
 		}
 
 		try {
 			registry.rebind("monserveurrmi", serveurRMI);
-		} catch (RemoteException e) {
+		} catch (final RemoteException e) {
 			System.out.println("Erreur rebind " + e.getMessage());
 		}
 
@@ -51,116 +51,97 @@ public class ServeurImpl implements ServeurRMI {
 
 	@Override
 	public ArrayList<Admin> getAdmin(String name, String password) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean putAdmin(Admin a) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean updateAdmin(Admin a) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public ArrayList<Plat> getPlat(String... arg) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean putPlat(Plat p) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean updatePlat(Plat p) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public ArrayList<Menu> getMenu(String name) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean putMenu(Menu m) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean updateMenu(Menu m) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+		return db.getAdmin(name, password);
 	}
 
 	@Override
 	public ArrayList<Groupe> getGroupe(String name) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return db.getGroupe(name);
 	}
 
 	@Override
-	public boolean putGroupe(Groupe g) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+	public ArrayList<Plat> getGroupePlat(Groupe g) throws RemoteException {
+		return db.getGroupePlat(g);
 	}
 
 	@Override
-	public boolean updateGroupe(Groupe g) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+	public ArrayList<Menu> getMenu(String name) throws RemoteException {
+		return db.getMenu(name);
 	}
 
 	@Override
 	public ArrayList<Plat> getMenuPlat(Menu m) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return db.getMenuPlat(m);
 	}
 
 	@Override
-	public boolean putMenuPlat(Menu m) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+	public ArrayList<Plat> getPlat(String nom) throws RemoteException {
+		return db.getPlat(nom);
 	}
 
 	@Override
-	public ArrayList<Menu> getPlatMenu(Plat p) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean putPlatMenu(Plat p, Menu m) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public ArrayList<Plat> getGroupePlat(Groupe p) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean putGroupePlat(Plat p, Groupe g) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+	public ArrayList<Plat> getPlat(String comparateur, float prix) throws RemoteException {
+		return db.getPlat(comparateur, prix);
 	}
 
 	@Override
 	public ArrayList<Groupe> getPlatGroupe(Plat p) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return db.getPlatGroupe(p);
+	}
+
+	@Override
+	public ArrayList<Menu> getPlatMenu(Plat p) throws RemoteException {
+		return db.getPlatMenu(p);
+	}
+
+	@Override
+	public boolean putAdmin(Admin a) throws RemoteException {
+		return db.putAdmin(a);
+	}
+
+	@Override
+	public boolean putGroupe(Groupe g) throws RemoteException {
+		return db.putGroupe(g);
+	}
+
+	@Override
+	public boolean putGroupePlat(Plat p, Groupe g) throws RemoteException {
+		return db.putGroupePlat(p, g);
+	}
+
+	@Override
+	public boolean putMenu(Menu m) throws RemoteException {
+		return db.putMenu(m);
+	}
+
+	@Override
+	public boolean putMenuPlat(Plat p, Menu m) throws RemoteException {
+		return db.putMenuPlat(p, m);
+	}
+
+	@Override
+	public boolean putPlat(Plat p) throws RemoteException {
+		return db.putPlat(p);
+	}
+
+	@Override
+	public boolean updateAdmin(Admin a) throws RemoteException {
+		return db.updateAdmin(a);
+	}
+
+	@Override
+	public boolean updateGroupe(Groupe g) throws RemoteException {
+		return db.updateGroupe(g);
+	}
+
+	@Override
+	public boolean updateMenu(Menu m) throws RemoteException {
+		return db.updateMenu(m);
+	}
+
+	@Override
+	public boolean updatePlat(Plat p) throws RemoteException {
+		return db.updatePlat(p);
 	}
 
 }

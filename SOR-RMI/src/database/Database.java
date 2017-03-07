@@ -39,14 +39,6 @@ public class Database {
 	static String			url, user, pwd;
 	static Connection		connection;
 
-	public static void main(String[] args) {
-		Database db = new Database();
-
-		db.open();
-		System.out.println(db.getAdmin("Mathieu", "password").size());
-		db.close();
-	}
-
 	public Database() {
 		rb = ResourceBundle.getBundle(fData);
 		url = rb.getString("url");
@@ -86,7 +78,6 @@ public class Database {
 			ps = connection.prepareStatement(sql);
 			ps.setString(1,name);
 			ps.setString(2,password);
-			System.out.println(ps.toString());
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Admin a = new Admin(rs.getInt("admin_id"), rs.getString("admin_user"), rs.getString("admin_password"));
@@ -110,16 +101,17 @@ public class Database {
 		Table table = (Table) Admin.class.getAnnotation(Table.class);
 		String sql = "insert into " + table.name() + " (admin_user, admin_password) values (?, ?)";
 
-		boolean res = false;
+		boolean res = true;
 		try {
 			PreparedStatement ps = null;
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, a.getAdmin_user());
 			ps.setString(2, a.getAdmin_password());
-			res = ps.execute();
+			ps.execute();
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.putAdmin " + e.getMessage());
 			e.printStackTrace();
+			res = false;
 		}
 
 		return res;
@@ -129,32 +121,61 @@ public class Database {
 		Table table = (Table) Admin.class.getAnnotation(Table.class);
 		String sql = "update " + table.name() + " set admin_user = ?, admin_password = ? where admin_id = " + a.getAdmin_id();
 
-		boolean res = false;
+		boolean res = true;
 		try {
 			PreparedStatement ps = null;
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, a.getAdmin_user());
 			ps.setString(2, a.getAdmin_password());
-			res = ps.execute();
+			ps.execute();
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.updateAdmin " + e.getMessage());
 			e.printStackTrace();
+			res = false;
 		}
 
 		return res;
 	}
 
-	public ArrayList<Plat> getPlat(String... args) {
+	public ArrayList<Plat> getPlat(String nom) {
 		Table table = (Table) Plat.class.getAnnotation(Table.class);
-		String sql = "select * from " + table.name();
-		if(args.length > 0) sql += " where plat_nom=" + args[0];
-		if(args.length > 1) sql += " and plat_prix" + args[1];
+		String sql = "select * from " + table.name() + " where plat_nom=?";
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		ArrayList<Plat> res = new ArrayList<Plat>();
 		try {
 			ps = connection.prepareStatement(sql);
+			ps.setString(1, nom);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Plat p = new Plat(rs.getInt("plat_id"), rs.getString("plat_nom"), rs.getString("plat_description"), rs.getFloat("plat_prix"), rs.getString("plat_photo"));
+				res.add(p);
+			}
+		} catch (Exception e) {
+			System.out.println("Erreur Base.getPlat " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		try {
+			if (ps != null) ps.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+	
+	public ArrayList<Plat> getPlat(String comparateur, float prix) {
+		Table table = (Table) Plat.class.getAnnotation(Table.class);
+		String sql = "select * from " + table.name() + " where plat_prix" + comparateur + "?";
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<Plat> res = new ArrayList<Plat>();
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setFloat(1, prix);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Plat p = new Plat(rs.getInt("plat_id"), rs.getString("plat_nom"), rs.getString("plat_description"), rs.getFloat("plat_prix"), rs.getString("plat_photo"));
@@ -178,7 +199,7 @@ public class Database {
 		Table table = (Table) Plat.class.getAnnotation(Table.class);
 		String sql = "insert into " + table.name() + " (plat_name, plat_description, plat_prix, plat_photo) values (?, ?, ?, ?)";
 
-		boolean res = false;
+		boolean res = true;
 		try {
 			PreparedStatement ps = null;
 			ps = connection.prepareStatement(sql);
@@ -186,10 +207,11 @@ public class Database {
 			ps.setString(2, p.getPlat_description());
 			ps.setFloat(3, p.getPlat_prix());
 			ps.setString(4, p.getPlat_photo());
-			res = ps.execute();
+			ps.execute();
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.putPlat " + e.getMessage());
 			e.printStackTrace();
+			res = false;
 		}
 
 		return res;
@@ -199,7 +221,7 @@ public class Database {
 		Table table = (Table) Plat.class.getAnnotation(Table.class);
 		String sql = "update " + table.name() + " set plat_nom = ?, plat_description = ?, plat_prix = ?, plat_photo = ? where plat_id = " + p.getPlat_id();
 
-		boolean res = false;
+		boolean res = true;
 		try {
 			PreparedStatement ps = null;
 			ps = connection.prepareStatement(sql);
@@ -207,10 +229,11 @@ public class Database {
 			ps.setString(2, p.getPlat_description());
 			ps.setFloat(3, p.getPlat_prix());
 			ps.setString(4, p.getPlat_photo());
-			res = ps.execute();
+			ps.execute();
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.updatePlat " + e.getMessage());
 			e.printStackTrace();
+			res = false;
 		}
 
 		return res;
@@ -218,13 +241,14 @@ public class Database {
 
 	public ArrayList<Menu> getMenu(String name) {
 		Table table = (Table) Menu.class.getAnnotation(Table.class);
-		String sql = "select * from " + table.name() + " where menu_nom=" + name;
+		String sql = "select * from " + table.name() + " where menu_nom=?";
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		ArrayList<Menu> res = new ArrayList<Menu>();
 		try {
 			ps = connection.prepareStatement(sql);
+			ps.setString(1, name);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Menu m = new Menu(rs.getInt("menu_id"), rs.getString("menu_nom"));
@@ -248,15 +272,16 @@ public class Database {
 		Table table = (Table) Menu.class.getAnnotation(Table.class);
 		String sql = "insert into " + table.name() + " (menu_name) values (?)";
 
-		boolean res = false;
+		boolean res = true;
 		try {
 			PreparedStatement ps = null;
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, m.getMenu_nom());
-			res = ps.execute();
+			ps.execute();
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.putMenu " + e.getMessage());
 			e.printStackTrace();
+			res = false;
 		}
 
 		return res;
@@ -266,15 +291,16 @@ public class Database {
 		Table table = (Table) Menu.class.getAnnotation(Table.class);
 		String sql = "update " + table.name() + " set menu_nom = ? where menu_id = " + m.getMenu_id();
 
-		boolean res = false;
+		boolean res = true;
 		try {
 			PreparedStatement ps = null;
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, m.getMenu_nom());
-			res = ps.execute();
+			ps.execute();
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.updateMenu " + e.getMessage());
 			e.printStackTrace();
+			res = false;
 		}
 
 		return res;
@@ -282,13 +308,14 @@ public class Database {
 
 	public ArrayList<Groupe> getGroupe(String name) {
 		Table table = (Table) Groupe.class.getAnnotation(Table.class);
-		String sql = "select * from " + table.name() + " where groupe_nom=" + name;
+		String sql = "select * from " + table.name() + " where groupe_nom=?";
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		ArrayList<Groupe> res = new ArrayList<Groupe>();
 		try {
 			ps = connection.prepareStatement(sql);
+			ps.setString(1, name);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Groupe g = new Groupe(rs.getInt("groupe_id"), rs.getString("groupe_nom"));
@@ -312,15 +339,16 @@ public class Database {
 		Table table = (Table) Groupe.class.getAnnotation(Table.class);
 		String sql = "insert into " + table.name() + " (groupe_nom) values (?)";
 
-		boolean res = false;
+		boolean res = true;
 		try {
 			PreparedStatement ps = null;
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, g.getGroupe_nom());
-			res = ps.execute();
+			ps.execute();
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.putPlat " + e.getMessage());
 			e.printStackTrace();
+			res = false;
 		}
 
 		return res;
@@ -330,15 +358,16 @@ public class Database {
 		Table table = (Table) Groupe.class.getAnnotation(Table.class);
 		String sql = "update " + table.name() + " set groupe_nom = ? where menu_id = " + g.getGroupe_id();
 
-		boolean res = false;
+		boolean res = true;
 		try {
 			PreparedStatement ps = null;
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, g.getGroupe_nom());
-			res = ps.execute();
+			ps.execute();
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.updateGroupe " + e.getMessage());
 			e.printStackTrace();
+			res = false;
 		}
 
 		return res;
@@ -346,13 +375,14 @@ public class Database {
 
 	public ArrayList<Plat> getMenuPlat(Menu m) {
 		Table table = (Table) Plat.class.getAnnotation(Table.class);
-		String sql = "select " + table.name() + ".* from menu_plat, " + table.name() + " where mp_id_menu=" + m.getMenu_id() + " and mp_id_plat=plat_id";
+		String sql = "select " + table.name() + ".* from menu_plat, " + table.name() + " where mp_id_menu=? and mp_id_plat=plat_id";
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		ArrayList<Plat> res = new ArrayList<Plat>();
 		try {
 			ps = connection.prepareStatement(sql);
+			ps.setInt(1, m.getMenu_id());
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Plat p = new Plat(rs.getInt("plat_id"), rs.getString("plat_nom"), rs.getString("plat_description"), rs.getFloat("plat_prix"), rs.getString("plat_photo"));
@@ -372,19 +402,20 @@ public class Database {
 		return res;
 	}
 
-	public boolean putPlatMenu(Plat p, Menu m) {
+	public boolean putMenuPlat(Plat p, Menu m) {
 		String sql = "insert into menu_plat (mp_id_menu, mp_id_plat) values (?, ?)";
 
-		boolean res = false;
+		boolean res = true;
 		try {
 			PreparedStatement ps = null;
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, m.getMenu_id());
 			ps.setInt(2, p.getPlat_id());
-			res = ps.execute();
+			ps.execute();
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.putPlatMenu " + e.getMessage());
 			e.printStackTrace();
+			res = false;
 		}
 
 		return res;
@@ -392,13 +423,14 @@ public class Database {
 
 	public ArrayList<Menu> getPlatMenu(Plat p) {
 		Table table = (Table) Menu.class.getAnnotation(Table.class);
-		String sql = "select " + table.name() + ".* from menu_plat, " + table.name() + " where mp_id_plat=" + p.getPlat_id() + " and mp_id_menu=menu_id";
+		String sql = "select " + table.name() + ".* from menu_plat, " + table.name() + " where mp_id_plat=? and mp_id_menu=menu_id";
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		ArrayList<Menu> res = new ArrayList<Menu>();
 		try {
 			ps = connection.prepareStatement(sql);
+			ps.setInt(1, p.getPlat_id());
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Menu m = new Menu(rs.getInt("menu_id"), rs.getString("menu_nom"));
@@ -420,13 +452,14 @@ public class Database {
 
 	public ArrayList<Plat> getGroupePlat(Groupe g) {
 		Table table = (Table) Groupe.class.getAnnotation(Table.class);
-		String sql = "select plat.* from groupe_plat, " + table.name() + " where gp_id_groupe=" + g.getGroupe_id() + " and gp_id_plat=plat_id";
+		String sql = "select plat.* from groupe_plat, " + table.name() + " where gp_id_groupe=? and gp_id_plat=plat_id";
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		ArrayList<Plat> res = new ArrayList<Plat>();
 		try {
 			ps = connection.prepareStatement(sql);
+			ps.setInt(1, g.getGroupe_id());
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Plat p = new Plat(rs.getInt("plat_id"), rs.getString("plat_nom"), rs.getString("plat_description"), rs.getFloat("plat_prix"), rs.getString("plat_photo"));
@@ -449,16 +482,17 @@ public class Database {
 	public boolean putGroupePlat(Plat p, Groupe g) {
 		String sql = "insert into groupe_plat (mp_id_groupe, mp_id_plat) values (?, ?)";
 
-		boolean res = false;
+		boolean res = true;
 		try {
 			PreparedStatement ps = null;
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, g.getGroupe_id());
 			ps.setInt(2, p.getPlat_id());
-			res = ps.execute();
+			ps.execute();
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.putGroupeMenu " + e.getMessage());
 			e.printStackTrace();
+			res = false;
 		}
 
 		return res;
@@ -466,13 +500,14 @@ public class Database {
 	
 	public ArrayList<Groupe> getPlatGroupe(Plat p) {
 		Table table = (Table) Groupe.class.getAnnotation(Table.class);
-		String sql = "select " + table.name() + ".* from groupe_plat, " + table.name() + " where gp_id_plat=" + p.getPlat_id() + " and gp_id_groupe=groupe_id";
+		String sql = "select " + table.name() + ".* from groupe_plat, " + table.name() + " where gp_id_plat=? and gp_id_groupe=groupe_id";
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		ArrayList<Groupe> res = new ArrayList<Groupe>();
 		try {
 			ps = connection.prepareStatement(sql);
+			ps.setInt(1, p.getPlat_id());
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Groupe g = new Groupe(rs.getInt("groupe_id"), rs.getString("groupe_nom"));
