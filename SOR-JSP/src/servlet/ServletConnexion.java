@@ -18,7 +18,7 @@ import manager.Manager;
 /**
  * Servlet implementation class ServletConnexion
  */
-@WebServlet("/ServletConnexion")
+@WebServlet("/Connexion")
 public class ServletConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -35,7 +35,6 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		request.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
 	}
 
@@ -43,14 +42,11 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		connexion(request,response);
-		response.sendRedirect("ServletAdministration");
+		response.sendRedirect("Administration");
 	}
 	
 	protected void connexion(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
-		
-		Manager manager = (Manager) request.getSession().getAttribute("Manager");
 		String login = request.getParameter("user");
 		String mdp = request.getParameter("password");
 		
@@ -68,19 +64,12 @@ public class ServletConnexion extends HttpServlet {
 		}
 		
 		
-		ArrayList<Admin> admins = manager.getAdmin(login, mdp);
+		ArrayList<Admin> admins = Manager.getAdmin(login, mdp);
 		HttpSession session = null;
 		if(!admins.isEmpty()){
 			session = request.getSession();
 			session.setAttribute("admin", admins.get(0));
 			
 		}
-		
-
-		
-		
-		
-		
 	}
-
 }

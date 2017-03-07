@@ -32,16 +32,9 @@ public class ServletPlat extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		
-		Manager manager = (Manager) request.getSession().getAttribute("Manager");
-		ArrayList<Plat> list = manager.getPlat();
+		ArrayList<Plat> list = Manager.getPlat();
 		request.setAttribute("Plat", list);		
 		request.getServletContext().getRequestDispatcher("/WEB-INF/Plat.jsp").forward(request, response);
-		
-		
-		
 	}
 
 	/**

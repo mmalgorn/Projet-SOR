@@ -1,0 +1,11 @@
+#authentication-menu {
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.validation-btn-group .btn {
+	width: 150px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
