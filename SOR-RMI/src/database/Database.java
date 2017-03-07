@@ -52,6 +52,7 @@ public class Database {
 		url = rb.getString("url");
 		user = rb.getString("user");
 		pwd = rb.getString("pwd");
+		System.out.println(url+" "+user+" "+pwd);
 		connection = null;
 	}
 

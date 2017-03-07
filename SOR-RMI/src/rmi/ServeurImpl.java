@@ -17,6 +17,7 @@ public class ServeurImpl implements ServeurRMI {
 	static Database db;
 
 	public static void main(String[] args) {
+		
 
 		final int port = 20000;
 
@@ -75,6 +76,8 @@ public class ServeurImpl implements ServeurRMI {
 		return db.getMenuPlat(m);
 	}
 
+	
+	
 	@Override
 	public ArrayList<Plat> getPlat(String nom) throws RemoteException {
 		return db.getPlat(nom);
@@ -172,6 +175,7 @@ public class ServeurImpl implements ServeurRMI {
 
 	@Override
 	public ArrayList<Plat> getPlat() throws RemoteException {
+		System.out.println("appel getPlat");
 		return db.getPlat();
 	}
 }

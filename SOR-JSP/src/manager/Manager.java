@@ -13,9 +13,9 @@ import rmi.ServeurRMI;
 
 public class Manager {
 
-	ServeurRMI serveur;
+	static ServeurRMI serveur;
 	
-	public Manager(){
+	static {
 		int port = 20000;
 
 		try {
@@ -53,6 +53,10 @@ public class Manager {
 		return serveur.getMenuPlat(m);
 	}
 
+	public static ArrayList<Plat> getPlat() throws RemoteException{
+		
+		return serveur.getPlat();
+	}
 	public ArrayList<Plat> getPlat(String nom) throws RemoteException{
 		
 		return serveur.getPlat(nom);
@@ -95,9 +99,10 @@ public class Manager {
 		return serveur.putMenu(m);
 	}
 
-	public boolean putMenuPlat(Plat p, Menu m) throws RemoteException{
+	public boolean putPlatMenu(Plat p, Menu m) throws RemoteException{
 		
-		return serveur.putPlatMenu(p, m);
+		//return  serveur.MenuPlat(p, m);
+		return false;
 	}
 
 	public boolean putPlat(Plat p) throws RemoteException{

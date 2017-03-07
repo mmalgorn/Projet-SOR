@@ -8,9 +8,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Insert title here</title>
+<title>Plat</title>
 </head>
 <body>
+
+<h1>Plat</h1>
+
+
+ <c:forEach items="${Plat}" var="Plats">
+	
+	<p>${Plats.getPlat_nom()}</p>
+	<p>${Plats.getPlat_prix() }</p> 
+ 
+</c:forEach>
+
 
 </body>
 </html>
