@@ -51,6 +51,7 @@ public class ServeurImpl implements ServeurRMI {
 
 	@Override
 	public ArrayList<Admin> getAdmin(String name, String password) throws RemoteException {
+
 		return db.getAdmin(name, password);
 	}
 

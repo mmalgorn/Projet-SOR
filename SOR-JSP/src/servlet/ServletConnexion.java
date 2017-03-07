@@ -36,7 +36,7 @@ public class ServletConnexion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
 	}
 
 	/**
@@ -44,7 +44,8 @@ public class ServletConnexion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	
+		connexion(request,response);
+		response.sendRedirect("ServletAdministration");
 	}
 	
 	protected void connexion(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
@@ -66,13 +67,15 @@ public class ServletConnexion extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		ArrayList<Admin> admins = manager.getAdmin(login, mdp);
 		
+		ArrayList<Admin> admins = manager.getAdmin(login, mdp);
+		HttpSession session = null;
 		if(!admins.isEmpty()){
-			HttpSession session = request.getSession();
+			session = request.getSession();
 			session.setAttribute("admin", admins.get(0));
 			
 		}
+		
 
 		
 		

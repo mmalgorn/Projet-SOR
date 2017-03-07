@@ -19,9 +19,10 @@
   <li><a href="Connexion.jsp" title="Connexion">Connexion</a></li>
 </ul>
 	<h1>Page Menu</h1>
-	<% Admin admin = (Admin) session.getAttribute("admin"); %>
-	
-	<%= admin.getAdmin_user() %>
-
+	<% Admin admin = (Admin) session.getAttribute("admin");
+		if(admin!=null){%> <%=admin.getAdmin_user()%>
+		<% } else {%>
+		<p>Veuillez vous connecter pour accéder à cette page</p>
+	<% } %>
 </body>
 </html>
