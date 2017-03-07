@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import database.Database;
 
 public class ServeurImpl implements ServeurRMI {
-	
-	static Database db;	
+
+	static Database db;
 
 	public static void main(String[] args) {
 
@@ -41,11 +41,9 @@ public class ServeurImpl implements ServeurRMI {
 		} catch (RemoteException e) {
 			System.out.println("Erreur rebind " + e.getMessage());
 		}
-		
-		
+
 		System.out.println("Serveur RMI lancé");
 	}
-
 
 	@Override
 	public ArrayList<Object> lire(Class c) throws RemoteException {

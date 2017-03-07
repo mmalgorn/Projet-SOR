@@ -5,6 +5,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import bean.Admin;
 import bean.Plat;
 import rmi.ServeurRMI;
 
@@ -25,13 +26,24 @@ public class Manager {
 	}
 
 
-	public ArrayList<Object> getAllPlat(){
-		try {
-			return serveur.lire(Plat.class);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	public ArrayList<Plat> getAllPlat() throws RemoteException{
+			return serveur.getPlat();
+		
+	}
+	
+	public ArrayList<Admin> getAdmin(String name,String password) throws RemoteException{
+			return serveur.getAdmin(name, password);
+		
+		
+	}
+	
+	public boolean putAdmin(Admin a) throws RemoteException{
+			return serveur.putAdmin(a);
+		
+	}
+	
+	public boolean updateAdmin(Admin a) throws RemoteException{
+			return serveur.updateAdmin(a);
+		
 	}
 }

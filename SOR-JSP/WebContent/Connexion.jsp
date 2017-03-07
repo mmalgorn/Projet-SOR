@@ -1,3 +1,5 @@
+<%@include file="Header.jsp" %>
+
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -18,7 +20,7 @@
 
 	<form method="post" action="Connexion">
                 <fieldset>
-                    <legend>Informations client</legend>
+                    <legend>Connexion</legend>
     
                     <label for="user">Nom d'utilisateur <span class="requis"></span></label>
                     <input type="text" id="user" name="user" value="" size="25" maxlength="25" minlength="4" required/>
