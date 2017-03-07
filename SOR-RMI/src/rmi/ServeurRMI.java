@@ -44,4 +44,10 @@ public interface ServeurRMI extends Remote {
 	public boolean updateMenu(Menu m) throws RemoteException;
 
 	public boolean updatePlat(Plat p) throws RemoteException;
+	
+	public boolean delete(Class<?> c, int id) throws RemoteException;
+	
+	public boolean deleteMenuPlat(int id_menu, int id_plat) throws RemoteException;
+	
+	public boolean deleteGroupePlat(int id_groupe, int id_plat) throws RemoteException;
 }
