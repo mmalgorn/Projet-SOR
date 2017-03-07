@@ -602,4 +602,89 @@ public class Database {
 
 		return res;
 	}
+	
+	public ArrayList<Groupe> getGroupe() {
+		Table table = (Table) Groupe.class.getAnnotation(Table.class);
+		String sql = "select * from " + table.name();
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<Groupe> res = new ArrayList<Groupe>();
+		try {
+			ps = connection.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Groupe g = new Groupe(rs.getInt("groupe_id"), rs.getString("groupe_nom"));
+				res.add(g);
+			}
+		} catch (Exception e) {
+			System.out.println("Erreur Base.getPlat " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		try {
+			if (ps != null) ps.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
+	public ArrayList<Menu> getMenu() {
+		Table table = (Table) Menu.class.getAnnotation(Table.class);
+		String sql = "select * from " + table.name();
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<Menu> res = new ArrayList<Menu>();
+		try {
+			ps = connection.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Menu m = new Menu(rs.getInt("menu_id"), rs.getString("menu_nom"));
+				res.add(m);
+			}
+		} catch (Exception e) {
+			System.out.println("Erreur Base.getMenu " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		try {
+			if (ps != null) ps.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
+	public ArrayList<Plat> getPlat() {
+		Table table = (Table) Plat.class.getAnnotation(Table.class);
+		String sql = "select * from " + table.name();
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<Plat> res = new ArrayList<Plat>();
+		try {
+			ps = connection.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Plat p = new Plat(rs.getInt("plat_id"), rs.getString("plat_nom"), rs.getString("plat_description"),
+						rs.getFloat("plat_prix"), rs.getString("plat_photo"));
+				res.add(p);
+			}
+		} catch (Exception e) {
+			System.out.println("Erreur Base.getPlat " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		try {
+			if (ps != null) ps.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
 }

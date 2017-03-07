@@ -8,15 +8,21 @@ import bean.*;
 public interface ServeurRMI extends Remote {
 
 	public ArrayList<Admin> getAdmin(String name, String password) throws RemoteException;
+	
+	public ArrayList<Groupe> getGroupe() throws RemoteException;
 
 	public ArrayList<Groupe> getGroupe(String name) throws RemoteException;
 
 	public ArrayList<Plat> getGroupePlat(Groupe g) throws RemoteException;
+	
+	public ArrayList<Menu> getMenu() throws RemoteException;
 
 	public ArrayList<Menu> getMenu(String name) throws RemoteException;
 
 	public ArrayList<Plat> getMenuPlat(Menu m) throws RemoteException;
 
+	public ArrayList<Plat> getPlat() throws RemoteException;
+	
 	public ArrayList<Plat> getPlat(String nom) throws RemoteException;
 
 	public ArrayList<Plat> getPlat(String comparateur, float prix) throws RemoteException;

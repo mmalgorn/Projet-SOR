@@ -159,4 +159,19 @@ public class ServeurImpl implements ServeurRMI {
 	public boolean deleteGroupePlat(int id_groupe, int id_plat) throws RemoteException {
 		return db.deleteGroupePlat(id_groupe, id_plat);
 	}
+
+	@Override
+	public ArrayList<Groupe> getGroupe() throws RemoteException {
+		return db.getGroupe();
+	}
+
+	@Override
+	public ArrayList<Menu> getMenu() throws RemoteException {
+		return db.getMenu();
+	}
+
+	@Override
+	public ArrayList<Plat> getPlat() throws RemoteException {
+		return db.getPlat();
+	}
 }
