@@ -15,8 +15,10 @@ public class ClientRMI {
 		try {
 			Registry registry = LocateRegistry.getRegistry(port);
 			ServeurRMI serveur = (ServeurRMI) registry.lookup("monserveurrmi");
+
 		} catch (Exception e) {
 			System.out.println("Erreur clientRMI " + e.getMessage());
+
 		}
 	}
 }
