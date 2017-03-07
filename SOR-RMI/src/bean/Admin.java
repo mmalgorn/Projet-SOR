@@ -17,18 +17,7 @@ public class Admin {
 	public Admin(Integer admin_id, String admin_user, String admin_password) {
 		this.admin_id = admin_id;
 		this.admin_user = admin_user;
-		try {
-			MessageDigest md = MessageDigest.getInstance("SHA-256");
-			md.update(admin_password.getBytes());
-			byte[] digest = md.digest();
-			StringBuffer sb = new StringBuffer();
-			for (byte b : digest) {
-				sb.append(String.format("%02x", b & 0xff));
-			}
-			this.admin_password = sb.toString();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
+		this.admin_password = admin_password;
 	}
 
 	@Override
@@ -66,9 +55,13 @@ public class Admin {
 	}
 
 	public void setAdmin_password(String admin_password) {
+		this.admin_password = admin_password;
+	}
+	
+	public void encryptPwd() {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
-			md.update(admin_password.getBytes());
+			md.update(this.admin_password.getBytes());
 			byte[] digest = md.digest();
 			StringBuffer sb = new StringBuffer();
 			for (byte b : digest) {
