@@ -25,7 +25,7 @@ public interface ServeurRMI extends Remote {
 	
 	public boolean updateMenu(Menu m) throws RemoteException;
 	
-	public ArrayList<Menu> getGroupe(String name) throws RemoteException;
+	public ArrayList<Groupe> getGroupe(String name) throws RemoteException;
 	
 	public boolean putGroupe(Groupe g) throws RemoteException;
 	
@@ -33,9 +33,15 @@ public interface ServeurRMI extends Remote {
 	
 	public ArrayList<Plat> getMenuPlat(Menu m) throws RemoteException;
 	
+	public boolean putMenuPlat(Menu m) throws RemoteException;
+	
 	public ArrayList<Menu> getPlatMenu(Plat p) throws RemoteException;
 	
+	public boolean putPlatMenu(Plat p, Menu m) throws RemoteException;
+	
 	public ArrayList<Plat> getGroupePlat(Groupe p) throws RemoteException;
+	
+	public boolean putGroupePlat(Plat p, Groupe g) throws RemoteException;
 	
 	public ArrayList<Groupe> getPlatGroupe(Plat p) throws RemoteException;
 }
