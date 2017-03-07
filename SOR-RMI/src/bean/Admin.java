@@ -1,12 +1,13 @@
 package bean;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import annotation.Table;
 
 @Table(name = "admin")
-public class Admin {
+public class Admin implements Serializable {
 
 	Integer	admin_id;
 	String	admin_user;

@@ -18,7 +18,7 @@
 </ul>
 	<h1>Page Connexion</h1>
 
-	<form method="post" action="Connexion">
+	<form method="post" action="ServletConnexion">
                 <fieldset>
                     <legend>Connexion</legend>
     
