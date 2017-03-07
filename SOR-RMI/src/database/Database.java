@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import annotation.Table;
+import bean.Admin;
 import bean.Groupe;
 import bean.Plat;
 
@@ -43,13 +44,8 @@ public class Database {
 		Database db = new Database();
 
 		db.open();
-		Map<Object, ArrayList<Object>> hm = db.lire(Groupe.class, Plat.class);
-		for (Object o : hm.keySet()) {
-			System.out.println(((Groupe)o).getGroupe_nom());
-			for (Object o1 : hm.get(o)) {
-				System.out.println("\t" + ((Plat)o1).getPlat_nom());
-			}
-		}
+		Admin a = new Admin(null, "Jean-Pascal", "LaCascade");
+		db.ajouter(a);
 		db.close();
 	}
 
@@ -69,7 +65,7 @@ public class Database {
 		}
 	}
 
-	public boolean enregistrer(Object o) {
+	public boolean ajouter(Object o) {
 		boolean res = false;
 
 		Class c = o.getClass();
@@ -85,6 +81,7 @@ public class Database {
 		String ln = ""; // liste des noms
 		String lv = ""; // liste des valeurs
 		for (Field f : fields) {
+			if(f.getName().equals(table.name()+"_id")) continue;
 			System.out.println("attribut " + f.getName());
 			if (count > 0) {
 				ln += ",";
@@ -117,7 +114,6 @@ public class Database {
 				} else {
 					System.out.print(" type = inconnu");
 				}
-				System.out.println();
 			}
 
 			res = ps.execute();
