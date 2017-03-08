@@ -13,9 +13,13 @@ public interface ServeurRMI extends Remote {
 
 	public ArrayList<Groupe> getGroupe(int id) throws RemoteException;
 	
+	public ArrayList<Groupe> getGroupe(String name) throws RemoteException;
+	
 	public ArrayList<Menu> getMenu() throws RemoteException;
 
 	public ArrayList<Menu> getMenu(int id) throws RemoteException;
+
+	public ArrayList<Menu> getMenu(String name) throws RemoteException;
 
 	public ArrayList<Plat> getMenuPlat(int id) throws RemoteException;
 
@@ -23,6 +27,8 @@ public interface ServeurRMI extends Remote {
 	
 	public ArrayList<Plat> getPlat(int id) throws RemoteException;
 
+	public ArrayList<Plat> getPlat(String name) throws RemoteException;
+	
 	public ArrayList<Menu> getPlatMenu(int id) throws RemoteException;
 
 	public boolean putAdmin(Admin a) throws RemoteException;

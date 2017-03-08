@@ -152,4 +152,19 @@ public class ServeurImpl implements ServeurRMI {
 		System.out.println("appel getPlat");
 		return db.getPlat();
 	}
+
+	@Override
+	public ArrayList<Groupe> getGroupe(String name) throws RemoteException {
+		return db.getGroupe(name);
+	}
+
+	@Override
+	public ArrayList<Menu> getMenu(String name) throws RemoteException {
+		return db.getMenu(name);
+	}
+
+	@Override
+	public ArrayList<Plat> getPlat(String name) throws RemoteException {
+		return db.getPlat(name);
+	}
 }

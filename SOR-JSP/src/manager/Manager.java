@@ -31,12 +31,16 @@ public class Manager {
 		return serveur.getAdmin(name, password);
 	}
 
-	public ArrayList<Groupe> getGroupe() throws RemoteException {
+	public static ArrayList<Groupe> getGroupe() throws RemoteException {
 		return serveur.getGroupe();
 	}
 
 	public static ArrayList<Groupe> getGroupe(int id) throws RemoteException {
 		return serveur.getGroupe(id);
+	}
+	
+	public static ArrayList<Groupe> getGroupe(String name) throws RemoteException {
+		return serveur.getGroupe(name);
 	}
 
 	public static ArrayList<Menu> getMenu() throws RemoteException {
@@ -45,6 +49,10 @@ public class Manager {
 
 	public static ArrayList<Menu> getMenu(int id) throws RemoteException {
 		return serveur.getMenu(id);
+	}
+	
+	public static ArrayList<Menu> getMenu(String name) throws RemoteException {
+		return serveur.getMenu(name);
 	}
 
 	public static ArrayList<Plat> getMenuPlat(int id) throws RemoteException {
@@ -57,6 +65,10 @@ public class Manager {
 
 	public static ArrayList<Plat> getPlat(int id) throws RemoteException {
 		return serveur.getPlat(id);
+	}
+	
+	public static ArrayList<Plat> getPlat(String name) throws RemoteException {
+		return serveur.getPlat(name);
 	}
 
 	public static ArrayList<Menu> getPlatMenu(int id) throws RemoteException {
