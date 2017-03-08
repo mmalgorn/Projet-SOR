@@ -4,7 +4,7 @@
 	<div class="container-fluid">
 		<ul class="nav navbar-nav">
 			<li><a href="Accueil" title="Accueil">Accueil</a></li>
-			<li><a href="Menu?ref=all" title="Menu">Menu</a></li>
+			<li><a href="Menu" title="Menu">Menu</a></li>
 			<li><a href="Plat" title="Plat">Plat</a></li>
 			<c:if test="${admin != null}">
 				<li class="active"><a href="Administration" title="Administration">Administration</a></li>

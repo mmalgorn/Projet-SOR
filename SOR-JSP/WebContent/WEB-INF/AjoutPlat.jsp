@@ -1,6 +1,5 @@
 <%@include file="Header.jsp"%>
 
-
 <body>
 	<h1>Ajout Plat</h1>
 
@@ -16,11 +15,8 @@
 		<p>Erreur lors de la création du plat</p>
 		${insert = "null"}
 	</c:if>
-   	
-   	
-   	
 	
-	<form method="post" action="AjoutPlat">
+	<form method="POST" action="AjoutPlat" enctype="multipart/form-data">
 		<div class="form-group">
 			<label for="plat">Nom du plat</label> <input type="text"
 				class="form-control" name="nom" placeholder="Nom du plat" size="25"
@@ -37,9 +33,7 @@
 				maxlength="5" required>
 		</div>
 		<div class="form-group">
-			<label for="plat">Photo</label> <input type="text"
-				class="form-control" name="photo" placeholder="Photo" size="25"
-				maxlength="25" required>
+			<label for="plat">Photo</label> <input type="file" name="photo">
 		</div>
 
 		<p>
