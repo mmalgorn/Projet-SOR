@@ -2,6 +2,7 @@
 	width: 600px;
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: 50px;
 }
 
 .validation-btn-group .btn {
@@ -12,4 +13,16 @@
 
 .navbar {
 	margin-top: 40px;
+}
+
+#menu-table td, #menu-table th {
+	vertical-align: middle;
+}
+
+#menu-table {
+	margin-top: 50px;
+}
+
+.plat-image {
+	width : 125px;
 }

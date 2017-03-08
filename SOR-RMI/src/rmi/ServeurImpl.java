@@ -5,6 +5,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Map;
 
 import bean.Admin;
 import bean.Groupe;
@@ -67,7 +68,7 @@ public class ServeurImpl implements ServeurRMI {
 	}
 
 	@Override
-	public ArrayList<Plat> getMenuPlat(int id) throws RemoteException {
+	public ArrayList<Map.Entry<Plat, Groupe>> getMenuPlat(int id) throws RemoteException {
 		return db.getMenuPlat(id);
 	}
 	

@@ -30,9 +30,7 @@ public class ServletAccueil extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
-		ArrayList<Menu> list = Manager.getMenu();
-		request.setAttribute("Menu", list);		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {			
 		request.getServletContext().getRequestDispatcher("/WEB-INF/Accueil.jsp").forward(request, response);
 	}
 
