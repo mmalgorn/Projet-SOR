@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,11 +43,16 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		connexion(request,response);
-		response.sendRedirect("Administration");
+		if (connexion(request,response)) {
+			request.removeAttribute("error");
+			response.sendRedirect("Administration");
+		} else {
+			request.setAttribute("error", "Nom d'utilisateur ou mot de passe incorrect");
+			request.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
+		}
 	}
 	
-	protected void connexion(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
+	protected boolean connexion(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
 		String login = request.getParameter("user");
 		String mdp = request.getParameter("password");
 		
@@ -62,13 +68,15 @@ public class ServletConnexion extends HttpServlet {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		ArrayList<Admin> admins = Manager.getAdmin(login, mdp);
 		HttpSession session = null;
-		if(!admins.isEmpty()){
+		if(admins.isEmpty()){
+			return false;
+		} else {
 			session = request.getSession();
-			session.setAttribute("admin", admins.get(0));
+			session.setAttribute("admin", admins.get(0).getAdmin_user());
+			return true;
 		}
 	}
 }

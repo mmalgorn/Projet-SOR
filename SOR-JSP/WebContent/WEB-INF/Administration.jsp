@@ -3,22 +3,24 @@
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
 		<ul class="nav navbar-nav">
-        	<li><a href="Accueil" title="Accueil">Accueil</a></li>
-			  <li><a href="Menu" title="Menu">Menu</a></li>
-			  <li class="active"><a href="#" title="Administration">Administration</a></li>
-			  <li><a href="Connexion" title="Connexion">Connexion</a></li>
-       	</ul>
+			<li><a href="Accueil" title="Accueil">Accueil</a></li>
+			<li><a href="Menu?ref=all" title="Menu">Menu</a></li>
+			<c:if test="${admin != null}">
+				<li class="active"><a href="Administration" title="Administration">Administration</a></li>
+			</c:if>
+			<li><a href="Connexion" title="Connexion">Connexion</a></li>
+		</ul>
+		<c:if test="${admin != null}">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a>Bienvenue ${admin}</a></li>
+			</ul>
+		</c:if>
 	</div>
 </nav>
-<div class="page-header">
-	<h1>Page Menu</h1>
-</div>
-<% Admin admin = (Admin) session.getAttribute("admin");
-	if(admin!=null){%> <%=admin.getAdmin_user()%>
-	<% } else {%>
-	<p>Veuillez vous connecter pour accéder à cette page</p>
-<% } %>
 
-${admin.get(0).getAdmin_user()}
+<div class="page-header">
+	<h1>Administration</h1>
+</div>
+
 
 <%@include file="Footer.jsp" %>

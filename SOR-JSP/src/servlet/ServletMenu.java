@@ -2,6 +2,8 @@ package servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bean.Groupe;
 import bean.Menu;
 import bean.Plat;
 import manager.Manager;
@@ -32,15 +35,21 @@ public class ServletMenu extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub		
-		int id = Integer.parseInt(request.getParameter("ref"));
-		ArrayList<Menu> menus = Manager.getMenu(id);
-		Menu menu = null;
-		if(menus.size() > 0) menu = menus.get(0);
-		ArrayList<Plat> plats = Manager.getMenuPlat(id);
-		request.setAttribute("Plats", plats);
-		request.setAttribute("Menu", menu);
-		request.getServletContext().getRequestDispatcher("/WEB-INF/Menu.jsp").forward(request, response);
+		if (request.getParameter("ref").equals("all")) {
+			ArrayList<Menu> menus = Manager.getMenu();
+			request.setAttribute("Menus", menus);
+			request.getServletContext().getRequestDispatcher("/WEB-INF/Menus.jsp").forward(request, response);
+		} else {
+			int id = Integer.parseInt(request.getParameter("ref"));
+			ArrayList<Menu> menus = Manager.getMenu(id);
+			Menu menu = null;
+			if(menus.size() > 0) menu = menus.get(0);
+			ArrayList<Map.Entry<Plat, Groupe>> pgList = Manager.getMenuPlat(id);
+			
+			request.setAttribute("plats", pgList);
+			request.setAttribute("menu", menu);
+			request.getServletContext().getRequestDispatcher("/WEB-INF/Menu.jsp").forward(request, response);
+		}
 	}
 
 	/**

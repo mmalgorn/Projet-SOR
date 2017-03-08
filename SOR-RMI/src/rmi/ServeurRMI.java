@@ -3,6 +3,8 @@ package rmi;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Map;
+
 import bean.*;
 
 public interface ServeurRMI extends Remote {
@@ -17,7 +19,7 @@ public interface ServeurRMI extends Remote {
 
 	public ArrayList<Menu> getMenu(int id) throws RemoteException;
 
-	public ArrayList<Plat> getMenuPlat(int id) throws RemoteException;
+	public ArrayList<Map.Entry<Plat, Groupe>> getMenuPlat(int id) throws RemoteException;
 
 	public ArrayList<Plat> getPlat() throws RemoteException;
 	

@@ -14,7 +14,6 @@
 
 <h1>Plat</h1>
 
-
  <c:forEach items="${Plat}" var="Plats">
 	
 	<p>${Plats.getPlat_nom()}</p>

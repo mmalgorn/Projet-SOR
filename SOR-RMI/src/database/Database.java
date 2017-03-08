@@ -1,21 +1,22 @@
 package database;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.rmi.RemoteException;
-import java.security.acl.Group;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 import annotation.Table;
-import bean.*;
+import bean.Admin;
+import bean.Groupe;
+import bean.Menu;
+import bean.Plat;
 
 public class Database {
 
@@ -190,14 +191,15 @@ public class Database {
 		return res;
 	}
 
-	public ArrayList<Plat> getMenuPlat(int id) {
-		Table table = (Table) Plat.class.getAnnotation(Table.class);
-		String sql = "select " + table.name() + ".* from menu_plat, " + table.name()
-				+ " where mp_id_menu=? and mp_id_plat=plat_id";
+	public ArrayList<Map.Entry<Plat, Groupe>> getMenuPlat(int id) {
+		Table table1 = (Table) Plat.class.getAnnotation(Table.class);
+		Table table2 = (Table) Groupe.class.getAnnotation(Table.class);
+		String sql = "select " + table1.name() + ".*, " + table2.name() + ".* from menu_plat, " + table1.name() + ","
+				+ table2.name() + " where mp_id_menu=? and mp_id_plat=plat_id and mp_id_groupe=groupe_id order by mp_id_groupe";
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		ArrayList<Plat> res = new ArrayList<Plat>();
+		ArrayList<Map.Entry<Plat, Groupe>> res = new ArrayList<Map.Entry<Plat, Groupe>>();
 		try {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, id);
@@ -205,7 +207,8 @@ public class Database {
 			while (rs.next()) {
 				Plat p = new Plat(rs.getInt("plat_id"), rs.getString("plat_nom"), rs.getString("plat_description"),
 						rs.getFloat("plat_prix"), rs.getString("plat_photo"), rs.getInt("plat_id_groupe"));
-				res.add(p);
+				Groupe g = new Groupe(rs.getInt("groupe_id"), rs.getString("groupe_nom"));
+				res.add(new AbstractMap.SimpleEntry<Plat, Groupe>(p, g));
 			}
 		} catch (Exception e) {
 			System.out.println("Erreur Base.getMenu " + e.getMessage());

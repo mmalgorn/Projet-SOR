@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.Map;
 
 import bean.Admin;
 import bean.Groupe;
@@ -47,7 +48,7 @@ public class Manager {
 		return serveur.getMenu(id);
 	}
 
-	public static ArrayList<Plat> getMenuPlat(int id) throws RemoteException {
+	public static ArrayList<Map.Entry<Plat, Groupe>> getMenuPlat(int id) throws RemoteException {
 		return serveur.getMenuPlat(id);
 	}
 
