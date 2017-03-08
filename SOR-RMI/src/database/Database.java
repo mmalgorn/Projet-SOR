@@ -222,7 +222,7 @@ public class Database {
 			ps.setString(1, name);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				Menu m = new Menu(rs.getInt("menu_id"), rs.getString("menu_nom"));
+				Menu m = new Menu(rs.getInt("menu_id"), rs.getString("menu_nom"),rs.getString("menu_description"),rs.getDouble("menu_prix"));
 				res.add(m);
 			}
 		} catch (Exception e) {
@@ -373,7 +373,7 @@ public class Database {
 			ps.setInt(1, p.getPlat_id());
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				Menu m = new Menu(rs.getInt("menu_id"), rs.getString("menu_nom"));
+				Menu m = new Menu(rs.getInt("menu_id"), rs.getString("menu_nom"),rs.getString("menu_description"),rs.getDouble("menu_prix"));
 				res.add(m);
 			}
 		} catch (Exception e) {
@@ -643,7 +643,7 @@ public class Database {
 			ps = connection.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				Menu m = new Menu(rs.getInt("menu_id"), rs.getString("menu_nom"));
+				Menu m = new Menu(rs.getInt("menu_id"), rs.getString("menu_nom"),rs.getString("menu_description"),rs.getDouble("menu_prix"));
 				res.add(m);
 			}
 		} catch (Exception e) {
