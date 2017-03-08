@@ -24,7 +24,7 @@
 				<img src="" alt="">
 				<div class="caption">
 					<h3>${menu.getMenu_nom()}</h3>
-					<p><%-- ${menu.getMenu_description()} --%>Description</p>
+					<p>${menu.getMenu_description()}</p>
 					<p>
 						<a href="Menu?ref=${menu.getMenu_id() }" class="btn btn-primary"
 							role="button">Voir le menu</a>

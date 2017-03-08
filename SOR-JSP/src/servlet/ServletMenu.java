@@ -34,7 +34,7 @@ public class ServletMenu extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub		
 		int id = Integer.parseInt(request.getParameter("ref"));
-		Menu menu = new Menu(id, "");
+		Menu menu = new Menu(id, "", "", 0.0);
 		System.out.println(menu);
 		ArrayList<Plat> list = Manager.getMenuPlat(menu);
 
