@@ -15,7 +15,7 @@
 	margin-top: 40px;
 }
 
-#menu-table td, #menu-table th {
+.table > tbody > tr > td, .table > tbody > tr > th {
 	vertical-align: middle;
 }
 
@@ -24,5 +24,7 @@
 }
 
 .plat-image {
-	width : 125px;
+	min-width: 200px; 
+	width: 200px;
+	margin-bottom: 0;
 }

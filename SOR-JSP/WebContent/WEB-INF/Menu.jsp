@@ -5,6 +5,7 @@
 		<ul class="nav navbar-nav">
 			<li><a href="Accueil" title="Accueil">Accueil</a></li>
 			<li class="active"><a href="Menu?ref=all" title="Menu">Menu</a></li>
+			<li><a href="Plat" title="Plat">Plat</a></li>
 			<c:if test="${admin != null}">
 				<li><a href="Administration" title="Administration">Administration</a></li>
 			</c:if>
@@ -25,7 +26,7 @@
 <c:forEach items="${plats}" var="pg">
 	<div class="media">
 		<div class="media-left">
-			<img class="plat-image" src="css/patoche.jpg" alt="">
+			<img class="plat-image" src="Image?ref=${pg.getKey().getPlat_id()}" alt="">
 		</div>
 		<div class="media-body">
 			<h3 class="media-heading">${pg.getKey().getPlat_nom()}
