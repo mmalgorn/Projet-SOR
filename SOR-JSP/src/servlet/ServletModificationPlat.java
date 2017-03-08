@@ -46,11 +46,10 @@ public class ServletModificationPlat extends HttpServlet {
 		
 		request.setAttribute("groupes", list);
 		
-		//int id_plat = (int) request.getAttribute("plat");
-		
-		//!!!!!!!!!!!!!! A enlever
-		int id_plat = 29;
-		
+		if(request.getParameter("id")!=null)
+			id_plat = Integer.parseInt(request.getParameter("id"));
+
+		System.out.println(id_plat);
 		ArrayList<Plat> plat = Manager.getPlat(id_plat);
 		if(plat.size()>0){
 			

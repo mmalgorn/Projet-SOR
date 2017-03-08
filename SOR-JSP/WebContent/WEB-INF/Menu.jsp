@@ -35,7 +35,7 @@
 		</div>
 		<c:if test="${admin != null}">
 			<div class="media-right">
-				<a class="btn btn-default">Modifier</a>
+				<a href="ModificationPlat?id=${pg.getKey().getPlat_id()}" class="btn btn-default">Modifier</a>
 			</div>
 			<div class="media-right">
 				<a class="btn btn-danger">Supprimer</a>

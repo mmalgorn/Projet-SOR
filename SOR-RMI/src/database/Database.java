@@ -421,7 +421,7 @@ public class Database {
 
 	public boolean updateGroupe(Groupe g) {
 		Table table = (Table) Groupe.class.getAnnotation(Table.class);
-		String sql = "update " + table.name() + " set groupe_nom = ? where menu_id = " + g.getGroupe_id();
+		String sql = "update " + table.name() + " set groupe_nom = ? where groupe_id = " + g.getGroupe_id();
 
 		boolean res = true;
 		try {

@@ -14,6 +14,7 @@
 		<link href="css/main.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="jQuery/jquery.min.js"></script>
 		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/AfficheListe.js"></script>
 	</head>
 	<body>
 		<div class="container">

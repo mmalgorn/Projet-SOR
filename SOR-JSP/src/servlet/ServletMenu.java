@@ -35,11 +35,9 @@ public class ServletMenu extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (request.getParameter("ref").equals("all")) {
-			ArrayList<Menu> menus = Manager.getMenu();
-			request.setAttribute("Menus", menus);
-			request.getServletContext().getRequestDispatcher("/WEB-INF/Menus.jsp").forward(request, response);
-		} else {
+		
+		request.setAttribute("plats", null);
+		if(request.getParameter("ref")!=null){
 			int id = Integer.parseInt(request.getParameter("ref"));
 			ArrayList<Menu> menus = Manager.getMenu(id);
 			Menu menu = null;
@@ -49,6 +47,10 @@ public class ServletMenu extends HttpServlet {
 			request.setAttribute("plats", pgList);
 			request.setAttribute("menu", menu);
 			request.getServletContext().getRequestDispatcher("/WEB-INF/Menu.jsp").forward(request, response);
+		}else{
+			ArrayList<Menu> menus = Manager.getMenu();
+			request.setAttribute("Menus", menus);
+			request.getServletContext().getRequestDispatcher("/WEB-INF/Menus.jsp").forward(request, response);
 		}
 	}
 
