@@ -12,6 +12,7 @@
 		<title>La Samba du palet</title>
 		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 		<link href="css/main.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="jQuery/jquery.min.js"></script>
 		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 	</head>
 	<body>

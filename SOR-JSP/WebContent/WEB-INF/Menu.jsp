@@ -33,10 +33,14 @@
 			</h3>
 			<p>${pg.getKey().getPlat_description()}</p>
 		</div>
-		<div class="media-right">
-			<a href="Menu?ref=${menu.getMenu_id() }" class="btn btn-success"
-								role="button">Voir le menu</a>
-		</div>
+		<c:if test="${admin != null}">
+			<div class="media-right">
+				<a class="btn btn-default">Modifier</a>
+			</div>
+			<div class="media-right">
+				<a class="btn btn-danger">Supprimer</a>
+			</div>
+		</c:if>
 	</div>
 </c:forEach>
 
