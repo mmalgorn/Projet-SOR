@@ -57,45 +57,28 @@ public class ServeurImpl implements ServeurRMI {
 	}
 
 	@Override
-	public ArrayList<Groupe> getGroupe(String name) throws RemoteException {
-		return db.getGroupe(name);
+	public ArrayList<Groupe> getGroupe(int id) throws RemoteException {
+		return db.getGroupe(id);
 	}
 
 	@Override
-	public ArrayList<Plat> getGroupePlat(Groupe g) throws RemoteException {
-		return db.getGroupePlat(g);
+	public ArrayList<Menu> getMenu(int id) throws RemoteException {
+		return db.getMenu(id);
 	}
 
 	@Override
-	public ArrayList<Menu> getMenu(String name) throws RemoteException {
-		return db.getMenu(name);
+	public ArrayList<Plat> getMenuPlat(int id) throws RemoteException {
+		return db.getMenuPlat(id);
 	}
-
-	@Override
-	public ArrayList<Plat> getMenuPlat(Menu m) throws RemoteException {
-		return db.getMenuPlat(m);
-	}
-
-	
 	
 	@Override
-	public ArrayList<Plat> getPlat(String nom) throws RemoteException {
-		return db.getPlat(nom);
+	public ArrayList<Plat> getPlat(int id) throws RemoteException {
+		return db.getPlat(id);
 	}
 
 	@Override
-	public ArrayList<Plat> getPlat(String comparateur, float prix) throws RemoteException {
-		return db.getPlat(comparateur, prix);
-	}
-
-	@Override
-	public ArrayList<Groupe> getPlatGroupe(Plat p) throws RemoteException {
-		return db.getPlatGroupe(p);
-	}
-
-	@Override
-	public ArrayList<Menu> getPlatMenu(Plat p) throws RemoteException {
-		return db.getPlatMenu(p);
+	public ArrayList<Menu> getPlatMenu(int id) throws RemoteException {
+		return db.getPlatMenu(id);
 	}
 
 	@Override
@@ -108,10 +91,6 @@ public class ServeurImpl implements ServeurRMI {
 		return db.putGroupe(g);
 	}
 
-	@Override
-	public boolean putGroupePlat(Plat p, Groupe g) throws RemoteException {
-		return db.putGroupePlat(p, g);
-	}
 
 	@Override
 	public boolean putMenu(Menu m) throws RemoteException {
@@ -119,8 +98,8 @@ public class ServeurImpl implements ServeurRMI {
 	}
 
 	@Override
-	public boolean putMenuPlat(Plat p, Menu m) throws RemoteException {
-		return db.putMenuPlat(p, m);
+	public boolean putMenuPlat(int id_plat, int id_menu, int id_groupe) throws RemoteException {
+		return db.putMenuPlat(id_plat, id_menu, id_groupe);
 	}
 
 	@Override
@@ -156,11 +135,6 @@ public class ServeurImpl implements ServeurRMI {
 	@Override
 	public boolean deleteMenuPlat(int id_menu, int id_plat) throws RemoteException {
 		return db.deleteMenuPlat(id_menu, id_plat);
-	}
-
-	@Override
-	public boolean deleteGroupePlat(int id_groupe, int id_plat) throws RemoteException {
-		return db.deleteGroupePlat(id_groupe, id_plat);
 	}
 
 	@Override

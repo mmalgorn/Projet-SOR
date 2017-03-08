@@ -11,16 +11,26 @@ public class Plat implements Serializable {
 	String	plat_description;
 	float	plat_prix;
 	String	plat_photo;
+	int 	plat_id_groupe;
 
 	public Plat() {
 	}
 
-	public Plat(int plat_id, String plat_nom, String plat_description, float plat_prix, String plat_photo) {
+	public Plat(int plat_id, String plat_nom, String plat_description, float plat_prix, String plat_photo, int plat_id_groupe) {
 		this.plat_id = plat_id;
 		this.plat_nom = plat_nom;
 		this.plat_description = plat_description;
 		this.plat_prix = plat_prix;
 		this.plat_photo = plat_photo;
+		this.plat_id_groupe = plat_id_groupe;
+	}
+
+	public int getPlat_id_groupe() {
+		return plat_id_groupe;
+	}
+
+	public void setPlat_id_groupe(int plat_id_groupe) {
+		this.plat_id_groupe = plat_id_groupe;
 	}
 
 	@Override
@@ -34,6 +44,7 @@ public class Plat implements Serializable {
 		if (!this.plat_description.equals(p.getPlat_description())) return false;
 		if (this.plat_prix != p.getPlat_prix()) return false;
 		if (!this.plat_photo.equals(p.getPlat_photo())) return false;
+		if (this.plat_id_groupe != p.getPlat_id_groupe()) return false;
 		return true;
 	}
 

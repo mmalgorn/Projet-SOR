@@ -1,6 +1,5 @@
 <%@include file="Header.jsp" %>
 
-
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
 		<ul class="nav navbar-nav">
@@ -12,12 +11,15 @@
 	</div>
 </nav>
 
-	<h1>Page Menu</h1>
+	<h1>Menu ${Menu.getMenu_nom()}</h1>
 
-	<c:forEach items="${Plat}" var="Plats">
-
-		<p>${Plats.getPlat_nom()}</p>
-
+	<c:forEach items="${Plats}" var="Plat">
+		<div class="panel panel-default">
+			<div class="panel-body"><h2>${Plat.getPlat_nom()}</h2></div>
+			<div class="panel-footer">
+				<p>${Plat.getPlat_description()}</p>
+			</div>
+		</div>
 	</c:forEach>
-</body>
-</html>
+	
+<%@include file="Header.jsp" %>

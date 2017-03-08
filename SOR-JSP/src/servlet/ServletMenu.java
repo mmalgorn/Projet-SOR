@@ -34,11 +34,12 @@ public class ServletMenu extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub		
 		int id = Integer.parseInt(request.getParameter("ref"));
-		Menu menu = new Menu(id, "", "", 0.0);
-		System.out.println(menu);
-		ArrayList<Plat> list = Manager.getMenuPlat(menu);
-
-		request.setAttribute("Plat", list);		
+		ArrayList<Menu> menus = Manager.getMenu(id);
+		Menu menu = null;
+		if(menus.size() > 0) menu = menus.get(0);
+		ArrayList<Plat> plats = Manager.getMenuPlat(id);
+		request.setAttribute("Plats", plats);
+		request.setAttribute("Menu", menu);
 		request.getServletContext().getRequestDispatcher("/WEB-INF/Menu.jsp").forward(request, response);
 	}
 
