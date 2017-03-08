@@ -32,11 +32,7 @@ public class ServletMenu extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		
+		// TODO Auto-generated method stub		
 		int id = Integer.parseInt(request.getParameter("ref"));
 		Menu menu = new Menu(id, "");
 		System.out.println(menu);
@@ -44,9 +40,6 @@ public class ServletMenu extends HttpServlet {
 
 		request.setAttribute("Plat", list);		
 		request.getServletContext().getRequestDispatcher("/WEB-INF/Menu.jsp").forward(request, response);
-		
-		
-		
 	}
 
 	/**

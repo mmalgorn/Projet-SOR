@@ -69,7 +69,6 @@ public class ServletConnexion extends HttpServlet {
 		if(!admins.isEmpty()){
 			session = request.getSession();
 			session.setAttribute("admin", admins.get(0));
-			
 		}
 	}
 }

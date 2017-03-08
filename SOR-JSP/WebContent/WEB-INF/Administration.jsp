@@ -19,4 +19,6 @@
 	<p>Veuillez vous connecter pour accéder à cette page</p>
 <% } %>
 
+${admin.get(0).getAdmin_user()}
+
 <%@include file="Footer.jsp" %>
