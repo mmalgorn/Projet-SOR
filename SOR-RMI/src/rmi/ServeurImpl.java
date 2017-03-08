@@ -18,8 +18,6 @@ public class ServeurImpl implements ServeurRMI {
 	static Database db;
 
 	public static void main(String[] args) {
-		
-
 		final int port = 20000;
 
 		final ServeurImpl si = new ServeurImpl();
@@ -150,7 +148,6 @@ public class ServeurImpl implements ServeurRMI {
 
 	@Override
 	public ArrayList<Plat> getPlat() throws RemoteException {
-		System.out.println("appel getPlat");
 		return db.getPlat();
 	}
 

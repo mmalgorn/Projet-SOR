@@ -1,6 +1,7 @@
 package database;
 
 import java.rmi.RemoteException;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,10 +13,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.sql.rowset.serial.SerialBlob;
+
 import annotation.Table;
 import bean.Admin;
 import bean.Groupe;
 import bean.Menu;
+import bean.Photo;
 import bean.Plat;
 
 public class Database {
@@ -206,7 +210,7 @@ public class Database {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Plat p = new Plat(rs.getInt("plat_id"), rs.getString("plat_nom"), rs.getString("plat_description"),
-						rs.getFloat("plat_prix"), rs.getString("plat_photo"), rs.getInt("plat_id_groupe"));
+						rs.getFloat("plat_prix"), new Photo(rs.getBlob("plat_photo")), rs.getInt("plat_id_groupe"));
 				Groupe g = new Groupe(rs.getInt("groupe_id"), rs.getString("groupe_nom"));
 				res.add(new AbstractMap.SimpleEntry<Plat, Groupe>(p, g));
 			}
@@ -237,7 +241,7 @@ public class Database {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Plat p = new Plat(rs.getInt("plat_id"), rs.getString("plat_nom"), rs.getString("plat_description"),
-						rs.getFloat("plat_prix"), rs.getString("plat_photo"), rs.getInt("plat_id_groupe"));
+						rs.getFloat("plat_prix"), new Photo(rs.getBlob("plat_photo")), rs.getInt("plat_id_groupe"));
 				res.add(p);
 			}
 		} catch (Exception e) {
@@ -386,7 +390,7 @@ public class Database {
 			ps.setString(1, p.getPlat_nom());
 			ps.setString(2, p.getPlat_description());
 			ps.setFloat(3, p.getPlat_prix());
-			ps.setString(4, p.getPlat_photo());
+			ps.setBlob(4, p.getPlat_photo().getBlob());
 			ps.setInt(5, p.getPlat_id_groupe());
 			ps.execute();
 		} catch (SQLException e) {
@@ -470,7 +474,7 @@ public class Database {
 			ps.setString(1, p.getPlat_nom());
 			ps.setString(2, p.getPlat_description());
 			ps.setFloat(3, p.getPlat_prix());
-			ps.setString(4, p.getPlat_photo());
+			ps.setBlob(4, p.getPlat_photo().getBlob());
 			ps.execute();
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.updatePlat " + e.getMessage());
@@ -549,7 +553,7 @@ public class Database {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Plat p = new Plat(rs.getInt("plat_id"), rs.getString("plat_nom"), rs.getString("plat_description"),
-						rs.getFloat("plat_prix"), rs.getString("plat_photo"), rs.getInt("plat_id_groupe"));
+						rs.getFloat("plat_prix"), new Photo(rs.getBlob("plat_photo")), rs.getInt("plat_id_groupe"));
 				res.add(p);
 			}
 		} catch (Exception e) {
@@ -637,7 +641,7 @@ public class Database {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Plat p = new Plat(rs.getInt("plat_id"), rs.getString("plat_nom"), rs.getString("plat_description"),
-						rs.getFloat("plat_prix"), rs.getString("plat_photo"), rs.getInt("plat_id_groupe"));
+						rs.getFloat("plat_prix"), new Photo(rs.getBlob("plat_photo")), rs.getInt("plat_id_groupe"));
 				res.add(p);
 			}
 		} catch (Exception e) {

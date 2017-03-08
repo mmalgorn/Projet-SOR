@@ -1,26 +1,37 @@
 <%@include file="Header.jsp" %>
 
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<ul class="nav navbar-nav">
+			<li><a href="Accueil" title="Accueil">Accueil</a></li>
+			<li><a href="Menu?ref=all" title="Menu">Menu</a></li>
+			<li class="active"><a href="Plat" title="Plat">Plat</a></li>
+			<c:if test="${admin != null}">
+				<li><a href="Administration" title="Administration">Administration</a></li>
+			</c:if>
+			<li><a href="Connexion" title="Connexion">Connexion</a></li>
+		</ul>
+		<c:if test="${admin != null}">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a>Bienvenue ${admin}</a></li>
+			</ul>
+		</c:if>
+	</div>
+</nav>
 
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Plat</title>
-</head>
-<body>
+<div class="page-header">
+	<h1>Plats</h1>
+</div>
 
-<h1>Plat</h1>
+<table class="table">
+	<c:forEach items="${Plat}" var="plat">
+		<tr>
+			<td><img class="plat-image thumbnail img-responsive" src="Image?ref=${plat.getPlat_id()}" alt=""></td>
+			<td><strong>${plat.getPlat_nom()}</strong></td>
+			<td>${plat.getPlat_description()}</td>
+			<td>${plat.getPlat_prix()} &euro;</td>
+		</tr>
+	</c:forEach>
+</table>
 
- <c:forEach items="${Plat}" var="Plats">
-	
-	<p>${Plats.getPlat_nom()}</p>
-	<p>${Plats.getPlat_prix()}</p> 
- 
-</c:forEach>
-
-
-</body>
-</html>
+<%@include file="Footer.jsp" %>

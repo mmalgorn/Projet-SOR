@@ -1,6 +1,8 @@
 package bean;
 
 import java.io.Serializable;
+import java.sql.Blob;
+
 import annotation.Table;
 
 @Table(name = "plat")
@@ -10,13 +12,13 @@ public class Plat implements Serializable {
 	String	plat_nom;
 	String	plat_description;
 	float	plat_prix;
-	String	plat_photo;
+	Photo	plat_photo;
 	int 	plat_id_groupe;
 
 	public Plat() {
 	}
 
-	public Plat(int plat_id, String plat_nom, String plat_description, float plat_prix, String plat_photo, int plat_id_groupe) {
+	public Plat(int plat_id, String plat_nom, String plat_description, float plat_prix, Photo plat_photo, int plat_id_groupe) {
 		this.plat_id = plat_id;
 		this.plat_nom = plat_nom;
 		this.plat_description = plat_description;
@@ -25,7 +27,7 @@ public class Plat implements Serializable {
 		this.plat_id_groupe = plat_id_groupe;
 	}
 	
-	public Plat(String plat_nom, String plat_description, float plat_prix, String plat_photo, int plat_id_groupe) {
+	public Plat(String plat_nom, String plat_description, float plat_prix, Photo plat_photo, int plat_id_groupe) {
 		this.plat_nom = plat_nom;
 		this.plat_description = plat_description;
 		this.plat_prix = plat_prix;
@@ -68,7 +70,7 @@ public class Plat implements Serializable {
 		return plat_nom;
 	}
 
-	public String getPlat_photo() {
+	public Photo getPlat_photo() {
 		return plat_photo;
 	}
 
@@ -88,7 +90,7 @@ public class Plat implements Serializable {
 		this.plat_nom = plat_nom;
 	}
 
-	public void setPlat_photo(String plat_photo) {
+	public void setPlat_photo(Photo plat_photo) {
 		this.plat_photo = plat_photo;
 	}
 

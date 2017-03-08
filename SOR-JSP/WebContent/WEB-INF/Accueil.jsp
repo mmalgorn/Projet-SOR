@@ -5,6 +5,7 @@
 		<ul class="nav navbar-nav">
 			<li class="active"><a href="#" title="Accueil">Accueil</a></li>
 			<li><a href="Menu?ref=all" title="Menu">Menu</a></li>
+			<li><a href="Plat" title="Plat">Plat</a></li>
 			<c:if test="${admin != null}">
 				<li><a href="Administration" title="Administration">Administration</a></li>
 			</c:if>
