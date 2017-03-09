@@ -32,6 +32,9 @@ public class ServletSuppressionPlat extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (request.getSession().getAttribute("admin") == null)
+			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
+		
 		if (request.getParameter("id") != null) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			ArrayList<Plat> plats = Manager.getPlat(id);
@@ -51,7 +54,6 @@ public class ServletSuppressionPlat extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		doGet(request, response);
 	}
 

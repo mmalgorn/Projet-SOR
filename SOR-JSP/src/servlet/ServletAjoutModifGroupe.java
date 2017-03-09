@@ -41,8 +41,8 @@ public class ServletAjoutModifGroupe extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+		if (request.getSession().getAttribute("admin") == null)
+			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);		
 		
 		if(request.getParameter("id")!=null)
 			id_groupe = Integer.parseInt(request.getParameter("id"));
@@ -61,7 +61,9 @@ public class ServletAjoutModifGroupe extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if (request.getSession().getAttribute("admin") == null)
+			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
+		
 		String name = request.getParameter("nom");
 		
 		if(request.getParameter("id")!=null)
