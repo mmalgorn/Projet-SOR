@@ -87,9 +87,7 @@ public class Database {
 				psSupr.setInt(1,id);
 				psSupr.execute();
 			}
-			if(table.name().equals("groupe")){
-				// A faire 
-			}
+		
 			ps.execute();
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.delete " + table.name());
@@ -110,6 +108,36 @@ public class Database {
 			ps.setInt(1, id_menu);
 			ps.setInt(2, id_plat);
 			ps.execute();
+		} catch (SQLException e) {
+			System.out.println("Erreur Base.delete menu_plat");
+			e.printStackTrace();
+			res = false;
+		}
+
+		return res;
+	}
+	
+	public boolean deleteGroupe(int id, int idRemp) {
+		String sql = "delete from groupe where groupe_id = ? ";
+		String updateMenuPlatSql = "update menu_plat set mp_id_groupe = ? where mp_id_groupe = ? ";
+		String updatePlatSql = " update plat set plat_id_groupe = ? where plat_id_groupe = ?";
+		boolean res = true;
+		try {
+			PreparedStatement ps = null;
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, id);
+			ps.execute();
+			
+			ps = connection.prepareStatement(updateMenuPlatSql);
+			ps.setInt(1, idRemp);
+			ps.setInt(2, id);
+			ps.execute();
+			
+			ps = connection.prepareStatement(updatePlatSql);
+			ps.setInt(1, idRemp);
+			ps.setInt(2, id);
+			ps.execute();
+			
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.delete menu_plat");
 			e.printStackTrace();
@@ -728,4 +756,7 @@ public class Database {
 
 		return res;
 	}
+
+	
+	
 }

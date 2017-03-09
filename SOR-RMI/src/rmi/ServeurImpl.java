@@ -176,4 +176,9 @@ public class ServeurImpl implements ServeurRMI {
 	public boolean putLog(Log l) throws RemoteException {
 		return db.putLog(l);
 	}
+
+	@Override
+	public boolean deleteGroupe(int id, int idRemp) throws RemoteException {
+		return db.deleteGroupe(id,idRemp);
+	}
 }

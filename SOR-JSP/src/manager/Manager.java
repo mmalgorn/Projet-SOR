@@ -133,5 +133,9 @@ public class Manager {
 
 	}
 
+	public static boolean deleteGroupe(int id, int idRemp) throws RemoteException {
+		return serveur.deleteGroupe(id,idRemp);
+	}
+
 	
 }
