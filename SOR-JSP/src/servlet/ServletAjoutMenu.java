@@ -78,6 +78,7 @@ public class ServletAjoutMenu extends HttpServlet {
 
 		if(retMenu.size()>0){
 			int idMenu = retMenu.get(0).getMenu_id();
+
 			ArrayList<Plat> plat = Manager.getPlat(false);
 			ArrayList<Plat> platMenu = new ArrayList<Plat>();
 

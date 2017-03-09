@@ -18,7 +18,7 @@
 
 
 
-	<form method="post" action="AjoutMenu">
+	<form method="post" action="ModifMenu">
 		<div class="form-group">
 			<label for="plat">Nom du Menu</label> <input type="text"
 				class="form-control" name="nom" placeholder="Nom du Menu" size="25" value="${menu.getMenu_nom()}"
@@ -84,7 +84,8 @@
 			</table>
 		</p>
 		<input type="hidden" name="i" id="i" value="${i}">
-		<div class="form-group validation-btn-group text-center">
+		<input type="hidden" name="menu" id="menu" value="${menu.getMenu_id()}">
+ 		<div class="form-group validation-btn-group text-center">
 			<button type="submit" class="btn btn-default">Valider</button>
 			<button type="reset" class="btn btn-default">Remettre à zéro</button>
 		</div>

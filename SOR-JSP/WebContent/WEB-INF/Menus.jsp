@@ -29,6 +29,16 @@
 				<td>${menu.getMenu_prix()} &euro;</td>
 				<td align="right"><a href="Menu?ref=${menu.getMenu_id()}" class="btn btn-success"
 								role="button">Voir le menu</a></td>
+				<td>
+					<c:if test="${admin != null}">
+						<div class="media-right">
+							<a href="ModificationMenu?id=${menu.getMenu_id()}" class="btn btn-default">Modifier</a>
+						</div>
+						<div class="media-right">
+							<a  href="SuppressionMenu?id=${menu.getMenu_id()}" class="btn btn-danger" onclick="return confirm('Voulez vous vraiment supprimer ${menu.getMenu_nom()}')">Supprimer</a>
+						</div>
+					</c:if>
+				</td>
 			</tr>
 		</c:forEach>
 	</tbody>

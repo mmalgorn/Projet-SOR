@@ -39,12 +39,11 @@
 			<td>${plat.getPlat_prix()} &euro;</td>
 			<td align="right">
 				<c:if test="${admin != null}">
-					<a href="ModificationPlat?id=${plat.getPlat_id()}"
-						class="btn btn-default">Modifier</a>
-					<a href="SuppressionPlat?id=${plat.getPlat_id()}"
-						class="btn btn-danger">Supprimer</a>
-				</c:if></td>
-			</tr>
+					<a href="ModificationPlat?id=${plat.getPlat_id()}" class="btn btn-default">Modifier</a>
+					<a href="SuppressionPlat?id=${plat.getPlat_id()}" class="btn btn-danger" onclick="return confirm('Voulez vous vraiment supprimer ${plat.getPlat_nom()}')">Supprimer</a>
+				</c:if>
+			</td>
+		</tr>
 	</c:forEach>
 </table>
 
