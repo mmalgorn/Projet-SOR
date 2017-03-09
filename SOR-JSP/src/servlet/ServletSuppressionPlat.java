@@ -17,13 +17,13 @@ import manager.Manager;
  * Servlet implementation class ServletSuppression
  */
 @WebServlet("/SuppressionPlat")
-public class ServletSuppression extends HttpServlet {
+public class ServletSuppressionPlat extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletSuppression() {
+    public ServletSuppressionPlat() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,7 +39,7 @@ public class ServletSuppression extends HttpServlet {
 				request.setAttribute("error", "Erreur lors de la suppression du plat. Le plat n'existe pas.");
 			} else {
 				if (Manager.delete(Plat.class, id))
-					request.setAttribute("success", "Le plat a Ã©tÃ© supprimÃ© avec succÃ¨s.");
+					request.setAttribute("success", "Le plat a été supprimé avec succès.");
 				else
 					request.setAttribute("error", "Erreur lors de la suppression du plat.");
 			}

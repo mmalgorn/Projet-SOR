@@ -20,14 +20,14 @@ import manager.Manager;
 /**
  * Servlet implementation class ServletAjoutMenu
  */
-@WebServlet("/ModifMenu")
-public class ServletModifPlat extends HttpServlet {
+@WebServlet("/ModificationMenu")
+public class ServletModificationMenu extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletModifPlat() {
+    public ServletModificationMenu() {
         super();
         // TODO Auto-generated constructor stub
     }

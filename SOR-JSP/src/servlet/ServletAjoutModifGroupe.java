@@ -46,8 +46,7 @@ public class ServletAjoutModifGroupe extends HttpServlet {
 		
 		if(request.getParameter("id")!=null)
 			id_groupe = Integer.parseInt(request.getParameter("id"));
-
-		ArrayList<Groupe> groupe = Manager.getGroupe(id_groupe);
+			ArrayList<Groupe> groupe = Manager.getGroupe(id_groupe);
 		if(groupe.size()>0){
 			
 			request.setAttribute("grp", groupe.get(0));

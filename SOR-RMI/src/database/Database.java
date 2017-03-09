@@ -73,12 +73,23 @@ public class Database {
 	public boolean delete(Class<?> c, int id) {
 		Table table = (Table) c.getAnnotation(Table.class);
 		String sql = "delete from " + table.name() + " where " + table.name() + "_id = ?";
-
+		String sqlSupr;
+		
 		boolean res = true;
 		try {
 			PreparedStatement ps = null;
+			PreparedStatement psSupr = null;
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, id);
+			if(table.name().equals("menu")){
+				sqlSupr = "delete from menu_plat where mp_id_menu = ?";
+				psSupr = connection.prepareStatement(sqlSupr);
+				psSupr.setInt(1,id);
+				psSupr.execute();
+			}
+			if(table.name().equals("groupe")){
+				// A faire 
+			}
 			ps.execute();
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.delete " + table.name());
