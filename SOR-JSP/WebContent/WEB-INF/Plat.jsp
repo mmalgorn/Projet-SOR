@@ -20,6 +20,13 @@
 </c:if>
 
 <table class="table">
+	<tr>
+		<th></th>
+		<th>Plat</th>
+		<th>Description</th>
+		<th>Prix</th>
+		<th class="th-right"><a href="AjoutPlat" class="btn btn-primary">Ajouter</a></td>
+	</tr>
 	<c:forEach items="${Plat}" var="plat">
 		<tr>
 			<td><a href="Image?ref=${plat.getPlat_id()}"><img class="plat-image" src="Image?ref=${plat.getPlat_id()}" alt=""></a></td>

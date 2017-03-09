@@ -3,7 +3,7 @@
 
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
-		<ul class="nav navbar-nav">
+		<ul class="nav navbar-nav navbar-left">
 			<li class="${param.accueil ? 'active' : ''}"><a href="Accueil" title="Accueil">Accueil</a></li>
 			<li class="${param.menu ? 'active' : ''}"><a href="Menu" title="Menu">Menu</a></li>
 			<li class="${param.plat ? 'active' : ''}"><a href="Plat" title="Plat">Plat</a></li>

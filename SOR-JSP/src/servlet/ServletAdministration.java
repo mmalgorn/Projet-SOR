@@ -34,7 +34,6 @@ public class ServletAdministration extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(request.getSession().getAttribute("admin"));
 		if (request.getSession().getAttribute("admin") == null) {
 			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);			
 		} else {
