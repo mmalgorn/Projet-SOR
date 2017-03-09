@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,14 +20,14 @@ import manager.Manager;
 /**
  * Servlet implementation class ServletAjoutMenu
  */
-@WebServlet("/AjoutMenu")
-public class ServletAjoutMenu extends HttpServlet {
+@WebServlet("/ModifMenu")
+public class ServletModifPlat extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletAjoutMenu() {
+    public ServletModifPlat() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,12 +39,25 @@ public class ServletAjoutMenu extends HttpServlet {
 		// TODO Auto-generated method stub
 		ArrayList<Plat> list = Manager.getPlat();
 		ArrayList<Groupe> listGroupe = Manager.getGroupe();
+		ArrayList<Menu> menus = null;
+		ArrayList<Entry<Plat,Groupe>> menuPlat = null;
 		
-		request.setAttribute("Plat", list);		
-		request.setAttribute("Groupe", listGroupe);
-		
-		request.getServletContext().getRequestDispatcher("/WEB-INF/AjoutMenu.jsp").forward(request, response);
+		if(request.getParameter("id")!=null){
+			
+			menuPlat = Manager.getMenuPlat(Integer.parseInt(request.getParameter("id")));
+			menus = Manager.getMenu(Integer.parseInt(request.getParameter("id")));
+			request.setAttribute("menu", menus.get(0));
+			request.setAttribute("Plat", list);		
+			request.setAttribute("Groupe", listGroupe);
+			request.setAttribute("menuPlat", menuPlat);
+			
+			request.getServletContext().getRequestDispatcher("/WEB-INF/ModifMenu.jsp").forward(request, response);
 
+		}else{
+			request.getRequestDispatcher("AjoutMenu").forward(request,response);
+		}
+		
+		
 	}
 
 	/**

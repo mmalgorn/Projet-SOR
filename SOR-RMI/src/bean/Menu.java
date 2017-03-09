@@ -20,6 +20,12 @@ public class Menu implements Serializable {
 		this.menu_description = menu_description;
 		this.menu_prix = menu_prix;
 	}
+	
+	public Menu(String menu_nom, String menu_description, double menu_prix) {
+		this.menu_nom = menu_nom;
+		this.menu_description = menu_description;
+		this.menu_prix = menu_prix;
+	}
 
 
 	@Override

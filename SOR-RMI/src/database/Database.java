@@ -341,13 +341,15 @@ public class Database {
 
 	public boolean putMenu(Menu m) {
 		Table table = (Table) Menu.class.getAnnotation(Table.class);
-		String sql = "insert into " + table.name() + " (menu_name) values (?)";
+		String sql = "insert into " + table.name() + " (menu_nom,menu_description,menu_prix) values (?,?,?)";
 
 		boolean res = true;
 		try {
 			PreparedStatement ps = null;
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, m.getMenu_nom());
+			ps.setString(2, m.getMenu_description());
+			ps.setDouble(3, m.getMenu_prix());
 			ps.execute();
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.putMenu " + e.getMessage());
@@ -444,13 +446,15 @@ public class Database {
 
 	public boolean updateMenu(Menu m) {
 		Table table = (Table) Menu.class.getAnnotation(Table.class);
-		String sql = "update " + table.name() + " set menu_nom = ? where menu_id = " + m.getMenu_id();
+		String sql = "update " + table.name() + " set menu_nom = ?,menu_description = ?,menu_prix = ? where menu_id = " + m.getMenu_id();
 
 		boolean res = true;
 		try {
 			PreparedStatement ps = null;
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, m.getMenu_nom());
+			ps.setString(2, m.getMenu_description());
+			ps.setDouble(3, m.getMenu_prix());
 			ps.execute();
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.updateMenu " + e.getMessage());
