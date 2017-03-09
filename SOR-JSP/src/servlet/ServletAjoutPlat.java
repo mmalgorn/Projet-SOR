@@ -41,6 +41,9 @@ public class ServletAjoutPlat extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (request.getSession().getAttribute("admin") == null)
+			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
+		
 		ArrayList<Groupe> list = Manager.getGroupe();	
 		request.setAttribute("groupes", list);
 		if (request.getAttribute("insert") != null) {
@@ -60,7 +63,9 @@ public class ServletAjoutPlat extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if (request.getSession().getAttribute("admin") == null)
+			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
+		
 		String name = request.getParameter("nom");
 		String description = request.getParameter("description");
 		float prix = Float.parseFloat(request.getParameter("prix"));

@@ -43,6 +43,9 @@ public class ServletPDF extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if (request.getSession().getAttribute("admin") == null)
+			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
+		
 		Document document = new Document();
 		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();

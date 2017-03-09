@@ -25,7 +25,11 @@
 		<th>Plat</th>
 		<th>Description</th>
 		<th>Prix</th>
-		<th class="th-right"><a href="AjoutPlat" class="btn btn-primary">Ajouter</a></td>
+		<th class="th-right">
+			<c:if test="${admin != null}">
+				<a href="AjoutPlat" class="btn btn-primary">Ajouter</a>
+			</c:if>
+		</td>
 	</tr>
 	<c:forEach items="${Plat}" var="plat">
 		<tr>
@@ -33,9 +37,14 @@
 			<td><strong>${plat.getPlat_nom()}</strong></td>
 			<td>${plat.getPlat_description()}</td>
 			<td>${plat.getPlat_prix()} &euro;</td>
-			<td align="right"><a href="ModificationPlat?id=${plat.getPlat_id()}" class="btn btn-default">Modifier</a>
-			<a href="SuppressionPlat?id=${plat.getPlat_id()}" class="btn btn-danger">Supprimer</a></td>
-		</tr>
+			<td align="right">
+				<c:if test="${admin != null}">
+					<a href="ModificationPlat?id=${plat.getPlat_id()}"
+						class="btn btn-default">Modifier</a>
+					<a href="SuppressionPlat?id=${plat.getPlat_id()}"
+						class="btn btn-danger">Supprimer</a>
+				</c:if></td>
+			</tr>
 	</c:forEach>
 </table>
 

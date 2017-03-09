@@ -13,7 +13,7 @@
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<c:if test="${admin != null}">
-				<li><a>Bienvenue ${param.admin}</a></li>
+				<li><a>Bienvenue ${admin}</a></li>
 			</c:if>
 			<li class="${param.connexion ? 'active' : ''}"><a href="Connexion" title="Connexion"> 
 				<c:choose>

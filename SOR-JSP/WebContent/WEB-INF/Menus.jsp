@@ -14,7 +14,11 @@
 			<th></th>
 			<th>Description</th>
 			<th>Prix</th>
-			<th class="th-right"><a href="AjoutMenu" class="btn btn-primary">Ajouter</a></th>
+			<th class="th-right">
+				<c:if test="${admin != null}">
+					<a href="AjoutMenu" class="btn btn-primary">Ajouter</a>
+				</c:if>
+			</th>
 		</tr>
 	</thead>
 	<tbody>

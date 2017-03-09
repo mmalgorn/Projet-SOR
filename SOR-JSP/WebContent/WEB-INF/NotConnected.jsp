@@ -4,6 +4,10 @@
     <jsp:param name="NotConnected" value="${true}"/>
 </jsp:include>
 
-<p>Veuillez vous <a href="Connexion">connecter</a> pour accï¿½der ï¿½ cette page</p>
+<div class="page-header">
+	<h1>Non connecté</h1>
+</div>
+
+<p>Veuillez vous <a href="Connexion">connecter</a> pour accéder à cette page</p>
 
 <%@include file="Footer.jsp" %>

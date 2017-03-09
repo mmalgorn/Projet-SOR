@@ -47,6 +47,9 @@ public class ServletModificationPlat extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if (request.getSession().getAttribute("admin") == null)
+			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
+		
 		if (request.getAttribute("insert") != null) {
 			if ((int) request.getAttribute("insert") == 0) {
 				request.setAttribute("error", "Erreur lors de la modification du plat.");
