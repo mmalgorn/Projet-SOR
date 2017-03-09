@@ -43,6 +43,16 @@ public class ServletAjoutPlat extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Groupe> list = Manager.getGroupe();	
 		request.setAttribute("groupes", list);
+		if (request.getAttribute("insert") != null) {
+			if ((int) request.getAttribute("insert") == 0) {
+				request.setAttribute("error", "Erreur lors de la création du plat.");
+			} else {
+				request.setAttribute("success", "Plat ajouté avec succès.");
+			}
+		}
+		if (request.getAttribute("present") != null) {
+			request.setAttribute("error", "Plat déja présent. Veuillez recommencer.");
+		}
 		request.getServletContext().getRequestDispatcher("/WEB-INF/AjoutPlat.jsp").forward(request, response);
 	}
 
@@ -63,27 +73,23 @@ public class ServletAjoutPlat extends HttpServlet {
 		ArrayList<Plat> listTest = Manager.getPlat(name);
 		
 		System.out.println(listTest.size());
-		if(listTest.size()==0){
-			Plat plat = new Plat(name,description,prix,new Photo(buffer),id_groupe);
+		if (listTest.size() == 0) {
+			Plat plat = new Plat(name, description, prix, new Photo(buffer), id_groupe);
 			System.out.println(plat.getPlat_nom());
 			System.out.println(plat.getPlat_description());
 			System.out.println(plat.getPlat_id_groupe());
 			System.out.println(plat.getPlat_prix());
 
-			if(Manager.putPlat(plat)){
-				request.setAttribute("insert", 1);	
-			}
-			else {
+			if (Manager.putPlat(plat)) {
+				request.setAttribute("insert", 1);
+			} else {
 				request.setAttribute("insert", 0);
 			}
-			
-		}else{
+		} else {
 			request.setAttribute("present", 1);
-			
 		}
 		
-		doGet(request,response);
-				
+		doGet(request,response);			
 	}
 
 }

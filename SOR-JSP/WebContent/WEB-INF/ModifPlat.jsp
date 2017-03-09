@@ -1,21 +1,19 @@
 <%@include file="Header.jsp"%>
 
-
-<body>
 	<h1>Modification Plat</h1>
 
+   	<c:if test="${error != null}">
+		<div class="alert alert-danger" role="alert">
+			<strong>Erreur :</strong> ${error}
+		</div>
+	</c:if>
+	<c:if test="${success != null}">
+		<div class="alert alert-success" role="alert">
+			<strong>Succès :</strong> ${success}
+		</div>
+	</c:if>
 
-   	<c:if test="${insert == 1}">
-		<p>Plat modifier avec succès</p>
-	</c:if>
-   	<c:if test="${insert == 0}">
-		<p>Erreur lors de la modification du plat</p>
-	</c:if>
-   	
-   	
-   	
-	
-	<form method="post" action="ModificationPlat">
+	<form method="POST" action="ModificationPlat" enctype="multipart/form-data">
 		<div class="form-group">
 			<label for="plat">Nom du plat</label> <input type="text"
 				class="form-control" name="nom" value="${plat.getPlat_nom()}" size="25"
@@ -32,9 +30,7 @@
 				maxlength="5" required>
 		</div>
 		<div class="form-group">
-			<label for="plat">Photo</label> <input type="text"
-				class="form-control" name="photo" value="${plat.getPlat_photo()}" size="25"
-				maxlength="25" required>
+			<label for="plat">Photo</label> <input type="file" name="photo">
 		</div>
 
 		<p>
@@ -56,9 +52,5 @@
 			<button type="reset" class="btn btn-default">Remettre à zéro</button>
 		</div>
 	</form>
-
-
-</body>
-
 
 <%@include file="Footer.jsp"%>

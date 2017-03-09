@@ -9,13 +9,18 @@
 			<c:if test="${admin != null}">
 				<li><a href="Administration" title="Administration">Administration</a></li>
 			</c:if>
-			<li class="active"><a href="#" title="Connexion">Connexion</a></li>
 		</ul>
-		<c:if test="${admin != null}">
-			<ul class="nav navbar-nav navbar-right">
+		<ul class="nav navbar-nav navbar-right">
+			<c:if test="${admin != null}">
 				<li><a>Bienvenue ${admin}</a></li>
-			</ul>
-		</c:if>
+			</c:if>
+			<li><a href="Connexion" title="Connexion"> 
+				<c:choose>
+					<c:when test="${empty admin}">Connexion</c:when>
+					<c:otherwise>Déconnexion</c:otherwise>
+				</c:choose>
+			</a></li>
+		</ul>
 	</div>
 </nav>
 

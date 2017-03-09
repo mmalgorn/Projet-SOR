@@ -112,5 +112,9 @@ public class Manager {
 	public static boolean updatePlat(Plat p) throws RemoteException {
 		return serveur.updatePlat(p);
 	}
+	
+	public static boolean delete(Class<?> c, int id) throws RemoteException {
+		return serveur.delete(c, id);
+	}
 
 }

@@ -1,19 +1,23 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import bean.Admin;
 import bean.Groupe;
+import bean.Photo;
 import bean.Plat;
 import manager.Manager;
 
@@ -21,89 +25,103 @@ import manager.Manager;
  * Servlet implementation class ServletAjoutPlat
  */
 @WebServlet("/ModificationPlat")
+@MultipartConfig
 public class ServletModificationPlat extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-	
-	int id_plat;
-	
-    public ServletModificationPlat() {
-        super();
-        id_plat=-1;
-        // TODO Auto-generated constructor stub
-    }
+	private static final long	serialVersionUID	= 1L;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		ArrayList<Groupe> list = Manager.getGroupe();
-		
-		request.setAttribute("groupes", list);
-		
-		if(request.getParameter("id")!=null)
-			id_plat = Integer.parseInt(request.getParameter("id"));
 
-		System.out.println(id_plat);
-		ArrayList<Plat> plat = Manager.getPlat(id_plat);
-		if(plat.size()>0){
-			
-			request.setAttribute("plat", plat.get(0));
-			this.id_plat=plat.get(0).getPlat_id();
-			
-			request.getServletContext().getRequestDispatcher("/WEB-INF/ModifPlat.jsp").forward(request, response);
+	int							id_plat;
 
-		}else{
-			request.getServletContext().getRequestDispatcher("/WEB-INF/AjoutPlat.jsp").forward(request, response);
-
-		}
-		
+	public ServletModificationPlat() {
+		super();
+		id_plat = -1;
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (request.getAttribute("insert") != null) {
+			if ((int) request.getAttribute("insert") == 0) {
+				request.setAttribute("error", "Erreur lors de la modification du plat.");
+			} else {
+				request.setAttribute("success", "Plat modifié avec succès.");
+			}
+		}
+
+		this.id_plat = -1;
+		ArrayList<Groupe> list = Manager.getGroupe();
+		request.setAttribute("groupes", list);
+		if (request.getParameter("id") != null) id_plat = Integer.parseInt(request.getParameter("id"));
+		else if (request.getAttribute("id") != null) id_plat = (int) request.getAttribute("id");
+		System.out.println(id_plat);
+		ArrayList<Plat> plat = Manager.getPlat(id_plat);
+		System.out.println(plat.size());
+		if (plat.size() > 0) {
+			request.setAttribute("plat", plat.get(0));
+			this.id_plat = plat.get(0).getPlat_id();
+			request.getServletContext().getRequestDispatcher("/WEB-INF/ModifPlat.jsp").forward(request, response);
+		} else {
+			request.getServletContext().getRequestDispatcher("/WEB-INF/AjoutPlat.jsp").forward(request, response);
+		}
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String name = request.getParameter("nom");
-		String description = request.getParameter("description");
-		float prix = Float.parseFloat(request.getParameter("prix"));
-		String photo = request.getParameter("photo");
-		int id_groupe = Integer.parseInt(request.getParameter("type"));
-		
+		String name = (request.getParameter("nom") ==  null ? "" : request.getParameter("nom"));
+		String description = (request.getParameter("description") == null ? "" : request.getParameter("description"));
+		float prix = (request.getParameter("prix") == null ? null : Float.parseFloat(request.getParameter("prix")));
+		int id_groupe = (request.getParameter("type") == null ? null : Integer.parseInt(request.getParameter("type")));
+		Part filePart = request.getPart("photo");
+		byte[] buffer = new byte[(int) filePart.getSize()];
+		InputStream is = filePart.getInputStream();
+		while (is.read(buffer) != -1)
+
 		System.out.println(id_plat);
 		ArrayList<Plat> listTest = Manager.getPlat(id_plat);
 		
+		//iso-8859-1 vers UTF-8
+		name = new String(name.getBytes ("iso-8859-1"), "UTF-8");
+		description = new String(description.getBytes ("iso-8859-1"), "UTF-8");
+
 		System.out.println(listTest.size());
-		if(listTest.size()>0){
-			Plat plat = new Plat(name,description,prix,photo,id_groupe);
+		if (!listTest.isEmpty()) {
+			Photo p;
+			if (buffer.length > 0)
+				p = new Photo(buffer);
+			else
+				p = listTest.get(0).getPlat_photo();
+			Plat plat = new Plat(name, description, prix, p, id_groupe);
 			plat.setPlat_id(id_plat);
 			System.out.println(plat.getPlat_nom());
 			System.out.println(plat.getPlat_description());
 			System.out.println(plat.getPlat_id_groupe());
 			System.out.println(plat.getPlat_prix());
 
-			
-			if(Manager.updatePlat(plat)){
-				request.setAttribute("insert", 1);	
-			}
-			else {
+			if (Manager.updatePlat(plat)) {
+				request.setAttribute("insert", 1);
+			} else {
 				request.setAttribute("insert", 0);
 			}
-			
-		}else{
+
+		} else {
 			request.setAttribute("present", 1);
-			
 		}
-		
-		this.id_plat=-1;		
-		doGet(request,response);
-				
+
+		request.setAttribute("id", id_plat);
+		doGet(request, response);
 	}
 
 }

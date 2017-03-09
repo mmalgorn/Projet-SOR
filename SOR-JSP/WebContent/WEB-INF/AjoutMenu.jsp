@@ -1,7 +1,5 @@
 <%@include file="Header.jsp"%>
 
-
-<body>
 	<h1>Ajout Menu</h1>
 
 	<c:if test="${present == 1}">
@@ -16,9 +14,6 @@
 		<p>Erreur lors de la création du plat</p>
 		${insert = "null"}
 	</c:if>
-
-
-
 
 	<form method="post" action="AjoutMenu">
 		<div class="form-group">
@@ -49,9 +44,5 @@
 			<button type="reset" class="btn btn-default">Remettre à zéro</button>
 		</div>
 	</form>
-
-
-</body>
-
 
 <%@include file="Footer.jsp"%>

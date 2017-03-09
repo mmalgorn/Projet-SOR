@@ -33,7 +33,7 @@ public class ServletPlat extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Plat> list = Manager.getPlat();
-		request.setAttribute("Plat", list);		
+		request.setAttribute("Plat", list);
 		request.getServletContext().getRequestDispatcher("/WEB-INF/Plat.jsp").forward(request, response);
 	}
 
