@@ -14,7 +14,7 @@
 			<th></th>
 			<th>Description</th>
 			<th>Prix</th>
-			<th></th>
+			<th class="th-right"><a href="AjoutMenu" class="btn btn-primary">Ajouter</a></th>
 		</tr>
 	</thead>
 	<tbody>

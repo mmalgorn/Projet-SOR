@@ -96,7 +96,8 @@ public class ServletModifPlat extends HttpServlet {
 
 		if(retMenu.size()>0){
 			int idMenu = retMenu.get(0).getMenu_id();
-			menuPlat = Manager.getMenuPlat(idMenu);
+
+
 			if(request.getParameter("i")!=null){
 				nbPlat = Integer.parseInt(request.getParameter("i"));
 			}

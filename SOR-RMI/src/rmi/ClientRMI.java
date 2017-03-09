@@ -2,9 +2,9 @@ package rmi;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
+import java.sql.Timestamp;
 
-import bean.Plat;
+import bean.Log;
 
 public class ClientRMI {
 
@@ -15,10 +15,9 @@ public class ClientRMI {
 		try {
 			Registry registry = LocateRegistry.getRegistry(port);
 			ServeurRMI serveur = (ServeurRMI) registry.lookup("monserveurrmi");
-
+			
 		} catch (Exception e) {
 			System.out.println("Erreur clientRMI " + e.getMessage());
-
 		}
 	}
 }

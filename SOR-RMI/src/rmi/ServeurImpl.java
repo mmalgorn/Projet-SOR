@@ -9,6 +9,7 @@ import java.util.Map;
 
 import bean.Admin;
 import bean.Groupe;
+import bean.Log;
 import bean.Menu;
 import bean.Plat;
 import database.Database;
@@ -164,5 +165,15 @@ public class ServeurImpl implements ServeurRMI {
 	@Override
 	public ArrayList<Plat> getPlat(String name) throws RemoteException {
 		return db.getPlat(name);
+	}
+
+	@Override
+	public ArrayList<Map.Entry<Log, Admin>> getLog() throws RemoteException {
+		return db.getLog();
+	}
+
+	@Override
+	public boolean putLog(Log l) throws RemoteException {
+		return db.putLog(l);
 	}
 }

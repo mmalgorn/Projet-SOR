@@ -18,6 +18,7 @@ import javax.sql.rowset.serial.SerialBlob;
 import annotation.Table;
 import bean.Admin;
 import bean.Groupe;
+import bean.Log;
 import bean.Menu;
 import bean.Photo;
 import bean.Plat;
@@ -102,6 +103,36 @@ public class Database {
 			System.out.println("Erreur Base.delete menu_plat");
 			e.printStackTrace();
 			res = false;
+		}
+
+		return res;
+	}
+	
+	public ArrayList<Map.Entry<Log, Admin>> getLog() {
+		Table table1 = (Table) Log.class.getAnnotation(Table.class);
+		Table table2 = (Table) Admin.class.getAnnotation(Table.class);
+		String sql = "select " + table1.name() + ".*, " + table2.name() + ".* from " + table1.name() + "," + table2.name() + " where admin_id = log_id_admin";
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<Map.Entry<Log, Admin>> res = new ArrayList<Map.Entry<Log, Admin>>();
+		try {
+			ps = connection.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Admin a = new Admin(rs.getInt("admin_id"), rs.getString("admin_user"), rs.getString("admin_password"));
+				Log l = new Log(rs.getInt("log_id"), rs.getInt("log_id_admin"), rs.getTimestamp("log_date"));
+				res.add(new AbstractMap.SimpleEntry<Log, Admin>(l, a));
+			}
+		} catch (Exception e) {
+			System.out.println("Erreur Base.getLog " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		try {
+			if (ps != null) ps.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		return res;
@@ -297,6 +328,26 @@ public class Database {
 			System.out.println("Erreur de connexion à la base de données :");
 			e.printStackTrace();
 		}
+		return res;
+	}
+	
+	public boolean putLog(Log l) {
+		Table table = (Table) Log.class.getAnnotation(Table.class);
+		String sql = "insert into " + table.name() + " (log_id_admin, log_date) values (?, ?)";
+
+		boolean res = true;
+		try {
+			PreparedStatement ps = null;
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, l.getLog_id_admin());
+			ps.setTimestamp(2, l.getLog_date());
+			ps.execute();
+		} catch (SQLException e) {
+			System.out.println("Erreur Base.putLog " + e.getMessage());
+			e.printStackTrace();
+			res = false;
+		}
+
 		return res;
 	}
 
