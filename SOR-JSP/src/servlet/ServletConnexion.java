@@ -36,6 +36,7 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getSession().removeAttribute("admin");
 		request.getServletContext().getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
 	}
 
@@ -61,9 +62,8 @@ public class ServletConnexion extends HttpServlet {
 			md.update(mdp.getBytes());
 			byte[] digest = md.digest();
 			StringBuffer sb = new StringBuffer();
-			for (byte b : digest) {
+			for (byte b : digest)
 				sb.append(String.format("%02x", b & 0xff));
-			}
 			mdp = sb.toString();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -71,7 +71,7 @@ public class ServletConnexion extends HttpServlet {
 
 		ArrayList<Admin> admins = Manager.getAdmin(login, mdp);
 		HttpSession session = null;
-		if(admins.isEmpty()){
+		if(admins.isEmpty()) {
 			return false;
 		} else {
 			session = request.getSession();

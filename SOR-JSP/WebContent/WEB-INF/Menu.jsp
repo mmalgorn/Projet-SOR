@@ -1,23 +1,8 @@
 <%@include file="Header.jsp" %>
 
-<nav class="navbar navbar-default">
-	<div class="container-fluid">
-		<ul class="nav navbar-nav">
-			<li><a href="Accueil" title="Accueil">Accueil</a></li>
-			<li class="active"><a href="Menu" title="Menu">Menu</a></li>
-			<li><a href="Plat" title="Plat">Plat</a></li>
-			<c:if test="${admin != null}">
-				<li><a href="Administration" title="Administration">Administration</a></li>
-			</c:if>
-			<li><a href="Connexion" title="Connexion">Connexion</a></li>
-		</ul>
-		<c:if test="${admin != null}">
-			<ul class="nav navbar-nav navbar-right">
-				<li><a>Bienvenue ${admin}</a></li>
-			</ul>
-		</c:if>
-	</div>
-</nav>
+<jsp:include page='Navigation.jsp'>
+    <jsp:param name="menu" value="${true}"/>
+</jsp:include>
 
 <div class="page-header">
 	<h1>Menu ${menu.getMenu_nom()}</h1>
@@ -26,7 +11,9 @@
 <c:forEach items="${plats}" var="pg">
 	<div class="media">
 		<div class="media-left">
-			<img class="plat-image" src="Image?ref=${pg.getKey().getPlat_id()}" alt="">
+			<a href="Image?ref=${plat.getPlat_id()}">
+				<img class="plat-image" src="Image?ref=${pg.getKey().getPlat_id()}" alt="">
+			</a>
 		</div>
 		<div class="media-body">
 			<h3 class="media-heading">${pg.getKey().getPlat_nom()}

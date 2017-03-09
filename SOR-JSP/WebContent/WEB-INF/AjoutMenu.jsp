@@ -16,9 +16,8 @@
 	</c:if>
 
 
+	<form method="post" action="AjoutMenu">
 
-
-	<form method="post" action="ModifMenu">
 		<div class="form-group">
 			<label for="plat">Nom du Menu</label> <input type="text"
 				class="form-control" name="nom" placeholder="Nom du Menu" size="25"
@@ -67,6 +66,4 @@
 			<button type="reset" class="btn btn-default">Remettre à zéro</button>
 		</div>
 	</form>
-
-
 <%@include file="Footer.jsp"%>

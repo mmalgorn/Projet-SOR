@@ -545,9 +545,9 @@ public class Database {
 		return res;
 	}
 
-	public ArrayList<Plat> getPlat() {
+	public ArrayList<Plat> getPlat(boolean images) {
 		Table table = (Table) Plat.class.getAnnotation(Table.class);
-		String sql = "select * from " + table.name();
+		String sql = "select " + (images ? "*" : "plat_id, plat_nom, plat_description, plat_prix, plat_groupe") + " from " + table.name();
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -556,8 +556,13 @@ public class Database {
 			ps = connection.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while (rs.next()) {
+				Photo photo;
+				if (images)
+					photo = new Photo(rs.getBlob("plat_photo"));
+				else
+					photo = new Photo(new byte[10]);
 				Plat p = new Plat(rs.getInt("plat_id"), rs.getString("plat_nom"), rs.getString("plat_description"),
-						rs.getFloat("plat_prix"), new Photo(rs.getBlob("plat_photo")), rs.getInt("plat_id_groupe"));
+						rs.getFloat("plat_prix"), photo, rs.getInt("plat_id_groupe"));
 				res.add(p);
 			}
 		} catch (Exception e) {

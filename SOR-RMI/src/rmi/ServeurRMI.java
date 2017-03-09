@@ -25,7 +25,7 @@ public interface ServeurRMI extends Remote {
 
 	public ArrayList<Map.Entry<Plat, Groupe>> getMenuPlat(int id) throws RemoteException;
 
-	public ArrayList<Plat> getPlat() throws RemoteException;
+	public ArrayList<Plat> getPlat(boolean images) throws RemoteException;
 	
 	public ArrayList<Plat> getPlat(int id) throws RemoteException;
 

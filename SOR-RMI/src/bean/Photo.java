@@ -30,7 +30,8 @@ public class Photo implements Serializable {
 	}
 	
 	public Blob getBlob() throws SerialException, SQLException {
-		return new SerialBlob(img);
+		if (img.length > 0) return new SerialBlob(img);
+		return new SerialBlob(new byte[10]);
 	}
 	
 	public void setImg(byte[] img) {

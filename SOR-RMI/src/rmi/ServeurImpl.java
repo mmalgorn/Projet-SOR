@@ -147,8 +147,8 @@ public class ServeurImpl implements ServeurRMI {
 	}
 
 	@Override
-	public ArrayList<Plat> getPlat() throws RemoteException {
-		return db.getPlat();
+	public ArrayList<Plat> getPlat(boolean images) throws RemoteException {
+		return db.getPlat(images);
 	}
 
 	@Override

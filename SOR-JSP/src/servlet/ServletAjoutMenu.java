@@ -43,7 +43,7 @@ public class ServletAjoutMenu extends HttpServlet {
 		request.setAttribute("Groupe", listGroupe);
 		
 		request.getServletContext().getRequestDispatcher("/WEB-INF/AjoutMenu.jsp").forward(request, response);
-
+		
 	}
 
 	/**
