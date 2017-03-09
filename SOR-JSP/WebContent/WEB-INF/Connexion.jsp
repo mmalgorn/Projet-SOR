@@ -1,28 +1,8 @@
 <%@include file="Header.jsp" %>
 
-<nav class="navbar navbar-default">
-	<div class="container-fluid">
-		<ul class="nav navbar-nav">
-			<li><a href="Accueil" title="Accueil">Accueil</a></li>
-			<li><a href="Menu" title="Menu">Menu</a></li>
-			<li><a href="Plat" title="Plat">Plat</a></li>
-			<c:if test="${admin != null}">
-				<li><a href="Administration" title="Administration">Administration</a></li>
-			</c:if>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<c:if test="${admin != null}">
-				<li><a>Bienvenue ${admin}</a></li>
-			</c:if>
-			<li><a href="Connexion" title="Connexion"> 
-				<c:choose>
-					<c:when test="${empty admin}">Connexion</c:when>
-					<c:otherwise>Déconnexion</c:otherwise>
-				</c:choose>
-			</a></li>
-		</ul>
-	</div>
-</nav>
+<jsp:include page='Navigation.jsp'>
+    <jsp:param name="connexion" value="${true}"/>
+</jsp:include>
 
 <div id="authentication-menu">
 	<div class="page-header">

@@ -60,8 +60,8 @@ public class Manager {
 		return serveur.getMenuPlat(id);
 	}
 
-	public static ArrayList<Plat> getPlat() throws RemoteException {
-		return serveur.getPlat();
+	public static ArrayList<Plat> getPlat(boolean images) throws RemoteException {
+		return serveur.getPlat(images);
 	}
 
 	public static ArrayList<Plat> getPlat(int id) throws RemoteException {
