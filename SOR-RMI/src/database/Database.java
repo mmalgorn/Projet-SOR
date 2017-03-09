@@ -96,7 +96,7 @@ public class Database {
 			PreparedStatement ps = null;
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, id_menu);
-			ps.setInt(1, id_plat);
+			ps.setInt(2, id_plat);
 			ps.execute();
 		} catch (SQLException e) {
 			System.out.println("Erreur Base.delete menu_plat");

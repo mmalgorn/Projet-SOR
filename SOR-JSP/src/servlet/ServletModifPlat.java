@@ -37,7 +37,7 @@ public class ServletModifPlat extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ArrayList<Plat> list = Manager.getPlat();
+		ArrayList<Plat> list = Manager.getPlat(false);
 		ArrayList<Groupe> listGroupe = Manager.getGroupe();
 		ArrayList<Menu> menus = null;
 		ArrayList<Entry<Plat,Groupe>> menuPlat = null;
@@ -71,6 +71,7 @@ public class ServletModifPlat extends HttpServlet {
 		float prix = 0;
 		Menu menu = null;
 		ArrayList<Menu> retMenu;
+		ArrayList<Entry<Plat,Groupe>> menuPlat = null;
 
 		if(request.getParameter("nom")!=null){
 			nom = request.getParameter("nom");
@@ -82,21 +83,29 @@ public class ServletModifPlat extends HttpServlet {
 			prix = Float.parseFloat(request.getParameter("prix"));
 		}
 
-		menu = new Menu(nom, description, prix);
-
-		Manager.putMenu(menu);
+		
+		menu = Manager.getMenu(Integer.parseInt(request.getParameter("menu"))).get(0);
+		
+		menu.setMenu_description(description);
+		menu.setMenu_nom(nom);
+		menu.setMenu_prix(prix);
+		
+		Manager.updateMenu(menu);
 
 		retMenu = Manager.getMenu(menu.getMenu_nom());
 
 		if(retMenu.size()>0){
 			int idMenu = retMenu.get(0).getMenu_id();
-			ArrayList<Plat> plat = Manager.getPlat();
-			ArrayList<Plat> platMenu = new ArrayList<Plat>();
-
+			menuPlat = Manager.getMenuPlat(idMenu);
 			if(request.getParameter("i")!=null){
 				nbPlat = Integer.parseInt(request.getParameter("i"));
 			}
 
+			for(int j=0;j<menuPlat.size();j++){
+				System.out.println("delete "+idMenu+" "+menuPlat.get(j).getKey().getPlat_id());
+						Manager.deleteMenuPlat(idMenu, menuPlat.get(j).getKey().getPlat_id());
+			}
+			
 			for(int i = 0 ;i<=nbPlat;i++){
 				if((request.getParameter(""+i)!=null)&&(request.getParameter("type"+i)!=null)){
 

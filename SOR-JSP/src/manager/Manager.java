@@ -116,5 +116,10 @@ public class Manager {
 	public static boolean delete(Class<?> c, int id) throws RemoteException {
 		return serveur.delete(c, id);
 	}
+	
+	public static boolean deleteMenuPlat(int id_menu, int id_plat) throws RemoteException{
+		return serveur.deleteMenuPlat(id_menu, id_plat);
+	}
 
+	
 }
