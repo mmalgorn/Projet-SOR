@@ -547,7 +547,7 @@ public class Database {
 
 	public ArrayList<Plat> getPlat(boolean images) {
 		Table table = (Table) Plat.class.getAnnotation(Table.class);
-		String sql = "select " + (images ? "*" : "plat_id, plat_nom, plat_description, plat_prix, plat_groupe") + " from " + table.name();
+		String sql = "select " + (images ? "*" : "plat_id, plat_nom, plat_description, plat_prix, plat_id_groupe") + " from " + table.name();
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
