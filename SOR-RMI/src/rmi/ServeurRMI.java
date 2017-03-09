@@ -8,6 +8,8 @@ import java.util.Map;
 import bean.*;
 
 public interface ServeurRMI extends Remote {
+	
+	public ArrayList<Map.Entry<Log, Admin>> getLog() throws RemoteException;
 
 	public ArrayList<Admin> getAdmin(String name, String password) throws RemoteException;
 	
@@ -32,6 +34,8 @@ public interface ServeurRMI extends Remote {
 	public ArrayList<Plat> getPlat(String name) throws RemoteException;
 	
 	public ArrayList<Menu> getPlatMenu(int id) throws RemoteException;
+	
+	public boolean putLog(Log l) throws RemoteException;
 
 	public boolean putAdmin(Admin a) throws RemoteException;
 

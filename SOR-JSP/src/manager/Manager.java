@@ -6,8 +6,11 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.sun.org.apache.bcel.internal.generic.ArrayInstruction;
+
 import bean.Admin;
 import bean.Groupe;
+import bean.Log;
 import bean.Menu;
 import bean.Plat;
 import rmi.ServeurRMI;
@@ -115,6 +118,14 @@ public class Manager {
 	
 	public static boolean delete(Class<?> c, int id) throws RemoteException {
 		return serveur.delete(c, id);
+	}
+	
+	public static ArrayList<Map.Entry<Log, Admin>> getLog() throws RemoteException {
+		return serveur.getLog();
+	}
+	
+	public static boolean putLog(Log l) throws RemoteException {
+		return serveur.putLog(l);
 	}
 
 }

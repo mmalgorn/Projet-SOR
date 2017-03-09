@@ -13,7 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.sql.Timestamp;
+
 import bean.Admin;
+import bean.Log;
 import manager.Manager;
 
 /**
@@ -74,8 +77,10 @@ public class ServletConnexion extends HttpServlet {
 		if(admins.isEmpty()) {
 			return false;
 		} else {
+			Admin a = admins.get(0);
 			session = request.getSession();
-			session.setAttribute("admin", admins.get(0).getAdmin_user());
+			session.setAttribute("admin", a.getAdmin_user());
+			Manager.putLog(new Log(a.getAdmin_id(), new Timestamp(System.currentTimeMillis())));
 			return true;
 		}
 	}

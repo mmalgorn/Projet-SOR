@@ -1,12 +1,19 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.websocket.Session;
+
+import bean.Admin;
+import bean.Log;
+import manager.Manager;
 
 /**
  * Servlet implementation class ServletAdministration
@@ -28,10 +35,13 @@ public class ServletAdministration extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println(request.getSession().getAttribute("admin"));
-		if (request.getSession().getAttribute("admin") == null) 
-			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
-		else
-			request.getServletContext().getRequestDispatcher("/WEB-INF/Administration.jsp").forward(request, response);
+		if (request.getSession().getAttribute("admin") == null) {
+			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);			
+		} else {
+			ArrayList<Map.Entry<Log, Admin>> logs = Manager.getLog();
+			request.setAttribute("logs", logs);
+			request.getServletContext().getRequestDispatcher("/WEB-INF/Administration.jsp").forward(request, response);			
+		}
 	}
 
 	/**

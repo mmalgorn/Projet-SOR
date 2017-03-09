@@ -36,7 +36,7 @@ public class ServletAjoutMenu extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ArrayList<Plat> list = Manager.getPlat();
+		ArrayList<Plat> list = Manager.getPlat(false);
 		ArrayList<Groupe> listGroupe = Manager.getGroupe();
 		
 		request.setAttribute("Plat", list);		
@@ -76,7 +76,7 @@ public class ServletAjoutMenu extends HttpServlet {
 
 		if(retMenu.size()>0){
 			int idMenu = retMenu.get(0).getMenu_id();
-			ArrayList<Plat> plat = Manager.getPlat();
+			ArrayList<Plat> plat = Manager.getPlat(false);
 			ArrayList<Plat> platMenu = new ArrayList<Plat>();
 
 			if(request.getParameter("i")!=null){
