@@ -32,7 +32,6 @@ public class ServletGroupe extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		ArrayList<Groupe> list = Manager.getGroupe();
 		request.setAttribute("Groupe", list);
 		request.getServletContext().getRequestDispatcher("/WEB-INF/Groupe.jsp").forward(request, response);

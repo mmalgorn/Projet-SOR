@@ -33,7 +33,9 @@ public class ServletSuppressionGroupe extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if (request.getSession().getAttribute("admin") == null)
+			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
+		
 		id = -1;
 		ArrayList<Groupe> groupe = Manager.getGroupe();
 		request.setAttribute("Groupe", groupe);
@@ -50,7 +52,9 @@ public class ServletSuppressionGroupe extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if (request.getSession().getAttribute("admin") == null)
+			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
+		
 		if (id!=-1 && request.getParameter("type") != null) {
 			
 			int idRemp = Integer.parseInt(request.getParameter("type"));
@@ -60,7 +64,7 @@ public class ServletSuppressionGroupe extends HttpServlet {
 				request.setAttribute("error", "Erreur lors de la suppression du plat. Le plat n'existe pas.");
 			} else {
 				if (Manager.deleteGroupe(id,idRemp))
-					request.setAttribute("success", "Le plat a été supprimé avec succès.");
+					request.setAttribute("success", "Le plat a ï¿½tï¿½ supprimï¿½ avec succï¿½s.");
 				else
 					request.setAttribute("error", "Erreur lors de la suppression du plat.");
 			}

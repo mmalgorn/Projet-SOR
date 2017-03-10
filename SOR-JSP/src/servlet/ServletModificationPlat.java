@@ -82,7 +82,9 @@ public class ServletModificationPlat extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if (request.getSession().getAttribute("admin") == null)
+			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
+		
 		String name = (request.getParameter("nom") ==  null ? "" : request.getParameter("nom"));
 		String description = (request.getParameter("description") == null ? "" : request.getParameter("description"));
 		float prix = (request.getParameter("prix") == null ? null : Float.parseFloat(request.getParameter("prix")));
@@ -118,7 +120,6 @@ public class ServletModificationPlat extends HttpServlet {
 			} else {
 				request.setAttribute("insert", 0);
 			}
-
 		} else {
 			request.setAttribute("present", 1);
 		}

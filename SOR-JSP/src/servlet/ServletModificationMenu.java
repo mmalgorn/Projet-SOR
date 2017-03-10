@@ -44,10 +44,23 @@ public class ServletModificationMenu extends HttpServlet {
 		ArrayList<Menu> menus = null;
 		ArrayList<Entry<Plat,Groupe>> menuPlat = null;
 		
-		if(request.getParameter("id")!=null){
+		int id_menu = -1;
+		
+		if (request.getParameter("id") != null) id_menu = Integer.parseInt(request.getParameter("id"));
+		else if (request.getAttribute("id") != null) id_menu = (int) request.getAttribute("id");
+		
+		if (request.getAttribute("insert") != null) {
+			if ((int) request.getAttribute("insert") == 0) {
+				request.setAttribute("error", "Erreur lors de la modification du menu.");
+			} else {
+				request.setAttribute("success", "Menu modifié avec succès.");
+			}
+		}
+		
+		if(id_menu != -1) {
 			
-			menuPlat = Manager.getMenuPlat(Integer.parseInt(request.getParameter("id")));
-			menus = Manager.getMenu(Integer.parseInt(request.getParameter("id")));
+			menuPlat = Manager.getMenuPlat(id_menu);
+			menus = Manager.getMenu(id_menu);
 			request.setAttribute("menu", menus.get(0));
 			request.setAttribute("Plat", list);		
 			request.setAttribute("Groupe", listGroupe);
@@ -55,11 +68,9 @@ public class ServletModificationMenu extends HttpServlet {
 			
 			request.getServletContext().getRequestDispatcher("/WEB-INF/ModifMenu.jsp").forward(request, response);
 
-		}else{
+		} else {
 			request.getRequestDispatcher("AjoutMenu").forward(request,response);
 		}
-		
-		
 	}
 
 	/**
@@ -87,8 +98,9 @@ public class ServletModificationMenu extends HttpServlet {
 			prix = Float.parseFloat(request.getParameter("prix"));
 		}
 
+		int id_menu = Integer.parseInt(request.getParameter("menu"));
 		
-		menu = Manager.getMenu(Integer.parseInt(request.getParameter("menu"))).get(0);
+		menu = Manager.getMenu(id_menu).get(0);
 		
 		menu.setMenu_description(description);
 		menu.setMenu_nom(nom);
@@ -98,9 +110,9 @@ public class ServletModificationMenu extends HttpServlet {
 
 		retMenu = Manager.getMenu(menu.getMenu_nom());
 
-		if(retMenu.size()>0){
+		if(retMenu.size() > 0){
 			int idMenu = retMenu.get(0).getMenu_id();
-
+			menuPlat = Manager.getMenuPlat(idMenu);
 
 			if(request.getParameter("i")!=null){
 				nbPlat = Integer.parseInt(request.getParameter("i"));
@@ -108,7 +120,7 @@ public class ServletModificationMenu extends HttpServlet {
 
 			for(int j=0;j<menuPlat.size();j++){
 				System.out.println("delete "+idMenu+" "+menuPlat.get(j).getKey().getPlat_id());
-						Manager.deleteMenuPlat(idMenu, menuPlat.get(j).getKey().getPlat_id());
+				Manager.deleteMenuPlat(idMenu, menuPlat.get(j).getKey().getPlat_id());
 			}
 			
 			for(int i = 0 ;i<=nbPlat;i++){
@@ -120,10 +132,14 @@ public class ServletModificationMenu extends HttpServlet {
 					Manager.putPlatMenu(idMenu,i, Integer.parseInt(request.getParameter("type"+i)));
 				}
 			}
-		}else{
-			//Menu pas ajouter
+			
+			request.setAttribute("insert", 1);
+		} else {
+			request.setAttribute("present", 1);
 		}
-
+		
+		request.setAttribute("id", id_menu);
+		doGet(request, response);
 	}
 
 }
