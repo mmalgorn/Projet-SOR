@@ -24,4 +24,14 @@
 	</table>
 </div>
 
+<form method="POST" action="PDF">
+	<select name="groupe">
+		<option value="all">Toutes les entrées</option>
+		<c:forEach items="${groupes}" var="grp">
+			<option value="${grp.getGroupe_id()}">${grp.getGroupe_nom()}</option>
+		</c:forEach>
+	</select>
+	<button  type="submit">Générer le PDF</button>
+</form>
+
 <%@include file="Footer.jsp" %>
