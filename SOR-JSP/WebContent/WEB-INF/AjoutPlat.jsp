@@ -32,8 +32,8 @@
 	</div>
 	<div class="form-group">
 		<label for="plat">Prix</label> <input type="number"
-			class="form-control" name="prix" placeholder="Prix"
-			maxlength="5" required>
+			class="form-control" name="prix" placeholder="Prix" min="0"
+			max="99999" required>
 	</div>
 	<div class="form-group">
 		<label for="plat">Photo</label> <input type="file" name="photo">

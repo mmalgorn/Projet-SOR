@@ -33,7 +33,7 @@
 	</div>
 	<div class="form-group">
 		<label for="plat">Prix</label> <input type="number" class="form-control" name="prix"
-			placeholder="Prix" size="25" value="${menu.getMenu_prix()}" maxlength="5" required>
+			placeholder="Prix" min="0" max="99999" value="${menu.getMenu_prix()}" required>
 	</div>
 	<p>
 		Cochez les plat que vous voulez rajouter au menu<br />

@@ -49,10 +49,8 @@ public class ServletAjoutPlat extends HttpServlet {
 		if (request.getAttribute("insert") != null) {
 			if ((int) request.getAttribute("insert") == 0) request.setAttribute("error", "Erreur lors de la création du plat.");
 			else if ((int) request.getAttribute("insert") == 2) request.setAttribute("error", "Certains champs ne sont pas valides.");
+			else if ((int) request.getAttribute("insert") == 3) request.setAttribute("error", "Le plat existe déjà.");
 			else request.setAttribute("success", "Plat ajouté avec succès.");
-		}
-		if (request.getAttribute("present") != null) {
-			request.setAttribute("error", "Plat déja présent. Veuillez recommencer.");
 		}
 		request.getServletContext().getRequestDispatcher("/WEB-INF/AjoutPlat.jsp").forward(request, response);
 	}
@@ -72,11 +70,15 @@ public class ServletAjoutPlat extends HttpServlet {
 		byte[] buffer = new byte[(int) filePart.getSize()];
 		InputStream is = filePart.getInputStream();
 		while(is.read(buffer) != -1);
+
+		//iso-8859-1 vers UTF-8
+		name = new String(name.getBytes ("iso-8859-1"), "UTF-8");
+		description = new String(description.getBytes ("iso-8859-1"), "UTF-8");
 		
 		ArrayList<Plat> listTest = Manager.getPlat(name);
 		
 		System.out.println(listTest.size());
-		if (listTest.size() == 0) {
+		if (listTest.isEmpty()) {
 			Plat plat = new Plat(name, description, prix, new Photo(buffer), id_groupe);
 			System.out.println(plat.getPlat_nom());
 			System.out.println(plat.getPlat_description());
@@ -95,7 +97,7 @@ public class ServletAjoutPlat extends HttpServlet {
 				request.setAttribute("insert", 0);
 			}
 		} else {
-			request.setAttribute("present", 1);
+			request.setAttribute("insert", 3);
 		}
 		
 		doGet(request,response);			

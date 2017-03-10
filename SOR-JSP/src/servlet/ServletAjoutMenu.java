@@ -39,13 +39,14 @@ public class ServletAjoutMenu extends HttpServlet {
 			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
 		
 		if (request.getAttribute("insert") != null) {
-			if ((int) request.getAttribute("insert") == 0) {
-				request.setAttribute("error", "Erreur lors de l'ajout du menu.");
-			} else if ((int) request.getAttribute("insert") == 2) {
-				request.setAttribute("error", "Certain champs ne sont pas valides.");
-			} else {
-				request.setAttribute("success", "Menu ajouté avec succès.");
-			}
+			if ((int) request.getAttribute("insert") == 0) request.setAttribute("error", "Erreur lors de l'ajout du menu.");
+			else if ((int) request.getAttribute("insert") == 2) request.setAttribute("error", "Certain champs ne sont pas valides.");
+			else if ((int) request.getAttribute("insert") == 3) request.setAttribute("error", "Le menu existe déjà.");
+			else  request.setAttribute("success", "Menu ajouté avec succès.");
+		}
+		
+		if (request.getAttribute("present") != null) {
+			
 		}
 		
 		ArrayList<Plat> list = Manager.getPlat(false);
@@ -89,6 +90,12 @@ public class ServletAjoutMenu extends HttpServlet {
 			doGet(request, response);
 			return;
 		}
+		
+		if (!Manager.getMenu(menu.getMenu_nom()).isEmpty()) {
+			request.setAttribute("insert", 3);
+			doGet(request, response);
+			return;
+		}
 
 		if (!Manager.putMenu(menu)) {
 			request.setAttribute("insert", 0);
@@ -99,6 +106,7 @@ public class ServletAjoutMenu extends HttpServlet {
 		retMenu = Manager.getMenu(menu.getMenu_nom());
 
 		if(retMenu.size() > 0){
+			System.out.println(retMenu.size());
 			int idMenu = retMenu.get(0).getMenu_id();
 
 			ArrayList<Plat> plat = Manager.getPlat(false);

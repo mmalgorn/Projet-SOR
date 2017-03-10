@@ -106,15 +106,13 @@ public class ServletModificationPlat extends HttpServlet {
 		byte[] buffer = new byte[(int) filePart.getSize()];
 		InputStream is = filePart.getInputStream();
 		while (is.read(buffer) != -1)
-
-		System.out.println(id_plat);
-		ArrayList<Plat> listTest = Manager.getPlat(id_plat);
 		
 		//iso-8859-1 vers UTF-8
 		name = new String(name.getBytes ("iso-8859-1"), "UTF-8");
 		description = new String(description.getBytes ("iso-8859-1"), "UTF-8");
 
-		System.out.println(listTest.size());
+		ArrayList<Plat> listTest = Manager.getPlat(id_plat);
+
 		if (!listTest.isEmpty()) {
 			Photo p;
 			
@@ -133,7 +131,7 @@ public class ServletModificationPlat extends HttpServlet {
 			if (Manager.updatePlat(plat)) request.setAttribute("insert", 1);
 			else request.setAttribute("insert", 0);
 		} else {
-			request.setAttribute("present", 1);
+			request.setAttribute("insert", 3);
 		}
 		
 		doGet(request, response);

@@ -35,7 +35,7 @@
 	<div class="form-group">
 		<label for="plat">Prix</label> <input type="number"
 			class="form-control" name="prix" value="${plat.getPlat_prix()}"
-			size="25" maxlength="5" required>
+			min="0" max="99999" required>
 	</div>
 	<div class="form-group">
 		<label for="plat">Photo</label> <input type="file" name="photo">
