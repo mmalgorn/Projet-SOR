@@ -1,7 +1,7 @@
 <%@include file="Header.jsp"%>
 
 <jsp:include page='Navigation.jsp'>
-    <jsp:param name="menu" value="${true}"/>
+	<jsp:param name="menu" value="${true}" />
 </jsp:include>
 
 <div class="page-header">
@@ -19,23 +19,21 @@
 	</div>
 </c:if>
 
-
 <form method="post" action="ModificationMenu">
 	<div class="form-group">
-		<label for="plat">Nom du Menu</label> <input type="text"
-			class="form-control" name="nom" placeholder="Nom du Menu" size="25"
-			value="${menu.getMenu_nom()}" maxlength="25" minlength="4" required>
-	</div>
-	<div class="form-group">
-		<label for="plat">Description</label> <input type="text"
-			class="form-control" name="description" placeholder="Desciption"
-			value="${menu.getMenu_description()}" size="1000" maxlength="1000"
+		<label for="plat">Nom du Menu</label> <input type="text" class="form-control" name="nom"
+			placeholder="Nom du Menu" size="25" value="${menu.getMenu_nom()}" maxlength="25" minlength="4"
 			required>
 	</div>
 	<div class="form-group">
-		<label for="plat">Prix</label> <input type="number"
-			class="form-control" name="prix" placeholder="Prix" size="25"
-			value="${menu.getMenu_prix()}" maxlength="5" required>
+		<label for="plat">Description</label>
+		<input type="text" class="form-control" name="description"
+			placeholder="Desciption" value="${menu.getMenu_description()}" size="1000" maxlength="1000"
+			required>
+	</div>
+	<div class="form-group">
+		<label for="plat">Prix</label> <input type="number" class="form-control" name="prix"
+			placeholder="Prix" size="25" value="${menu.getMenu_prix()}" maxlength="5" required>
 	</div>
 	<p>
 		Cochez les plat que vous voulez rajouter au menu<br />
@@ -52,8 +50,7 @@
 				<c:set var="i" value="${plat.getPlat_id()}" />
 			</c:if>
 			<tr>
-				<td><input type="checkbox" name="${plat.getPlat_id()}"
-					id="${plat.getPlat_id()}"
+				<td><input type="checkbox" name="${plat.getPlat_id()}" id="${plat.getPlat_id()}"
 					onchange='doAfficheListe(this,"type${plat.getPlat_id()}")'
 					<c:forEach items="${menuPlat}" var="platGroupe">
 					<c:if test="${platGroupe.getKey().getPlat_id() == plat.getPlat_id() }"> 
@@ -62,8 +59,7 @@
 					</c:if>
 				</c:forEach>>
 					<label for="${plat.getPlat_id()}">${plat.getPlat_nom()}</label></td>
-				<td><select name="type${plat.getPlat_id()}"
-					id="type${plat.getPlat_id()}"
+				<td><select name="type${plat.getPlat_id()}" id="type${plat.getPlat_id()}"
 					<c:if test="${grp ==0 }">
 				style="visibility:hidden"
 				</c:if>>
@@ -88,8 +84,8 @@
 		</c:forEach>
 	</table>
 	</p>
-	<input type="hidden" name="i" id="i" value="${i}"> <input
-		type="hidden" name="menu" id="menu" value="${menu.getMenu_id()}">
+	<input type="hidden" name="i" id="i" value="${i}"> <input type="hidden" name="menu"
+		id="menu" value="${menu.getMenu_id()}">
 	<div class="form-group validation-btn-group text-center">
 		<button type="submit" class="btn btn-default">Valider</button>
 		<button type="reset" class="btn btn-default">Remettre à zéro</button>

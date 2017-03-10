@@ -42,7 +42,7 @@ public class ServletSuppressionMenu extends HttpServlet {
 				request.setAttribute("error", "Erreur lors de la suppression du plat. Le plat n'existe pas.");
 			} else {
 				if (Manager.delete(Menu.class, id))
-					request.setAttribute("success", "Le plat a �t� supprim� avec succ�s.");
+					request.setAttribute("success", "Le plat a été supprimé avec succès.");
 				else
 					request.setAttribute("error", "Erreur lors de la suppression du plat.");
 			}

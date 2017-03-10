@@ -43,4 +43,10 @@ public class Groupe implements Serializable {
 		if (!this.groupe_nom.equals(g.getGroupe_nom())) return false;
 		return true;
 	}
+	
+	public boolean checkFields() {
+		if (groupe_id < 0) return false;
+		if (groupe_nom.length() > 25 || groupe_nom.length() < 4) return false;
+		return true;
+	}
 }

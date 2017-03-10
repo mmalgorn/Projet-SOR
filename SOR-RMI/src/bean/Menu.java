@@ -74,7 +74,11 @@ public class Menu implements Serializable {
 		this.menu_prix = menu_prix;
 	}
 	
-	
-
-	
+	public boolean checkFields() {
+		if (menu_id < 0) return false;
+		if (menu_nom.length() < 4 || menu_nom.length() > 25) return false;
+		if (menu_description == null || menu_description.length() > 1000) return false;
+		if (menu_prix < 0 || menu_prix > 100000) return false;
+		return true;
+	}
 }

@@ -33,12 +33,8 @@ public class ServletModificationPlat extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 
-	//l'id permet de recuperer l'id du plat souhaiter dans le doPost
-	int	id_plat;
-
 	public ServletModificationPlat() {
 		super();
-		id_plat = -1;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -51,16 +47,19 @@ public class ServletModificationPlat extends HttpServlet {
 		if (request.getSession().getAttribute("admin") == null)
 			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
 		
+		int id_plat = -1;
+		
+		if (request.getParameter("id") != null) id_plat = Integer.parseInt(request.getParameter("id"));
+		else if (request.getAttribute("id") != null) id_plat = (int) request.getAttribute("id");
+		
 		if (request.getAttribute("insert") != null) {
-			if ((int) request.getAttribute("insert") == 0) {
-				request.setAttribute("error", "Erreur lors de la modification du plat.");
-			} else {
-				request.setAttribute("success", "Plat modifié avec succès.");
-			}
+			if ((int) request.getAttribute("insert") == 0) request.setAttribute("error", "Erreur lors de la modification du plat.");
+			else if ((int) request.getAttribute("insert") == 2) request.setAttribute("error", "Certains champs ne sont pas valides.");
+			else if ((int) request.getAttribute("insert") == 3) request.setAttribute("error", "Une erreur est survenue.");
+			else request.setAttribute("success", "Plat modifiÃ© avec succÃ¨s.");
 		}
 
-		this.id_plat = -1;
-		//On récupère le plat et on sauvegarde l'id du plat passer en paramètre afin de le retrouver dans le Post
+		//On rï¿½cupï¿½re le plat et on sauvegarde l'id du plat passer en paramï¿½tre afin de le retrouver dans le Post
 		
 		ArrayList<Groupe> list = Manager.getGroupe();
 		request.setAttribute("groupes", list);
@@ -70,10 +69,9 @@ public class ServletModificationPlat extends HttpServlet {
 		ArrayList<Plat> plat = Manager.getPlat(id_plat);
 		System.out.println(plat.size());
 		
-		//SI la plat n'est pas présent en base on renvoi vers la page AjoutPLat
+		//SI la plat n'est pas prï¿½sent en base on renvoi vers la page AjoutPLat
 		if (plat.size() > 0) {
 			request.setAttribute("plat", plat.get(0));
-			this.id_plat = plat.get(0).getPlat_id();
 			request.getServletContext().getRequestDispatcher("/WEB-INF/ModifPlat.jsp").forward(request, response);
 		} else {
 			request.getServletContext().getRequestDispatcher("/WEB-INF/AjoutPlat.jsp").forward(request, response);
@@ -90,6 +88,16 @@ public class ServletModificationPlat extends HttpServlet {
 		if (request.getSession().getAttribute("admin") == null)
 			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
 		
+		int id_plat = -1;
+		try {
+			id_plat = Integer.parseInt(request.getParameter("plat_id"));
+		} catch(NumberFormatException e) {
+			request.setAttribute("insert", 3);
+			doGet(request, response);
+			return;
+		}
+		
+		request.setAttribute("id", id_plat);
 		String name = (request.getParameter("nom") ==  null ? "" : request.getParameter("nom"));
 		String description = (request.getParameter("description") == null ? "" : request.getParameter("description"));
 		float prix = (request.getParameter("prix") == null ? null : Float.parseFloat(request.getParameter("prix")));
@@ -109,23 +117,25 @@ public class ServletModificationPlat extends HttpServlet {
 		System.out.println(listTest.size());
 		if (!listTest.isEmpty()) {
 			Photo p;
-			if (buffer.length > 0)
-				p = new Photo(buffer);
-			else
-				p = listTest.get(0).getPlat_photo();
+			
+			if (buffer.length > 0) p = new Photo(buffer);
+			else p = listTest.get(0).getPlat_photo();
+			
 			Plat plat = new Plat(name, description, prix, p, id_groupe);
 			plat.setPlat_id(id_plat);
-
-			if (Manager.updatePlat(plat)) {
-				request.setAttribute("insert", 1);
-			} else {
-				request.setAttribute("insert", 0);
+			
+			if (!plat.checkFields()) {
+				request.setAttribute("insert", 2);
+				doGet(request, response);
+				return;
 			}
+
+			if (Manager.updatePlat(plat)) request.setAttribute("insert", 1);
+			else request.setAttribute("insert", 0);
 		} else {
 			request.setAttribute("present", 1);
 		}
-
-		request.setAttribute("id", id_plat);
+		
 		doGet(request, response);
 	}
 

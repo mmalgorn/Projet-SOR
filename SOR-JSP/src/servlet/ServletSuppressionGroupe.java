@@ -64,7 +64,7 @@ public class ServletSuppressionGroupe extends HttpServlet {
 				request.setAttribute("error", "Erreur lors de la suppression du plat. Le plat n'existe pas.");
 			} else {
 				if (Manager.deleteGroupe(id,idRemp))
-					request.setAttribute("success", "Le plat a �t� supprim� avec succ�s.");
+					request.setAttribute("success", "Le plat a été supprimé avec succès.");
 				else
 					request.setAttribute("error", "Erreur lors de la suppression du plat.");
 			}

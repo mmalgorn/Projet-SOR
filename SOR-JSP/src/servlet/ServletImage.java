@@ -34,7 +34,7 @@ public class ServletImage extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("ref"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		
 		ArrayList<Plat> plats = Manager.getPlat(id);
 		if(!plats.isEmpty()) {

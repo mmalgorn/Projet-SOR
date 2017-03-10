@@ -49,13 +49,12 @@ public class ServletModificationMenu extends HttpServlet {
 		if (request.getParameter("id") != null) id_menu = Integer.parseInt(request.getParameter("id"));
 		else if (request.getAttribute("id") != null) id_menu = (int) request.getAttribute("id");
 		
+		System.out.println(id_menu);
 		
 		if (request.getAttribute("insert") != null) {
-			if ((int) request.getAttribute("insert") == 0) {
-				request.setAttribute("error", "Erreur lors de la modification du menu.");
-			} else {
-				request.setAttribute("success", "Menu modifié avec succès.");
-			}
+			if ((int) request.getAttribute("insert") == 0) request.setAttribute("error", "Erreur lors de la modification du menu.");
+			else if ((int) request.getAttribute("insert") == 2) request.setAttribute("error", "Certains champs ne sont pas valides.");
+			else request.setAttribute("success", "Menu modifié avec succès.");
 		}
 		
 		//Si l'id passer en param�tre est incorrecte on redirige vers la page d'ajout de menu
@@ -109,6 +108,14 @@ public class ServletModificationMenu extends HttpServlet {
 		menu.setMenu_description(description);
 		menu.setMenu_nom(nom);
 		menu.setMenu_prix(prix);
+		
+		request.setAttribute("id", id_menu);
+		
+		if (!menu.checkFields()) {
+			request.setAttribute("insert", 1);
+			doGet(request, response);
+			return;
+		}
 		
 		Manager.updateMenu(menu);
 

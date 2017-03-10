@@ -8,19 +8,16 @@
 	<h1>Ajout Menu</h1>
 </div>
 
-<c:if test="${present == 1}">
-	<p>Plat déja présent. Veuillez reccomencer.</p> 
-	  	${present = "null"}
-   	</c:if>
-<c:if test="${insert == 1}">
-	<p>Plat ajouté avec succès</p>
-		${insert = "null"}
-	</c:if>
-<c:if test="${insert == 0}">
-	<p>Erreur lors de la création du plat</p>
-		${insert = "null"}
-	</c:if>
-
+<c:if test="${error != null}">
+	<div class="alert alert-danger" role="alert">
+		<strong>Erreur :</strong> ${error}
+	</div>
+</c:if>
+<c:if test="${success != null}">
+	<div class="alert alert-success" role="alert">
+		<strong>Succès :</strong> ${success}
+	</div>
+</c:if>
 
 <form method="post" action="AjoutMenu">
 

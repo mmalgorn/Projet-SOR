@@ -53,6 +53,8 @@
 
 		</select>
 	</p>
+	
+	<input type="hidden" name="plat_id" id="plat_id" value="${plat.getPlat_id()}">
 
 	<div class="form-group validation-btn-group text-center">
 		<button type="submit" class="btn btn-default">Valider</button>

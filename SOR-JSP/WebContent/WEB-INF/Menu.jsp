@@ -8,11 +8,22 @@
 	<h1>Menu ${menu.getMenu_nom()}</h1>
 </div>
 
+<c:if test="${error != null}">
+	<div class="alert alert-danger" role="alert">
+		<strong>Erreur :</strong> ${error}
+	</div>
+</c:if>
+<c:if test="${success != null}">
+	<div class="alert alert-success" role="alert">
+		<strong>Succès :</strong> ${success}
+	</div>
+</c:if>
+
 <c:forEach items="${plats}" var="pg">
 	<div class="media">
 		<div class="media-left">
-			<a href="Image?ref=${plat.getPlat_id()}">
-				<img class="plat-image" src="Image?ref=${pg.getKey().getPlat_id()}" alt="">
+			<a href="Image?id=${pg.getKey().getPlat_id()}">
+				<img class="plat-image" src="Image?id=${pg.getKey().getPlat_id()}" alt="">
 			</a>
 		</div>
 		<div class="media-body">

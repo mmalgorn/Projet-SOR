@@ -123,6 +123,15 @@ public class ServletPDF extends HttpServlet {
 
 	private static void createTable(Document document, Map<Groupe, ArrayList<Plat>> groupePlat) throws DocumentException {
 		
+		if (groupePlat.values().size() == 1 ) {			
+			if (((ArrayList<Plat>) new ArrayList(groupePlat.values()).get(0)).isEmpty()) {
+				Paragraph para = new Paragraph("Il n'y a pas encore de plats dans ce groupe", tableNameFont);
+				para.setLeading(30);
+				document.add(para);
+				return;
+			}
+		}
+		
 		for(Groupe g : groupePlat.keySet()) {
 			if (groupePlat.get(g).isEmpty()) continue;
 

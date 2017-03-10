@@ -42,7 +42,7 @@ public class ServletSuppressionPlat extends HttpServlet {
 				request.setAttribute("error", "Erreur lors de la suppression du plat. Le plat n'existe pas.");
 			} else {
 				if (Manager.delete(Plat.class, id))
-					request.setAttribute("success", "Le plat a été supprimé avec succès.");
+					request.setAttribute("success", "Le plat a Ã©tÃ© supprimÃ© avec succÃ¨s.");
 				else
 					request.setAttribute("error", "Erreur lors de la suppression du plat.");
 			}

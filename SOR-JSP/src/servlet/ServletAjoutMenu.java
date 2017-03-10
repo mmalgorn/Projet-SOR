@@ -37,6 +37,17 @@ public class ServletAjoutMenu extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getSession().getAttribute("admin") == null)
 			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
+		
+		if (request.getAttribute("insert") != null) {
+			if ((int) request.getAttribute("insert") == 0) {
+				request.setAttribute("error", "Erreur lors de l'ajout du menu.");
+			} else if ((int) request.getAttribute("insert") == 2) {
+				request.setAttribute("error", "Certain champs ne sont pas valides.");
+			} else {
+				request.setAttribute("success", "Menu ajouté avec succès.");
+			}
+		}
+		
 		ArrayList<Plat> list = Manager.getPlat(false);
 		ArrayList<Groupe> listGroupe = Manager.getGroupe();
 		
@@ -53,6 +64,7 @@ public class ServletAjoutMenu extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getSession().getAttribute("admin") == null)
 			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
+		
 		int nbPlat = 0;
 		String nom= null;
 		String description= null;
@@ -71,12 +83,22 @@ public class ServletAjoutMenu extends HttpServlet {
 		}
 
 		menu = new Menu(nom, description, prix);
+		
+		if (!menu.checkFields()) {
+			request.setAttribute("insert", 2);
+			doGet(request, response);
+			return;
+		}
 
-		Manager.putMenu(menu);
+		if (!Manager.putMenu(menu)) {
+			request.setAttribute("insert", 0);
+			doGet(request, response);
+			return;
+		}
 
 		retMenu = Manager.getMenu(menu.getMenu_nom());
 
-		if(retMenu.size()>0){
+		if(retMenu.size() > 0){
 			int idMenu = retMenu.get(0).getMenu_id();
 
 			ArrayList<Plat> plat = Manager.getPlat(false);
@@ -95,10 +117,12 @@ public class ServletAjoutMenu extends HttpServlet {
 					Manager.putPlatMenu(idMenu,i, Integer.parseInt(request.getParameter("type"+i)));
 				}
 			}
-		}else{
-			//Menu pas ajouter
+			request.setAttribute("insert", 1);
+		} else {
+			request.setAttribute("present", 1);
 		}
-
+		
+		doGet(request, response);
 	}
 
 }

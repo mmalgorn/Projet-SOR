@@ -35,7 +35,7 @@
 	</thead>
 	<c:forEach items="${Plat}" var="plat">
 		<tr>
-			<td><a href="Image?ref=${plat.getPlat_id()}"><img class="plat-image" src="Image?ref=${plat.getPlat_id()}" alt=""></a></td>
+			<td><a href="Image?id=${plat.getPlat_id()}"><img class="plat-image" src="Image?id=${plat.getPlat_id()}" alt=""></a></td>
 			<td><strong>${plat.getPlat_nom()}</strong></td>
 			<td>${plat.getPlat_description()}</td>
 			<td>${plat.getPlat_prix()} &euro;</td>

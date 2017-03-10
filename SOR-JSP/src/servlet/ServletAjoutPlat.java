@@ -47,11 +47,9 @@ public class ServletAjoutPlat extends HttpServlet {
 		ArrayList<Groupe> list = Manager.getGroupe();	
 		request.setAttribute("groupes", list);
 		if (request.getAttribute("insert") != null) {
-			if ((int) request.getAttribute("insert") == 0) {
-				request.setAttribute("error", "Erreur lors de la création du plat.");
-			} else {
-				request.setAttribute("success", "Plat ajouté avec succès.");
-			}
+			if ((int) request.getAttribute("insert") == 0) request.setAttribute("error", "Erreur lors de la création du plat.");
+			else if ((int) request.getAttribute("insert") == 2) request.setAttribute("error", "Certains champs ne sont pas valides.");
+			else request.setAttribute("success", "Plat ajouté avec succès.");
 		}
 		if (request.getAttribute("present") != null) {
 			request.setAttribute("error", "Plat déja présent. Veuillez recommencer.");
@@ -84,6 +82,12 @@ public class ServletAjoutPlat extends HttpServlet {
 			System.out.println(plat.getPlat_description());
 			System.out.println(plat.getPlat_id_groupe());
 			System.out.println(plat.getPlat_prix());
+			
+			if (!plat.checkFields()) {
+				request.setAttribute("insert", 2);
+				doGet(request, response);
+				return;
+			}
 
 			if (Manager.putPlat(plat)) {
 				request.setAttribute("insert", 1);

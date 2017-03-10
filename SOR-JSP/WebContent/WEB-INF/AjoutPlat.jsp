@@ -32,7 +32,7 @@
 	</div>
 	<div class="form-group">
 		<label for="plat">Prix</label> <input type="number"
-			class="form-control" name="prix" placeholder="Prix" size="25"
+			class="form-control" name="prix" placeholder="Prix"
 			maxlength="5" required>
 	</div>
 	<div class="form-group">

@@ -97,4 +97,12 @@ public class Plat implements Serializable {
 	public void setPlat_prix(float plat_prix) {
 		this.plat_prix = plat_prix;
 	}
+	
+	public boolean checkFields() {
+		if (plat_id < 0) return false;
+		if (plat_nom.length() < 4 || plat_nom.length() > 25) return false;
+		if (plat_description == null || plat_description.length() > 1000) return false;
+		if (plat_prix > 100000 || plat_prix < 0) return false;
+		return true;
+	}
 }

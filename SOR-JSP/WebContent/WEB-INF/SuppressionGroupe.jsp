@@ -7,6 +7,7 @@
 <div class="page-header">
 	<h1>Suppression Groupe</h1>
 </div>
+
 <form method="post" action="SuppressionGroupe">
 		<div class="form-group">
 		<p>
