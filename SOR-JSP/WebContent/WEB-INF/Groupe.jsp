@@ -29,8 +29,7 @@
 		<tr>
 			<td><strong>${groupe.getGroupe_nom()}</strong></td>
 			<td align="right"><a href="AjoutModifGroupe?id=${groupe.getGroupe_id()}" class="btn btn-default">Modifier</a>
-				<a href="SuppressionGroupe?id=${groupe.getGroupe_id()}" class="btn btn-danger" onclick="return confirm('Voulez vous vraiment supprimer ${groupe.getGroupe_nom()}\n
-				Attention tout les plats utilisant le groupes seront supprimer des menus')">Supprimer</a>
+				<a href="SuppressionGroupe?id=${groupe.getGroupe_id()}" class="btn btn-danger" onclick="return confirm('Voulez vous vraiment supprimer ${groupe.getGroupe_nom()}\nAttention tout les plats utilisant le groupes seront supprimer des menus')">Supprimer</a>
 			</td>
 		</tr>
 	</c:forEach>

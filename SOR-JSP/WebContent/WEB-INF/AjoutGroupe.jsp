@@ -1,7 +1,13 @@
 <%@include file="Header.jsp"%>
 
+<jsp:include page='Navigation.jsp'>
+    <jsp:param name="groupe" value="${true}"/>
+</jsp:include>
+
 
 <body>
+
+	
 	<h1>Ajout Groupe</h1>
 
 	<c:if test="${present == 1}">

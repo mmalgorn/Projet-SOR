@@ -34,6 +34,9 @@ public class ServletSuppressionGroupe extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		if (request.getSession().getAttribute("admin") == null)
+			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
+		
 		id = -1;
 		ArrayList<Groupe> groupe = Manager.getGroupe();
 		request.setAttribute("Groupe", groupe);

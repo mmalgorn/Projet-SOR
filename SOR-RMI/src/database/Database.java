@@ -49,7 +49,6 @@ public class Database {
 		Database db = new Database();
 		
 		db.open();
-		System.out.println(db.delete(Admin.class, 2));
 		db.close();
 	}
 
@@ -70,6 +69,7 @@ public class Database {
 		}
 	}
 
+	//Supression générique d'un élément d'une table
 	public boolean delete(Class<?> c, int id) {
 		Table table = (Table) c.getAnnotation(Table.class);
 		String sql = "delete from " + table.name() + " where " + table.name() + "_id = ?";
@@ -98,7 +98,8 @@ public class Database {
 		return res;
 	}
 
-	public boolean deleteMenuPlat(int id_menu, int id_plat) throws RemoteException {
+	//Suppression d'un plat présent dans un menu 
+	public boolean deleteMenuPlat(int id_menu, int id_plat)  {
 		String sql = "delete from menu_plat where mp_id_menu = ? and mp_id_plat = ?";
 
 		boolean res = true;
@@ -117,6 +118,7 @@ public class Database {
 		return res;
 	}
 	
+	//Supression d'un groupe et remplacement de ce groupe par un autre groupe passer en  paramètre
 	public boolean deleteGroupe(int id, int idRemp) {
 		String sql = "delete from groupe where groupe_id = ? ";
 		String updateMenuPlatSql = "update menu_plat set mp_id_groupe = ? where mp_id_groupe = ? ";
@@ -147,6 +149,7 @@ public class Database {
 		return res;
 	}
 	
+	//Fonction permettant de renvoyer les logs en fonction de l'administrateur
 	public ArrayList<Map.Entry<Log, Admin>> getLog() {
 		Table table1 = (Table) Log.class.getAnnotation(Table.class);
 		Table table2 = (Table) Admin.class.getAnnotation(Table.class);
@@ -177,6 +180,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction pemettant de récuperer un administrateur en fonction de son mot de passe et nom
 	public ArrayList<Admin> getAdmin(String name, String password) {
 		Table table = (Table) Admin.class.getAnnotation(Table.class);
 		String sql = "select * from " + table.name() + " where admin_user=? and admin_password=?";
@@ -207,6 +211,7 @@ public class Database {
 		return res;
 	}
 
+	//Fontcion permettant de récuperer un groupe en fonction de son id
 	public ArrayList<Groupe> getGroupe(int id) {
 		Table table = (Table) Groupe.class.getAnnotation(Table.class);
 		String sql = "select * from " + table.name() + " where groupe_id=?";
@@ -236,6 +241,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant de récuperer un Menu en fonction de son id
 	public ArrayList<Menu> getMenu(int id) {
 		Table table = (Table) Menu.class.getAnnotation(Table.class);
 		String sql = "select * from " + table.name() + " where menu_id=?";
@@ -265,6 +271,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant de récuperer un liste des Plat associer à un menu en fonction de l'id du menu
 	public ArrayList<Map.Entry<Plat, Groupe>> getMenuPlat(int id) {
 		Table table1 = (Table) Plat.class.getAnnotation(Table.class);
 		Table table2 = (Table) Groupe.class.getAnnotation(Table.class);
@@ -298,6 +305,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant de recuperer un plat en fonction de l'id
 	public ArrayList<Plat> getPlat(int id) {
 		Table table = (Table) Plat.class.getAnnotation(Table.class);
 		String sql = "select * from " + table.name() + " where plat_id=?";
@@ -328,6 +336,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant de recuperer le menu associé à un plat
 	public ArrayList<Menu> getPlatMenu(int id) {
 		Table table = (Table) Menu.class.getAnnotation(Table.class);
 		String sql = "select " + table.name() + ".* from menu_plat, " + table.name()
@@ -370,6 +379,7 @@ public class Database {
 		return res;
 	}
 	
+	//Fonction permettant d'ajouter un log
 	public boolean putLog(Log l) {
 		Table table = (Table) Log.class.getAnnotation(Table.class);
 		String sql = "insert into " + table.name() + " (log_id_admin, log_date) values (?, ?)";
@@ -390,6 +400,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant d'ajouter un admin
 	public boolean putAdmin(Admin a) {
 		Table table = (Table) Admin.class.getAnnotation(Table.class);
 		String sql = "insert into " + table.name() + " (admin_user, admin_password) values (?, ?)";
@@ -410,6 +421,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant d'ajouter un groupe
 	public boolean putGroupe(Groupe g) {
 		Table table = (Table) Groupe.class.getAnnotation(Table.class);
 		String sql = "insert into " + table.name() + " (groupe_nom) values (?)";
@@ -429,6 +441,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant d'ajouter un Menu
 	public boolean putMenu(Menu m) {
 		Table table = (Table) Menu.class.getAnnotation(Table.class);
 		String sql = "insert into " + table.name() + " (menu_nom,menu_description,menu_prix) values (?,?,?)";
@@ -450,6 +463,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant de rajouter un plat dans un menu en fonction du groupe associé
 	public boolean putMenuPlat(int id_plat, int id_menu, int id_groupe) {
 		String sql = "insert into menu_plat (mp_id_menu, mp_id_plat, mp_id_groupe) values (?, ?, ?)";
 
@@ -470,6 +484,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant d'ajouter un plat
 	public boolean putPlat(Plat p) {
 		Table table = (Table) Plat.class.getAnnotation(Table.class);
 		String sql = "insert into " + table.name()
@@ -494,6 +509,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant de mettre à jour un admin
 	public boolean updateAdmin(Admin a) {
 		Table table = (Table) Admin.class.getAnnotation(Table.class);
 		String sql = "update " + table.name() + " set admin_user = ?, admin_password = ? where admin_id = "
@@ -515,6 +531,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant de mettre à jour un groupe
 	public boolean updateGroupe(Groupe g) {
 		Table table = (Table) Groupe.class.getAnnotation(Table.class);
 		String sql = "update " + table.name() + " set groupe_nom = ? where groupe_id = " + g.getGroupe_id();
@@ -534,6 +551,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant de mettre à jour un Menu
 	public boolean updateMenu(Menu m) {
 		Table table = (Table) Menu.class.getAnnotation(Table.class);
 		String sql = "update " + table.name() + " set menu_nom = ?,menu_description = ?,menu_prix = ? where menu_id = " + m.getMenu_id();
@@ -555,6 +573,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant de mettre à jour un plat
 	public boolean updatePlat(Plat p) {
 		Table table = (Table) Plat.class.getAnnotation(Table.class);
 		String sql = "update " + table.name()
@@ -579,6 +598,7 @@ public class Database {
 		return res;
 	}
 	
+	//Fonction permettant de récuperer la liste de tout les groupes
 	public ArrayList<Groupe> getGroupe() {
 		Table table = (Table) Groupe.class.getAnnotation(Table.class);
 		String sql = "select * from " + table.name();
@@ -607,6 +627,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant de récuperer la liste de tout les menus
 	public ArrayList<Menu> getMenu() {
 		Table table = (Table) Menu.class.getAnnotation(Table.class);
 		String sql = "select * from " + table.name();
@@ -635,6 +656,8 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant de récuperer la liste de tout les plats
+	//Le paramètre permet de récuperer ou non les images associées au plat
 	public ArrayList<Plat> getPlat(boolean images) {
 		Table table = (Table) Plat.class.getAnnotation(Table.class);
 		String sql = "select " + (images ? "*" : "plat_id, plat_nom, plat_description, plat_prix, plat_id_groupe") + " from " + table.name();
@@ -669,6 +692,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant de recuperer un groupe en fonction de son nom
 	public ArrayList<Groupe> getGroupe(String name) {
 		Table table = (Table) Groupe.class.getAnnotation(Table.class);
 		String sql = "select * from " + table.name() + " where groupe_nom=?";
@@ -698,6 +722,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant de recuperer un menu en fonction de son nom	
 	public ArrayList<Menu> getMenu(String name) {
 		Table table = (Table) Menu.class.getAnnotation(Table.class);
 		String sql = "select * from " + table.name() + " where menu_nom=?";
@@ -727,6 +752,7 @@ public class Database {
 		return res;
 	}
 
+	//Fonction permettant de recuperer un plat en fonction de son nom
 	public ArrayList<Plat> getPlat(String name) {
 		Table table = (Table) Plat.class.getAnnotation(Table.class);
 		String sql = "select * from " + table.name() + " where plat_nom=?";

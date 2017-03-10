@@ -44,6 +44,8 @@ public class ServletModificationMenu extends HttpServlet {
 		ArrayList<Menu> menus = null;
 		ArrayList<Entry<Plat,Groupe>> menuPlat = null;
 		
+		//Si l'id passer en paramètre est incorrecte on redirige vers la page d'ajout de menu
+		//Sinon on récupère les informations associés au menu
 		if(request.getParameter("id")!=null){
 			
 			menuPlat = Manager.getMenuPlat(Integer.parseInt(request.getParameter("id")));
@@ -77,6 +79,7 @@ public class ServletModificationMenu extends HttpServlet {
 		ArrayList<Menu> retMenu;
 		ArrayList<Entry<Plat,Groupe>> menuPlat = null;
 
+		//Recupération des paramètres
 		if(request.getParameter("nom")!=null){
 			nom = request.getParameter("nom");
 		}
@@ -87,7 +90,7 @@ public class ServletModificationMenu extends HttpServlet {
 			prix = Float.parseFloat(request.getParameter("prix"));
 		}
 
-		
+		//On récupère l'ancien menu et on le met à jour
 		menu = Manager.getMenu(Integer.parseInt(request.getParameter("menu"))).get(0);
 		
 		menu.setMenu_description(description);
@@ -98,25 +101,22 @@ public class ServletModificationMenu extends HttpServlet {
 
 		retMenu = Manager.getMenu(menu.getMenu_nom());
 
+		//On update la table menuPLat en fonction des case cocher
+		//Afin d'éviter les erreur on supprime tout les plats présents dans un menu avant de les rajouter
 		if(retMenu.size()>0){
 			int idMenu = retMenu.get(0).getMenu_id();
-
 
 			if(request.getParameter("i")!=null){
 				nbPlat = Integer.parseInt(request.getParameter("i"));
 			}
 
 			for(int j=0;j<menuPlat.size();j++){
-				System.out.println("delete "+idMenu+" "+menuPlat.get(j).getKey().getPlat_id());
-						Manager.deleteMenuPlat(idMenu, menuPlat.get(j).getKey().getPlat_id());
+				Manager.deleteMenuPlat(idMenu, menuPlat.get(j).getKey().getPlat_id());
 			}
 			
 			for(int i = 0 ;i<=nbPlat;i++){
 				if((request.getParameter(""+i)!=null)&&(request.getParameter("type"+i)!=null)){
 
-					System.out.println("Plat : "+i+" "+request.getParameter(""+i));
-					System.out.println("Groupe : "+request.getParameter("type"+i));
-					
 					Manager.putPlatMenu(idMenu,i, Integer.parseInt(request.getParameter("type"+i)));
 				}
 			}

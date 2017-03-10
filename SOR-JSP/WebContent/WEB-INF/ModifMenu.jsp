@@ -1,6 +1,11 @@
 <%@include file="Header.jsp"%>
 
-	<h1>Ajout Menu</h1>
+<jsp:include page='Navigation.jsp'>
+    <jsp:param name="menu" value="${true}"/>
+</jsp:include>
+
+
+	<h1>Modification Menu</h1>
 
 	<c:if test="${present == 1}">
 		<p>Plat déja présent. Veuillez reccomencer.</p> 

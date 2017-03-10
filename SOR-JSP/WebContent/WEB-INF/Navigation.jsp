@@ -6,10 +6,10 @@
 		<ul class="nav navbar-nav navbar-left">
 			<li class="${param.accueil ? 'active' : ''}"><a href="Accueil" title="Accueil">Accueil</a></li>
 			<li class="${param.menu ? 'active' : ''}"><a href="Menu" title="Menu">Menu</a></li>
-			<li class="${param.groupe ? 'active' : ''}"><a href="Groupe" title="Groupe">Groupe</a></li>
 			<li class="${param.plat ? 'active' : ''}"><a href="Plat" title="Plat">Plat</a></li>
 			<c:if test="${admin != null}">
 				<li class="${param.administration ? 'active' : ''}"><a href="Administration" title="Administration">Administration</a></li>
+				<li class="${param.groupe ? 'active' : ''}"><a href="Groupe" title="Groupe">Groupe</a></li>
 			</c:if>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">

@@ -41,18 +41,20 @@ public class ServletAjoutModifGroupe extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		if (request.getSession().getAttribute("admin") == null)
 			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);		
 		
-		if(request.getParameter("id")!=null)
+		if(request.getParameter("id")!=null) {
 			id_groupe = Integer.parseInt(request.getParameter("id"));
 			ArrayList<Groupe> groupe = Manager.getGroupe(id_groupe);
+		
 		if(groupe.size()>0){
 			
 			request.setAttribute("grp", groupe.get(0));
 			this.id_groupe=groupe.get(0).getGroupe_id();
 		}
-		
+		}
 		request.getServletContext().getRequestDispatcher("/WEB-INF/AjoutGroupe.jsp").forward(request, response);
 
 	}

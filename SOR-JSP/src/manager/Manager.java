@@ -29,10 +29,12 @@ public class Manager {
 		}
 	}
 
+	//Fonction permettant la recuperation d'un admin avec en paramètre un nom et un mot de passe
 	public static ArrayList<Admin> getAdmin(String name, String password) throws RemoteException {
 		return serveur.getAdmin(name, password);
 	}
 
+	
 	public static ArrayList<Groupe> getGroupe() throws RemoteException {
 		return serveur.getGroupe();
 	}

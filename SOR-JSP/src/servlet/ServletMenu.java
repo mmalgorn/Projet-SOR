@@ -37,6 +37,8 @@ public class ServletMenu extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setAttribute("plats", null);
+		//S'il n'y a pas de parametre ref on affiche par defaut la liste des menus
+		//Sinon on affiche le menu passer en paramètre
 		if(request.getParameter("ref")!=null){
 			int id = Integer.parseInt(request.getParameter("ref"));
 			ArrayList<Menu> menus = Manager.getMenu(id);
