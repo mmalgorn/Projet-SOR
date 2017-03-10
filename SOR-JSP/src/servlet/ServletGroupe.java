@@ -32,6 +32,10 @@ public class ServletGroupe extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Message d'erreur si non connecté
+		if (request.getSession().getAttribute("admin") == null)
+			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);
+		
 		ArrayList<Groupe> list = Manager.getGroupe();
 		request.setAttribute("Groupe", list);
 		request.getServletContext().getRequestDispatcher("/WEB-INF/Groupe.jsp").forward(request, response);

@@ -5,7 +5,7 @@
 </jsp:include>
 
 <div class="page-header">
-	<h1>Nos menus</h1>
+	<h1>Modification Menu</h1>
 </div>
 
 <c:if test="${error != null}">

@@ -24,7 +24,8 @@
 		</div>
 		<input type="hidden" name="id" id="id" value="${id}"/>
 		<div class="form-group validation-btn-group text-center">
-			<button type="submit" class="btn btn-default" onclick="return confirm('Voulez vous vraiment supprimer ${groupe.getGroupe_nom()}">Valider</button>
+			<button type="submit" class="btn btn-default" >Valider</button>
+				
 			<button type="reset" class="btn btn-default">Remettre à zéro</button>
 		</div>
 	</form>

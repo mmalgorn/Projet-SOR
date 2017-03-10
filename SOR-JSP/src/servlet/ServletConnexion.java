@@ -47,6 +47,7 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//SI la connexion fonctionne on redirige vers la page administration sinon on affiche un message d'erreur
 		if (connexion(request,response)) {
 			request.removeAttribute("error");
 			response.sendRedirect("Administration");
@@ -60,6 +61,7 @@ public class ServletConnexion extends HttpServlet {
 		String login = request.getParameter("user");
 		String mdp = request.getParameter("password");
 		
+		//Cryptage du mot de passe
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			md.update(mdp.getBytes());
@@ -71,9 +73,11 @@ public class ServletConnexion extends HttpServlet {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-
+		
+		//On récupère l'admin
 		ArrayList<Admin> admins = Manager.getAdmin(login, mdp);
 		HttpSession session = null;
+		//Si l'admin est present on le connecte en ajouter une varriable de session
 		if(admins.isEmpty()) {
 			return false;
 		} else {

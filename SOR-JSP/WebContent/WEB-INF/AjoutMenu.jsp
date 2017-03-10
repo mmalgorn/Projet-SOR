@@ -1,7 +1,7 @@
 <%@include file="Header.jsp"%>
 
 <jsp:include page='Navigation.jsp'>
-	<jsp:param name="plat" value="${true}" />
+	<jsp:param name="menu" value="${true}" />
 </jsp:include>
 
 <div class="page-header">

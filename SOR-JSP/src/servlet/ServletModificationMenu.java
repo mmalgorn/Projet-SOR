@@ -49,6 +49,7 @@ public class ServletModificationMenu extends HttpServlet {
 		if (request.getParameter("id") != null) id_menu = Integer.parseInt(request.getParameter("id"));
 		else if (request.getAttribute("id") != null) id_menu = (int) request.getAttribute("id");
 		
+		
 		if (request.getAttribute("insert") != null) {
 			if ((int) request.getAttribute("insert") == 0) {
 				request.setAttribute("error", "Erreur lors de la modification du menu.");
@@ -57,8 +58,9 @@ public class ServletModificationMenu extends HttpServlet {
 			}
 		}
 		
+		//Si l'id passer en param�tre est incorrecte on redirige vers la page d'ajout de menu
+		//Sinon on r�cup�re les informations associ�s au menu
 		if(id_menu != -1) {
-			
 			menuPlat = Manager.getMenuPlat(id_menu);
 			menus = Manager.getMenu(id_menu);
 			request.setAttribute("menu", menus.get(0));
@@ -88,6 +90,7 @@ public class ServletModificationMenu extends HttpServlet {
 		ArrayList<Menu> retMenu;
 		ArrayList<Entry<Plat,Groupe>> menuPlat = null;
 
+		//Recup�ration des param�tres
 		if(request.getParameter("nom")!=null){
 			nom = request.getParameter("nom");
 		}
@@ -100,6 +103,7 @@ public class ServletModificationMenu extends HttpServlet {
 
 		int id_menu = Integer.parseInt(request.getParameter("menu"));
 		
+		//On r�cup�re l'ancien menu et on le met � jour
 		menu = Manager.getMenu(id_menu).get(0);
 		
 		menu.setMenu_description(description);
@@ -110,6 +114,8 @@ public class ServletModificationMenu extends HttpServlet {
 
 		retMenu = Manager.getMenu(menu.getMenu_nom());
 
+		//On update la table menuPLat en fonction des case cocher
+		//Afin d'�viter les erreur on supprime tout les plats pr�sents dans un menu avant de les rajouter
 		if(retMenu.size() > 0){
 			int idMenu = retMenu.get(0).getMenu_id();
 			menuPlat = Manager.getMenuPlat(idMenu);
@@ -119,16 +125,12 @@ public class ServletModificationMenu extends HttpServlet {
 			}
 
 			for(int j=0;j<menuPlat.size();j++){
-				System.out.println("delete "+idMenu+" "+menuPlat.get(j).getKey().getPlat_id());
 				Manager.deleteMenuPlat(idMenu, menuPlat.get(j).getKey().getPlat_id());
 			}
 			
 			for(int i = 0 ;i<=nbPlat;i++){
 				if((request.getParameter(""+i)!=null)&&(request.getParameter("type"+i)!=null)){
 
-					System.out.println("Plat : "+i+" "+request.getParameter(""+i));
-					System.out.println("Groupe : "+request.getParameter("type"+i));
-					
 					Manager.putPlatMenu(idMenu,i, Integer.parseInt(request.getParameter("type"+i)));
 				}
 			}

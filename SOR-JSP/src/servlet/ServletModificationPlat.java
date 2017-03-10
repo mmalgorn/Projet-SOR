@@ -33,7 +33,8 @@ public class ServletModificationPlat extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 
-	int							id_plat;
+	//l'id permet de recuperer l'id du plat souhaiter dans le doPost
+	int	id_plat;
 
 	public ServletModificationPlat() {
 		super();
@@ -54,11 +55,13 @@ public class ServletModificationPlat extends HttpServlet {
 			if ((int) request.getAttribute("insert") == 0) {
 				request.setAttribute("error", "Erreur lors de la modification du plat.");
 			} else {
-				request.setAttribute("success", "Plat modifiÃ© avec succÃ¨s.");
+				request.setAttribute("success", "Plat modifié avec succès.");
 			}
 		}
 
 		this.id_plat = -1;
+		//On récupère le plat et on sauvegarde l'id du plat passer en paramètre afin de le retrouver dans le Post
+		
 		ArrayList<Groupe> list = Manager.getGroupe();
 		request.setAttribute("groupes", list);
 		if (request.getParameter("id") != null) id_plat = Integer.parseInt(request.getParameter("id"));
@@ -66,6 +69,8 @@ public class ServletModificationPlat extends HttpServlet {
 		System.out.println(id_plat);
 		ArrayList<Plat> plat = Manager.getPlat(id_plat);
 		System.out.println(plat.size());
+		
+		//SI la plat n'est pas présent en base on renvoi vers la page AjoutPLat
 		if (plat.size() > 0) {
 			request.setAttribute("plat", plat.get(0));
 			this.id_plat = plat.get(0).getPlat_id();
@@ -110,10 +115,6 @@ public class ServletModificationPlat extends HttpServlet {
 				p = listTest.get(0).getPlat_photo();
 			Plat plat = new Plat(name, description, prix, p, id_groupe);
 			plat.setPlat_id(id_plat);
-			System.out.println(plat.getPlat_nom());
-			System.out.println(plat.getPlat_description());
-			System.out.println(plat.getPlat_id_groupe());
-			System.out.println(plat.getPlat_prix());
 
 			if (Manager.updatePlat(plat)) {
 				request.setAttribute("insert", 1);
