@@ -2,13 +2,16 @@ package jUnit;
 
 import static org.junit.Assert.*;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import bean.Admin;
 import bean.Groupe;
+import bean.Log;
 import bean.Menu;
 import bean.Photo;
 import bean.Plat;
@@ -22,6 +25,7 @@ public class JUnitDatabase {
 	Plat p2;
 	Groupe g1;
 	Groupe g2;
+	Admin a1;
 
 	@Before
 	public void setUp() throws Exception {
@@ -33,18 +37,12 @@ public class JUnitDatabase {
 		p2 = new Plat("TestP2","Test",1000, new Photo(new byte[10]), 0);
 		g1 = new Groupe(100, "TestG1");
 		g2 = new Groupe(101,"TestG2");
+		a1 = new Admin(100, "Testa", "Test");
+		
 	}
 
 
-	@Test
-	public void testDatabase() {
-		fail("Not yet implemented");
-	}
 
-	@Test
-	public void testClose() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testDelete() {
@@ -56,7 +54,7 @@ public class JUnitDatabase {
 		
 		db.putPlat(p1);
 		ArrayList<Plat> plat = db.getPlat(p1.getPlat_nom());
-		db.delete(Menu.class, plat.get(0).getPlat_id());
+		db.delete(Plat.class, plat.get(0).getPlat_id());
 		ArrayList<Menu> retPlat = db.getMenu(menu.get(0).getMenu_id());
 		assertTrue(retPlat.size()==0); 
 		
@@ -84,7 +82,7 @@ public class JUnitDatabase {
 		
 		db.delete(Menu.class,menu.get(0).getMenu_id());
 		db.delete(Plat.class, plat1.get(0).getPlat_id());
-		db.delete(Plat.class, plat1.get(0).getPlat_id());
+		db.delete(Plat.class, plat2.get(0).getPlat_id());
 			
 	}
 
@@ -102,127 +100,206 @@ public class JUnitDatabase {
 		
 		ArrayList<Menu> menu = db.getMenu(m1.getMenu_nom());
 		ArrayList<Plat> plat1 = db.getPlat(p1.getPlat_nom());
+		ArrayList<Plat> plat2 = db.getPlat(p2.getPlat_nom());
 		
+		db.putMenuPlat( menu.get(0).getMenu_id(),plat1.get(0).getPlat_id(), groupe.get(0).getGroupe_id());
+		db.putMenuPlat( menu.get(0).getMenu_id(),plat2.get(0).getPlat_id(), groupe.get(0).getGroupe_id());
+		
+		db.deleteGroupe(groupe.get(0).getGroupe_id(), 1);
+		
+		ArrayList<Groupe> retGroupe = db.getGroupe(g1.getGroupe_nom());
+		assertTrue(retGroupe.size()==0);
+		
+		ArrayList<Plat> retPlat = db.getPlat(p1.getPlat_nom());
+		
+		assertTrue(retPlat.get(0).getPlat_id_groupe()==1);
+		
+		ArrayList<Entry<Plat,Groupe>> retMenuPlat = db.getMenuPlat(menu.get(0).getMenu_id());
+		
+		for(int i =0; i<retMenuPlat.size()-1;i++){
+			assertTrue(retMenuPlat.get(i).getValue().getGroupe_id()==1);
+		}
+		
+		db.deleteMenuPlat(menu.get(0).getMenu_id(), plat1.get(0).getPlat_id());
+		db.deleteMenuPlat(menu.get(0).getMenu_id(), plat2.get(0).getPlat_id());
+		db.delete(Plat.class, plat1.get(0).getPlat_id());
+		db.delete(Plat.class, plat2.get(0).getPlat_id());
+		db.delete(Menu.class, menu.get(0).getMenu_id());
 	}
 
-	@Test
-	public void testGetLog() {
-		fail("Not yet implemented");
-	}
+	
 
 	@Test
 	public void testGetAdmin() {
-		fail("Not yet implemented");
+		db.putAdmin(a1);
+		
+		ArrayList<Admin> admin = db.getAdmin(a1.getAdmin_user(), a1.getAdmin_password());
+		
+		assertTrue(admin.size()>0);
+		assertTrue(admin.get(0).getAdmin_user().equals(a1.getAdmin_user()));
+		assertTrue(admin.get(0).getAdmin_password().equals(a1.getAdmin_password()));
+		
+		db.delete(Admin.class, admin.get(0).getAdmin_id());
 	}
 
 	@Test
 	public void testGetGroupeInt() {
-		fail("Not yet implemented");
+		
+		db.putGroupe(g1);
+		
+		ArrayList<Groupe> g = db.getGroupe(g1.getGroupe_nom());
+		
+		ArrayList<Groupe> groupe = db.getGroupe(g.get(0).getGroupe_id());
+		
+		assertTrue(groupe.get(0).getGroupe_nom().equals(g1.getGroupe_nom()));
+		
+		db.delete(Groupe.class, groupe.get(0).getGroupe_id());
 	}
 
 	@Test
 	public void testGetMenuInt() {
-		fail("Not yet implemented");
+		
+		db.putMenu(m1);
+		
+		ArrayList<Menu> m = db.getMenu(m1.getMenu_nom());
+		
+		ArrayList<Menu> menu = db.getMenu(m.get(0).getMenu_id());
+		
+		assertTrue(menu.get(0).getMenu_nom().equals(m1.getMenu_nom()));
+		
+		db.delete(Menu.class, menu.get(0).getMenu_id());
 	}
 
-	@Test
-	public void testGetMenuPlat() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testGetPlatInt() {
-		fail("Not yet implemented");
+		
+		db.putPlat(p1);
+		
+		ArrayList<Plat> p = db.getPlat(p1.getPlat_nom());
+		
+		ArrayList<Plat> plat = db.getPlat(p.get(0).getPlat_id());
+		
+		assertTrue(plat.get(0).getPlat_nom().equals(p1.getPlat_nom()));
+		
+		db.delete(Plat.class, plat.get(0).getPlat_id());
 	}
 
-	@Test
-	public void testGetPlatMenu() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testOpen() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testPutLog() {
-		fail("Not yet implemented");
-	}
+	
 
 	@Test
 	public void testPutAdmin() {
-		fail("Not yet implemented");
+		
+		db.putAdmin(a1);
+		ArrayList<Admin> admin = db.getAdmin(a1.getAdmin_user(), a1.getAdmin_password());
+		assertTrue(admin.get(0).getAdmin_user().equals(a1.getAdmin_user()));
+		assertTrue(admin.get(0).getAdmin_password().equals(a1.getAdmin_password()));
+		
+		db.delete(Admin.class, admin.get(0).getAdmin_id());
 	}
 
 	@Test
 	public void testPutGroupe() {
-		fail("Not yet implemented");
+		db.putGroupe(g1);
+		ArrayList<Groupe> groupe = db.getGroupe(g1.getGroupe_nom());
+		assertTrue(groupe.get(0).getGroupe_nom().equals(g1.getGroupe_nom()));
+		
+		db.delete(Groupe.class, groupe.get(0).getGroupe_id());
+		
 	}
 
 	@Test
 	public void testPutMenu() {
-		fail("Not yet implemented");
+		db.putMenu(m1);
+		ArrayList<Menu> menu = db.getMenu(m1.getMenu_nom());
+		assertTrue(menu.get(0).getMenu_nom().equals(m1.getMenu_nom()));
+		assertTrue(menu.get(0).getMenu_description().equals(m1.getMenu_description()));
+		assertTrue(menu.get(0).getMenu_prix()==m1.getMenu_prix());
+		db.delete(Menu.class, menu.get(0).getMenu_id());
 	}
 
-	@Test
-	public void testPutMenuPlat() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testPutPlat() {
-		fail("Not yet implemented");
+		db.putPlat(p1);
+		ArrayList<Plat> plat = db.getPlat(p1.getPlat_nom());
+		assertTrue(plat.get(0).getPlat_nom().equals(p1.getPlat_nom()));
+		assertTrue(plat.get(0).getPlat_description().equals(p1.getPlat_description()));
+		assertTrue(plat.get(0).getPlat_prix()==p1.getPlat_prix());
+		db.delete(Plat.class, plat.get(0).getPlat_id());
 	}
 
 	@Test
 	public void testUpdateAdmin() {
-		fail("Not yet implemented");
+		db.putAdmin(a1);
+		
+		ArrayList<Admin> admin = db.getAdmin(a1.getAdmin_user(), a1.getAdmin_password());
+		
+		admin.get(0).setAdmin_user("New");
+		
+		db.updateAdmin(admin.get(0));
+		
+		ArrayList<Admin> retAdmin = db.getAdmin(admin.get(0).getAdmin_user(),admin.get(0).getAdmin_password());
+		
+		assertTrue(retAdmin.size()>0);
+		
+		db.delete(Admin.class, retAdmin.get(0).getAdmin_id());
+		
+		
 	}
 
 	@Test
 	public void testUpdateGroupe() {
-		fail("Not yet implemented");
+		db.putGroupe(g1);
+		
+		ArrayList<Groupe> groupe = db.getGroupe(g1.getGroupe_nom());
+		
+		groupe.get(0).setGroupe_nom("New");
+		
+		db.updateGroupe(groupe.get(0));
+		
+		ArrayList<Groupe> retGroupe = db.getGroupe(groupe.get(0).getGroupe_nom());
+		
+		assertTrue(retGroupe.size()>0);
+						
+		db.delete(Groupe.class, retGroupe.get(0).getGroupe_id());
+		
 	}
 
 	@Test
 	public void testUpdateMenu() {
-		fail("Not yet implemented");
+		db.putMenu(m1);
+		
+		ArrayList<Menu> menu = db.getMenu(m1.getMenu_nom());
+		
+		menu.get(0).setMenu_nom("New");
+		
+		db.updateMenu(menu.get(0));
+		
+		ArrayList<Menu> retMenu = db.getMenu(menu.get(0).getMenu_nom());
+		
+		assertTrue(retMenu.size()>0);
+						
+		db.delete(Menu.class, retMenu.get(0).getMenu_id());
 	}
 
 	@Test
 	public void testUpdatePlat() {
-		fail("Not yet implemented");
+		db.putPlat(p1);
+		
+		ArrayList<Plat> plat = db.getPlat(p1.getPlat_nom());
+		
+		plat.get(0).setPlat_nom("New");
+		
+		db.updatePlat(plat.get(0));
+		
+		ArrayList<Plat> retPlat = db.getPlat(plat.get(0).getPlat_nom());
+		
+		assertTrue(retPlat.size()>0);
+						
+		db.delete(Plat.class, retPlat.get(0).getPlat_id());
 	}
 
-	@Test
-	public void testGetGroupe() {
-		fail("Not yet implemented");
-	}
 
-	@Test
-	public void testGetMenu() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetPlatBoolean() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetGroupeString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetMenuString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetPlatString() {
-		fail("Not yet implemented");
-	}
 
 }
