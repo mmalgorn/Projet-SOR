@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.websocket.Session;
 
 import bean.Admin;
+import bean.Groupe;
 import bean.Log;
 import manager.Manager;
 
@@ -36,11 +37,13 @@ public class ServletAdministration extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getSession().getAttribute("admin") == null) {
 			request.getServletContext().getRequestDispatcher("/WEB-INF/NotConnected.jsp").forward(request, response);			
-		} else {
-			ArrayList<Map.Entry<Log, Admin>> logs = Manager.getLog();
-			request.setAttribute("logs", logs);
-			request.getServletContext().getRequestDispatcher("/WEB-INF/Administration.jsp").forward(request, response);			
 		}
+		
+		ArrayList<Map.Entry<Log, Admin>> logs = Manager.getLog();
+		ArrayList<Groupe> groupes = Manager.getGroupe();
+		request.setAttribute("logs", logs);
+		request.setAttribute("groupes", groupes);
+		request.getServletContext().getRequestDispatcher("/WEB-INF/Administration.jsp").forward(request, response);
 	}
 
 	/**
